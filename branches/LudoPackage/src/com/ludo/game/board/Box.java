@@ -12,8 +12,11 @@ import com.ludo.game.other.Pawn;
 public abstract class Box extends JPanel{
 
 	protected int id;
+	protected static int idStatic = 1;
 	protected Color colorBox;
 	public Box(){
+		id = idStatic;
+		idStatic++;
 		this.setLayout(new FlowLayout());
 		this.setMinimumSize(getBoxSize());
 		this.setMaximumSize(getBoxSize());
