@@ -1,9 +1,31 @@
 package com.ludo.game.other;
 
-public class HumanPlayer extends Player{
+import java.awt.Color;
 
-	public HumanPlayer(Cube cube) {
-		super(cube);
+import com.ludo.observers.ServerObserver;
+
+public class HumanPlayer extends Player implements ServerObserver{
+
+	public HumanPlayer(String name, Color color) {
+		super(name,color);
+		
+	}
+
+	@Override
+	public void updatePawn(Player player) {
+		this.pawn = player.getPawns();
+		
+	}
+
+	@Override
+	public void updateGameStarting() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateGameEnding() {
+		// TODO Auto-generated method stub
 		
 	}
 
