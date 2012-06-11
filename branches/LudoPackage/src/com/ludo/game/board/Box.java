@@ -1,6 +1,7 @@
 package com.ludo.game.board;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 
@@ -14,12 +15,17 @@ public abstract class Box extends JPanel{
 	protected Color colorBox;
 	public Box(){
 		this.setLayout(new FlowLayout());
+		this.setMinimumSize(getBoxSize());
+		this.setMaximumSize(getBoxSize());
+		this.setPreferredSize(getBoxSize());
 	}
 	
 	public void addPawn(Pawn pawn){
 		pawn.setBlockId(id);
-		this.removeAll();
 		this.add(pawn);
+	}
+	private Dimension getBoxSize(){
+		return new Dimension(50,50);
 	}
 	@Override
 	protected void paintComponent(Graphics g){
