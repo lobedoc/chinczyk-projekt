@@ -2,7 +2,9 @@ package com.ludo.game.other;
 
 import java.io.Serializable;
 
-public class Pawn implements Serializable{
+import javax.swing.JComponent;
+
+public class Pawn extends JComponent implements Serializable{
 
 	private int blockId;
 	
