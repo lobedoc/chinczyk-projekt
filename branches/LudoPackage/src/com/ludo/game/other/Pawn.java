@@ -1,27 +1,19 @@
 package com.ludo.game.other;
 
-import java.awt.Color;
+import java.io.Serializable;
 
-public class Pawn {
+public class Pawn implements Serializable{
 
-	private Color pawnColor;
-	private int x;
-	private int y;
-	public Pawn(Color color){
-		this.pawnColor = color;
+	private int blockId;
+	
+	public Pawn(){
+		
 	}
-	public void setPawnX(int x){
-		this.x = x;
+	public void setBlockId(int id){
+		blockId = id;
 	}
-	public void setPawnY(int y){
-		this.y = y;
-	}
-	public void movePawn(int x, int y){
-		this.x = this.x + x;
-		this.y = this.y + y;
+	public int getBlockId(){
+		return blockId;
 	}
 	
-	public void setPawnColor(Color color){
-		this.pawnColor = color;
-	}
 }

@@ -4,27 +4,28 @@ import java.awt.Color;
 
 public abstract class Player {
 
-	private Cube cube;
 	protected Pawn[] pawn = new Pawn[4];
-	private Color playerColor = Color.RED;
-	private String playerName = "Player";
+	private Color playerColor;
+	private String playerName;
 	
-	public Player(Cube cube) {
-		this.cube = cube;
-		for(int i = 0; i < pawn.length; i++)
-			pawn[i] = new Pawn(playerColor);
-	}
-	
-	public void setPlayerColor(Color color){
+	public Player(String name, Color color) {
+		this.playerName = name;
 		this.playerColor = color;
 		for(int i = 0; i < pawn.length; i++)
-			pawn[i].setPawnColor(color);
+			pawn[i] = new Pawn();
+		
+	}
+	public Pawn getPawn(int i){
+		return pawn[i];
+	}
+	public Pawn[] getPawns(){
+		return pawn;
+	}
+	public void setPlayerColor(Color color){
+		this.playerColor = color;
 	}
 	public Color getPlayerColor(){
 		return playerColor;
-	}
-	public int rollDice(){
-		return cube.rollDice();
 	}
 	public void setPlayerName(String name){
 		this.playerName = name;
