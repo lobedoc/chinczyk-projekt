@@ -29,30 +29,7 @@ public class RunLudo {
 	 * campRed[2] = 87; stawiamy pionek na 87 pole
 	 */
 	public static void main(String[] args) {
-		Box[] box = new Box[100];
-		
-		for(int i = 0; i < box.length; i++){
-			if(i%2 == 0)
-				box[i] = new BlueBox();
-			else if(i%3 == 0)
-				box[i] = new YellowBox();
-			else
-				box[i] = new WhiteBox();
-		}
-		
-		for(int i = 0; i < box.length; i++){
-			Color c = box[i].getBoxColor();
-			String name = "Kolor";
-			if(Color.BLUE.equals(c))
-				name = "Niebieski";
-			if(Color.WHITE.equals(c))
-				name = "Biały";
-			if(Color.YELLOW.equals(c))
-				name = "Żółty";
-			
-			System.out.println(box[i].getBoxId() + " " + name);
-		}
-
+	
 		BoardControlInterface create = new BoardControl();
 	}
 
