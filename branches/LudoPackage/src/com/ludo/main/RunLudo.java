@@ -2,11 +2,10 @@ package com.ludo.main;
 
 import java.awt.Color;
 
-
-import com.ludo.app.control.BoardControl;
-import com.ludo.app.control.BoardControlInterface;
-import com.ludo.app.view.board.box.*;
-import com.ludo.app.view.login.LoginView;
+import com.ludo.game.other.HumanPlayer;
+import com.ludo.game.other.Pawn;
+import com.ludo.game.other.Player;
+import com.ludo.game.other.YellowCamp;
 
 
 public class RunLudo {
@@ -31,7 +30,12 @@ public class RunLudo {
 	 */
 	public static void main(String[] args) {
 	
-		BoardControlInterface create = new BoardControl();
+		//BoardControlInterface create = new BoardControl();
+		Player yellow = new HumanPlayer("Zolty", Color.YELLOW);
+		yellow.setPawnCamp(new YellowCamp());
+		Pawn[] yellowPawn = yellow.getPawns();
+		for(int i = 0; i < yellowPawn.length; i++)
+			System.out.println("Zolty: poczatek: " + yellowPawn[i].getStartId() + " numer domku dla pionka: " + yellowPawn[i].getCampId());
 		//LoginView v = new LoginView();
 		//v.setVisible(true);
 	}
