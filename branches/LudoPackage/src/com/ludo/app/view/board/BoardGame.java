@@ -21,7 +21,7 @@ import com.ludo.app.view.board.box.YellowBox;
 public class BoardGame{
 
 	private BoardControlInterface control;
-	private Box[] box = new Box[95];
+	private Box[] box = new Box[96];
 	private JFrame view;
 	public BoardGame(BoardControlInterface control){
 		this.control = control;
@@ -57,6 +57,21 @@ public class BoardGame{
 			else
 				box[i] = new WhiteBox();
 		}
+		for(int i = 0; i < box.length; i++){
+			Color c = box[i].getBoxColor();
+			String name = "Kolor";
+			if(Color.WHITE.equals(c))
+				name = "Biały";
+			if(Color.YELLOW.equals(c))
+				name = "Żółty";
+			if(Color.RED.equals(c))
+				name = "Czerwony";
+			if(Color.GREEN.equals(c))
+				name = "Zielony";
+			if(Color.BLUE.equals(c))
+				name = "Niebieski";
+			System.out.println("Box"+i+" ma id: " + box[i].getBoxId() +" " + name );
+		}
 	}
 	public JPanel panelBoard(){
 		initBox();
@@ -73,6 +88,82 @@ public class BoardGame{
 				panel);
 		lay.putConstraint(SpringLayout.NORTH, box[0], 25, SpringLayout.NORTH,
 				panel);
+		/* zolty domek */
+		lay.putConstraint(SpringLayout.WEST, box[64], 60, SpringLayout.WEST,
+				box[1]);
+		lay.putConstraint(SpringLayout.NORTH, box[64], 0, SpringLayout.NORTH,
+				box[1]);
+		lay.putConstraint(SpringLayout.WEST, box[65], 60, SpringLayout.WEST,
+				box[64]);
+		lay.putConstraint(SpringLayout.NORTH, box[65], 0, SpringLayout.NORTH,
+				box[64]);
+		lay.putConstraint(SpringLayout.WEST, box[66], 0, SpringLayout.WEST,
+				box[64]);
+		lay.putConstraint(SpringLayout.NORTH, box[66], 60, SpringLayout.NORTH,
+				box[64]);
+		lay.putConstraint(SpringLayout.WEST, box[67], 0, SpringLayout.WEST,
+				box[65]);
+		lay.putConstraint(SpringLayout.NORTH, box[67], 60, SpringLayout.NORTH,
+				box[65]);
+		
+		// czerwony domek
+		
+		lay.putConstraint(SpringLayout.WEST, box[68], 60, SpringLayout.WEST,
+				box[29]);
+		lay.putConstraint(SpringLayout.NORTH, box[68], 0, SpringLayout.NORTH,
+				box[29]);
+		lay.putConstraint(SpringLayout.WEST, box[69], 60, SpringLayout.WEST,
+				box[68]);
+		lay.putConstraint(SpringLayout.NORTH, box[69], 0, SpringLayout.NORTH,
+				box[68]);
+		lay.putConstraint(SpringLayout.WEST, box[70], 0, SpringLayout.WEST,
+				box[68]);
+		lay.putConstraint(SpringLayout.NORTH, box[70], -60, SpringLayout.NORTH,
+				box[68]);
+		lay.putConstraint(SpringLayout.WEST, box[71], 0, SpringLayout.WEST,
+				box[69]);
+		lay.putConstraint(SpringLayout.NORTH, box[71], -60, SpringLayout.NORTH,
+				box[69]);
+		
+		// zielony domek
+		
+		lay.putConstraint(SpringLayout.WEST, box[72], -60, SpringLayout.WEST,
+				box[33]);
+		lay.putConstraint(SpringLayout.NORTH, box[72], 0, SpringLayout.NORTH,
+				box[33]);
+		lay.putConstraint(SpringLayout.WEST, box[73], -60, SpringLayout.WEST,
+				box[72]);
+		lay.putConstraint(SpringLayout.NORTH, box[73], 0, SpringLayout.NORTH,
+				box[72]);
+		lay.putConstraint(SpringLayout.WEST, box[74], 0, SpringLayout.WEST,
+				box[72]);
+		lay.putConstraint(SpringLayout.NORTH, box[74], -60, SpringLayout.NORTH,
+				box[72]);
+		lay.putConstraint(SpringLayout.WEST, box[75], 0, SpringLayout.WEST,
+				box[73]);
+		lay.putConstraint(SpringLayout.NORTH, box[75], -60, SpringLayout.NORTH,
+				box[73]);
+		
+		// niebieski domek
+		
+		lay.putConstraint(SpringLayout.WEST, box[76], -60, SpringLayout.WEST,
+				box[61]);
+		lay.putConstraint(SpringLayout.NORTH, box[76], 0, SpringLayout.NORTH,
+				box[61]);
+		lay.putConstraint(SpringLayout.WEST, box[77], -60, SpringLayout.WEST,
+				box[76]);
+		lay.putConstraint(SpringLayout.NORTH, box[77], 0, SpringLayout.NORTH,
+				box[76]);
+		lay.putConstraint(SpringLayout.WEST, box[78], 0, SpringLayout.WEST,
+				box[76]);
+		lay.putConstraint(SpringLayout.NORTH, box[78], 60, SpringLayout.NORTH,
+				box[76]);
+		lay.putConstraint(SpringLayout.WEST, box[79], 0, SpringLayout.WEST,
+				box[77]);
+		lay.putConstraint(SpringLayout.NORTH, box[79], 60, SpringLayout.NORTH,
+				box[77]);
+		
+		
 		for(int i = 1; i <= 7; i++){
 				lay.putConstraint(SpringLayout.NORTH, box[i], 30, SpringLayout.NORTH,
 						box[i-1]);
@@ -142,6 +233,57 @@ public class BoardGame{
 		for(int i = 63; i <= 63; i++ ){
 			lay.putConstraint(SpringLayout.NORTH, box[i], 0, SpringLayout.NORTH,
 					box[62]);
+			lay.putConstraint(SpringLayout.WEST, box[i], 30, SpringLayout.WEST,
+					box[i-1]);
+		}
+		
+		// zolty koniec
+		lay.putConstraint(SpringLayout.NORTH, box[80], 30, SpringLayout.NORTH,
+				box[63]);
+		lay.putConstraint(SpringLayout.WEST, box[80], 0, SpringLayout.WEST,
+				box[63]);
+		for(int i = 81; i <= 83; i++){
+			lay.putConstraint(SpringLayout.NORTH, box[i], 30, SpringLayout.NORTH,
+					box[i-1]);
+			lay.putConstraint(SpringLayout.WEST, box[i], 0, SpringLayout.WEST,
+					box[i-1]);
+		}
+		
+		// czerwony koniec
+		
+		lay.putConstraint(SpringLayout.NORTH, box[84], 0, SpringLayout.NORTH,
+				box[15]);
+		lay.putConstraint(SpringLayout.WEST, box[84], -30, SpringLayout.WEST,
+				box[15]);
+		for(int i = 85; i <= 87; i++){
+			lay.putConstraint(SpringLayout.NORTH, box[i], 0, SpringLayout.NORTH,
+					box[i-1]);
+			lay.putConstraint(SpringLayout.WEST, box[i], -30, SpringLayout.WEST,
+					box[i-1]);
+		}
+		
+		// zielony koniec
+		
+		lay.putConstraint(SpringLayout.NORTH, box[88], -30, SpringLayout.NORTH,
+				box[31]);
+		lay.putConstraint(SpringLayout.WEST, box[88], 0, SpringLayout.WEST,
+				box[31]);
+		for(int i = 89; i <= 91; i++){
+			lay.putConstraint(SpringLayout.NORTH, box[i], -30, SpringLayout.NORTH,
+					box[i-1]);
+			lay.putConstraint(SpringLayout.WEST, box[i], 0, SpringLayout.WEST,
+					box[i-1]);
+		}
+		
+		// niebieski koniec
+		
+		lay.putConstraint(SpringLayout.NORTH, box[92], 0, SpringLayout.NORTH,
+				box[47]);
+		lay.putConstraint(SpringLayout.WEST, box[92], 30, SpringLayout.WEST,
+				box[47]);
+		for(int i = 93; i <= 95; i++){
+			lay.putConstraint(SpringLayout.NORTH, box[i], 0, SpringLayout.NORTH,
+					box[i-1]);
 			lay.putConstraint(SpringLayout.WEST, box[i], 30, SpringLayout.WEST,
 					box[i-1]);
 		}
