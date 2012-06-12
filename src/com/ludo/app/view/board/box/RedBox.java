@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class RedBox extends Box{
 	
 	public RedBox(){
-		colorBox = Color.BLUE;
+		colorBox = Color.RED;
 	}
 	
 	protected void paintComponent(Graphics g){

@@ -3,6 +3,8 @@ package com.ludo.main;
 import java.awt.Color;
 
 
+import com.ludo.app.control.BoardControl;
+import com.ludo.app.control.BoardControlInterface;
 import com.ludo.app.view.board.box.*;
 
 
@@ -51,6 +53,7 @@ public class RunLudo {
 			System.out.println(box[i].getBoxId() + " " + name);
 		}
 
+		BoardControlInterface create = new BoardControl();
 	}
 
 }

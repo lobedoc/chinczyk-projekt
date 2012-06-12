@@ -41,14 +41,14 @@ public abstract class Box extends JPanel{
 		return colorBox;
 	}
 	private Dimension getBoxSize(){
-		return new Dimension(50,50);
+		return new Dimension(30,30);
 	}
 	@Override
 	protected void paintComponent(Graphics g){
 		g.setColor(colorBox);
-		g.fillRect(0, 0, 50, 50);
+		g.fillRect(0, 0, 30, 30);
 		g.setColor(Color.BLACK);
-		g.drawRect(0, 0, 50, 50);
+		g.drawRect(0, 0, 30, 30);
 	}
 	
 	
