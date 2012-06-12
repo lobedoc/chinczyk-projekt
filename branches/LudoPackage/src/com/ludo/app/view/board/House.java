@@ -4,6 +4,8 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
+import com.ludo.app.view.board.box.Box;
+
 public abstract class House extends JPanel{
 
 	protected Box[] box;
