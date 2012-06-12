@@ -1,6 +1,7 @@
 package com.ludo.app.view.board;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
@@ -40,6 +41,7 @@ public class BoardGame{
 		view.setLocation((screenSize.width-dialogSize.width)/2,   
 						(screenSize.height-dialogSize.height)/2);
 		view.add(panelBoard(), BorderLayout.CENTER);
+		view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		view.setVisible(true);
 	}
 	private void initBox(){
@@ -59,11 +61,91 @@ public class BoardGame{
 	public JPanel panelBoard(){
 		initBox();
 		JPanel panel = new JPanel();
-
+		panel.setBackground(Color.GRAY);
+		SpringLayout lay = new SpringLayout();
+		panel.setLayout(lay);
 		int h = view.getHeight();
 		int w = view.getWidth();
+		for(int i = 0; i < box.length; i++)
+			panel.add(box[i]);
 
-		panel.add(box[63]);
+		lay.putConstraint(SpringLayout.WEST, box[0], w/2+30, SpringLayout.WEST,
+				panel);
+		lay.putConstraint(SpringLayout.NORTH, box[0], 25, SpringLayout.NORTH,
+				panel);
+		for(int i = 1; i <= 7; i++){
+				lay.putConstraint(SpringLayout.NORTH, box[i], 30, SpringLayout.NORTH,
+						box[i-1]);
+				lay.putConstraint(SpringLayout.WEST, box[i], 0, SpringLayout.WEST,
+						box[0]);
+		}
+		for(int i = 8; i <= 14; i++ ){
+			lay.putConstraint(SpringLayout.NORTH, box[i], 0, SpringLayout.NORTH,
+					box[7]);
+			lay.putConstraint(SpringLayout.WEST, box[i], 30, SpringLayout.WEST,
+					box[i-1]);
+		}
+		for(int i = 15; i <= 16; i++){
+			lay.putConstraint(SpringLayout.NORTH, box[i], 30, SpringLayout.NORTH,
+					box[i-1]);
+			lay.putConstraint(SpringLayout.WEST, box[i], 0, SpringLayout.WEST,
+					box[14]);
+		}
+		for(int i = 17; i <= 23; i++ ){
+			lay.putConstraint(SpringLayout.NORTH, box[i], 0, SpringLayout.NORTH,
+					box[16]);
+			lay.putConstraint(SpringLayout.WEST, box[i], -30, SpringLayout.WEST,
+					box[i-1]);
+		}
+		for(int i = 24; i <= 30; i++){
+			lay.putConstraint(SpringLayout.NORTH, box[i], 30, SpringLayout.NORTH,
+					box[i-1]);
+			lay.putConstraint(SpringLayout.WEST, box[i], 0, SpringLayout.WEST,
+					box[23]);
+		}
+		for(int i = 31; i <= 32; i++ ){
+			lay.putConstraint(SpringLayout.NORTH, box[i], 0, SpringLayout.NORTH,
+					box[30]);
+			lay.putConstraint(SpringLayout.WEST, box[i], -30, SpringLayout.WEST,
+					box[i-1]);
+		}
+		for(int i = 33; i <= 39; i++){
+			lay.putConstraint(SpringLayout.NORTH, box[i], -30, SpringLayout.NORTH,
+					box[i-1]);
+			lay.putConstraint(SpringLayout.WEST, box[i], 0, SpringLayout.WEST,
+					box[32]);
+		}
+		for(int i = 40; i <= 46; i++ ){
+			lay.putConstraint(SpringLayout.NORTH, box[i], 0, SpringLayout.NORTH,
+					box[39]);
+			lay.putConstraint(SpringLayout.WEST, box[i], -30, SpringLayout.WEST,
+					box[i-1]);
+		}
+		for(int i = 47; i <= 48; i++){
+			lay.putConstraint(SpringLayout.NORTH, box[i], -30, SpringLayout.NORTH,
+					box[i-1]);
+			lay.putConstraint(SpringLayout.WEST, box[i], 0, SpringLayout.WEST,
+					box[46]);
+		}
+		for(int i = 49; i <= 55; i++ ){
+			lay.putConstraint(SpringLayout.NORTH, box[i], 0, SpringLayout.NORTH,
+					box[48]);
+			lay.putConstraint(SpringLayout.WEST, box[i], 30, SpringLayout.WEST,
+					box[i-1]);
+		}
+		for(int i = 56; i <= 62; i++){
+			lay.putConstraint(SpringLayout.NORTH, box[i], -30, SpringLayout.NORTH,
+					box[i-1]);
+			lay.putConstraint(SpringLayout.WEST, box[i], 0, SpringLayout.WEST,
+					box[55]);
+		}
+		for(int i = 63; i <= 63; i++ ){
+			lay.putConstraint(SpringLayout.NORTH, box[i], 0, SpringLayout.NORTH,
+					box[62]);
+			lay.putConstraint(SpringLayout.WEST, box[i], 30, SpringLayout.WEST,
+					box[i-1]);
+		}
 		return panel;
 	}
+	
 }
