@@ -1,4 +1,4 @@
-package com.ludo.game.board;
+package com.ludo.app.view.board;
 
 import java.awt.Color;
 import java.awt.Dimension;
