@@ -1,12 +1,12 @@
-package com.ludo.game.board;
+package com.ludo.app.view.board;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class BlueBox extends Box{
+public class YellowBox extends Box{
 
-	public BlueBox(){
-		colorBox = Color.BLUE;
+	public YellowBox(){
+		colorBox = Color.YELLOW;
 	}
 	
 	protected void paintComponent(Graphics g){
