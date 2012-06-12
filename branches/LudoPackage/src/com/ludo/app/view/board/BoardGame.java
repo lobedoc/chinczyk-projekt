@@ -3,10 +3,23 @@ package com.ludo.app.view.board;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import com.ludo.app.control.BoardControlInterface;
 import com.ludo.app.view.board.box.BlueBox;
@@ -18,11 +31,19 @@ import com.ludo.app.view.board.box.YellowBox;
 
 
 
-public class BoardGame{
+public class BoardGame implements ActionListener{
 
 	private BoardControlInterface control;
 	private Box[] box = new Box[96];
 	private JFrame view;
+	private JButton buttonJoinYellow;
+	private JButton buttonJoinRed;
+	private JButton buttonJoinGreen;
+	private JButton buttonJoinBlue;
+	private JButton buttonRoll;
+	private JButton buttonSend;
+	private JTextField fieldMsg;
+	private JTextArea areaMsg;
 	public BoardGame(BoardControlInterface control){
 		this.control = control;
 	}
@@ -40,9 +61,33 @@ public class BoardGame{
 			dialogSize.height = screenSize.width;
 		view.setLocation((screenSize.width-dialogSize.width)/2,   
 						(screenSize.height-dialogSize.height)/2);
+		view.setResizable(false);
+		createControlElements();
+		view.add(panelRight(), BorderLayout.EAST);
 		view.add(panelBoard(), BorderLayout.CENTER);
+
 		view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		view.setVisible(true);
+	}
+	private void createControlElements(){
+		buttonJoinYellow = new JButton("Dołącz");
+		buttonJoinRed = new JButton("Dołącz");
+		buttonJoinGreen = new JButton("Dołącz");
+		buttonJoinBlue = new JButton("Dołącz");
+		buttonRoll = new JButton("Rzuć kostka");
+		buttonSend = new JButton("Wyślij");
+		fieldMsg = new JTextField(10);
+		areaMsg = new JTextArea(15,2);
+		 areaMsg.setBorder(new CompoundBorder(
+	                new LineBorder(Color.BLACK),
+	                new EmptyBorder(1, 3, 1, 1)));
+		areaMsg.setLineWrap(true);
+		areaMsg.setWrapStyleWord(true);
+		areaMsg.setText( "This is an editable JTextArea. " +
+    "A text area is a \"plain\" text component, " +
+    "which means that although it can display text " +
+    "in any font, all of the text is in the same font.");
+		areaMsg.setEditable(false);
 	}
 	private void initBox(){
 		for(int i = 0; i < box.length; i++){
@@ -57,34 +102,62 @@ public class BoardGame{
 			else
 				box[i] = new WhiteBox();
 		}
-		for(int i = 0; i < box.length; i++){
-			Color c = box[i].getBoxColor();
-			String name = "Kolor";
-			if(Color.WHITE.equals(c))
-				name = "Biały";
-			if(Color.YELLOW.equals(c))
-				name = "Żółty";
-			if(Color.RED.equals(c))
-				name = "Czerwony";
-			if(Color.GREEN.equals(c))
-				name = "Zielony";
-			if(Color.BLUE.equals(c))
-				name = "Niebieski";
-			System.out.println("Box"+i+" ma id: " + box[i].getBoxId() +" " + name );
-		}
 	}
-	public JPanel panelBoard(){
+	private JPanel panelRight(){
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		panel.add(panelRightUp(), BorderLayout.NORTH);
+		panel.setPreferredSize(new Dimension(150, panel.getHeight()));
+		panel.add(panelRightDown(), BorderLayout.CENTER);
+		return panel;
+	}
+	private JPanel panelRightUp(){
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.GRAY);
+		panel.setLayout(new GridLayout(4,2,5,5));
+		JLabel labelYellow = new JLabel("Żółty:", SwingConstants.RIGHT);
+		labelYellow.setForeground(Color.YELLOW);
+		JLabel labelRed = new JLabel("Czerwony:", SwingConstants.RIGHT);
+		labelRed.setForeground(Color.RED);
+		JLabel labelGreen = new JLabel("Zielony:", SwingConstants.RIGHT);
+		labelGreen.setForeground(Color.GREEN);
+		JLabel labelBlue = new JLabel("Niebieski:", SwingConstants.RIGHT);
+		labelBlue.setForeground(Color.BLUE);
+		
+		panel.add(labelYellow);
+		panel.add(buttonJoinYellow);
+		panel.add(labelRed);
+		panel.add(buttonJoinRed);
+		panel.add(labelGreen);
+		panel.add(buttonJoinGreen);
+		panel.add(labelBlue);
+		panel.add(buttonJoinBlue);
+		return panel;
+	}
+	private JPanel panelRightDown(){
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		JPanel panelDown = new JPanel();
+		panelDown.setLayout(new GridLayout(1,2,5,5));
+		panelDown.add(fieldMsg);
+		panelDown.add(buttonSend);
+		JScrollPane scrollPane = new JScrollPane(areaMsg); 
+		panel.add(scrollPane, BorderLayout.CENTER);
+		panel.add(panelDown, BorderLayout.SOUTH);
+		return panel;
+	}
+	private JPanel panelBoard(){
 		initBox();
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.GRAY);
 		SpringLayout lay = new SpringLayout();
+		
 		panel.setLayout(lay);
-		int h = view.getHeight();
 		int w = view.getWidth();
 		for(int i = 0; i < box.length; i++)
 			panel.add(box[i]);
 
-		lay.putConstraint(SpringLayout.WEST, box[0], w/2+30, SpringLayout.WEST,
+		lay.putConstraint(SpringLayout.WEST, box[0], w/3 + 60, SpringLayout.WEST,
 				panel);
 		lay.putConstraint(SpringLayout.NORTH, box[0], 25, SpringLayout.NORTH,
 				panel);
@@ -288,6 +361,12 @@ public class BoardGame{
 					box[i-1]);
 		}
 		return panel;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
