@@ -21,6 +21,14 @@ public abstract class Player {
 	public Pawn[] getPawns(){
 		return pawn;
 	}
+	public void setPawnCamp(Camp camp){
+		int[] campId = camp.getCampLocation();
+		int start = camp.getStart();
+		for(int i = 0; i < campId.length; i++){
+			pawn[i].setCampId(campId[i]);
+			pawn[i].setStartId(start);
+		}
+	}
 	public void setPlayerColor(Color color){
 		this.playerColor = color;
 	}
