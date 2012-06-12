@@ -11,8 +11,8 @@ import com.ludo.game.other.Pawn;
 
 public abstract class Box extends JPanel{
 
-	protected int id;
-	protected static int idStatic = 1;
+	private int id;
+	private static int idStatic = 1;
 	protected Color colorBox;
 	public Box(){
 		id = idStatic;
@@ -26,6 +26,13 @@ public abstract class Box extends JPanel{
 	public void addPawn(Pawn pawn){
 		pawn.setBlockId(id);
 		this.add(pawn);
+	}
+	
+	public int getBoxId(){
+		return id;
+	}
+	public Color getBoxColor(){
+		return colorBox;
 	}
 	private Dimension getBoxSize(){
 		return new Dimension(50,50);
