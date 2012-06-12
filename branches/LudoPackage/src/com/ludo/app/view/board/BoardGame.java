@@ -76,6 +76,7 @@ public class BoardGame implements ActionListener{
 	private void createControlElements(){
 		buttonJoinYellow = new JButton("Dołącz");
 		buttonJoinRed = new JButton("Dołącz");
+		buttonJoinRed.addActionListener(this);
 		buttonJoinGreen = new JButton("Dołącz");
 		buttonJoinBlue = new JButton("Dołącz");
 		buttonRoll = new JButton("Rzuć kostka");
@@ -366,11 +367,18 @@ public class BoardGame implements ActionListener{
 		}
 		return panel;
 	}
-
+	public void addBox(int id, Pawn pawn){
+		box[id].addPawn(pawn);
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		if(e.getSource() == buttonJoinRed){
+			control.createRedPlayer("Czerwony");
+			buttonJoinRed.setEnabled(false);
+			buttonJoinRed.setText("Czerwony");
+		}
+
 	}
 	
 }
