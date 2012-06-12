@@ -2,6 +2,8 @@ package com.ludo.main;
 
 import java.awt.Color;
 
+import com.ludo.app.control.BoardControl;
+import com.ludo.app.control.BoardControlInterface;
 import com.ludo.game.other.HumanPlayer;
 import com.ludo.game.other.Pawn;
 import com.ludo.game.other.Player;

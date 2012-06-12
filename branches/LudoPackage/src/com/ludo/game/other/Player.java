@@ -11,8 +11,11 @@ public abstract class Player {
 	public Player(String name, Color color) {
 		this.playerName = name;
 		this.playerColor = color;
-		for(int i = 0; i < pawn.length; i++)
+		for(int i = 0; i < pawn.length; i++){
 			pawn[i] = new Pawn();
+			pawn[i].setColorPawn(color);
+		}
+
 		
 	}
 	public Pawn getPawn(int i){
@@ -31,6 +34,8 @@ public abstract class Player {
 	}
 	public void setPlayerColor(Color color){
 		this.playerColor = color;
+		for(int i = 0; i < pawn.length; i++)
+			pawn[i].setColorPawn(color);
 	}
 	public Color getPlayerColor(){
 		return playerColor;

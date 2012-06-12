@@ -28,6 +28,10 @@ import com.ludo.app.view.board.box.GreenBox;
 import com.ludo.app.view.board.box.RedBox;
 import com.ludo.app.view.board.box.WhiteBox;
 import com.ludo.app.view.board.box.YellowBox;
+import com.ludo.game.other.HumanPlayer;
+import com.ludo.game.other.Pawn;
+import com.ludo.game.other.Player;
+import com.ludo.game.other.YellowCamp;
 
 
 
