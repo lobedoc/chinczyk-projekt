@@ -6,6 +6,7 @@ import java.awt.Color;
 import com.ludo.app.control.BoardControl;
 import com.ludo.app.control.BoardControlInterface;
 import com.ludo.app.view.board.box.*;
+import com.ludo.app.view.login.LoginView;
 
 
 public class RunLudo {
@@ -31,6 +32,8 @@ public class RunLudo {
 	public static void main(String[] args) {
 	
 		BoardControlInterface create = new BoardControl();
+		//LoginView v = new LoginView();
+		//v.setVisible(true);
 	}
 
 }
