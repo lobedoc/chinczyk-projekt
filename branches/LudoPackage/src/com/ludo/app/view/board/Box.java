@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.util.ArrayDeque;
 
 import javax.swing.JPanel;
 
@@ -14,6 +15,8 @@ public abstract class Box extends JPanel{
 	private int id;
 	private static int idStatic = 1;
 	protected Color colorBox;
+	private Pawn pawnLast;
+	private ArrayDeque<Pawn> arrayPawn = new ArrayDeque<Pawn>();
 	public Box(){
 		id = idStatic;
 		idStatic++;
@@ -23,9 +26,12 @@ public abstract class Box extends JPanel{
 		this.setPreferredSize(getBoxSize());
 	}
 	
-	public void addPawn(Pawn pawn){
+	public Pawn addPawn(Pawn pawn){
+		pawnLast = arrayPawn.pollLast();
+		arrayPawn.addFirst(pawn);
 		pawn.setBlockId(id);
 		this.add(pawn);
+		return pawnLast;
 	}
 	
 	public int getBoxId(){
