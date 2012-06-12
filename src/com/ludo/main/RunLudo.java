@@ -2,14 +2,9 @@ package com.ludo.main;
 
 import java.awt.Color;
 
-import com.ludo.game.board.BlueBox;
-import com.ludo.game.board.Box;
-import com.ludo.game.board.WhiteBox;
-import com.ludo.game.board.YellowBox;
-import com.ludo.game.other.Cube;
-import com.ludo.game.other.HumanPlayer;
-import com.ludo.game.other.Player;
-import com.ludo.game.other.SixCube;
+
+import com.ludo.app.view.board.box.*;
+
 
 public class RunLudo {
 
