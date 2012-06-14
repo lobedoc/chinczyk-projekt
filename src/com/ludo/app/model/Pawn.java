@@ -78,11 +78,12 @@ public class Pawn implements PawnSubject{
 	}
 
 	public boolean move(int movement){
-		if(!canMove(movement)){
+		if(canMove(movement)){
 			targetPosition=actualyPosition - startId;
 			targetPosition +=68;
 			targetPosition -=2;
 			targetPosition -=64;
+			moveTo(targetPosition);
 			return true;
 		}
 		else{
@@ -93,17 +94,18 @@ public class Pawn implements PawnSubject{
 	}
 	public boolean canMove(int movement){
 		targetPosition = (actualyPosition + movement)%63;
-		if(targetPosition > startId)
+		if(targetPosition > startId || targetPosition<startId )
 			return false;
 		return true;
 	}
 	private void moveTo(int movement){
-		actualyPosition = movement + actualyPosition;
+		actualyPosition = movement;
 		notifyObserver();
 	}
 	public void moveFromBase(int movement) {
 		if (movement == 6) {
-			 moveTo(startId);
+			 actualyPosition = startId;
+			 notifyObserver();
 		}
 	}
 }
