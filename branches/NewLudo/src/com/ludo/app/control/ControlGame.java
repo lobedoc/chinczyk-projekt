@@ -3,12 +3,13 @@ package com.ludo.app.control;
 import java.util.LinkedList;
 import java.util.Random;
 
-import com.ludo.app.model.BlueCamp;
-import com.ludo.app.model.Camp;
-import com.ludo.app.model.GreenCamp;
+import com.ludo.app.model.location.camp.BlueCamp;
+import com.ludo.app.model.location.camp.Camp;
+import com.ludo.app.model.location.camp.GreenCamp;
 import com.ludo.app.model.Pawn;
-import com.ludo.app.model.RedCamp;
-import com.ludo.app.model.YellowCamp;
+import com.ludo.app.model.location.camp.RedCamp;
+import com.ludo.app.model.location.camp.YellowCamp;
+import com.ludo.app.model.location.house.RedHouse;
 import com.ludo.app.view.BoardGame;
 
 
@@ -28,9 +29,17 @@ public class ControlGame implements ControlGameInterface{
 	@Override
 	public void rollDice() {
 		Random random = new Random();
-		redPlayer.getPawns()[0].moveFromBase(6);
+		/*redPlayer.getPawns()[0].moveFromBase(1);
 		redPlayer.getPawns()[0].move(62);
 		redPlayer.getPawns()[0].move(1);
+		int[] cos = new int[]{1,2,3,4};
+		System.out.println(cos[0]);
+		System.out.println(cos[1]);
+		System.out.println(cos[2]);
+		System.out.println(cos[3]);*/
+		redPlayer.getPawns()[0].setActualyPosition(1);
+		redPlayer.getPawns()[0].move(14);
+		redPlayer.getPawns()[0].moveHouse(1);
 
 
 	}
@@ -72,6 +81,7 @@ public class ControlGame implements ControlGameInterface{
 	public Player createRedPlayer(){
 		redPlayer = new HumanPlayer();
 		redPlayer.setCamp(new RedCamp());
+		redPlayer.setHouse(new RedHouse());
 		addPawn(redPlayer);
 		return redPlayer;
 	}

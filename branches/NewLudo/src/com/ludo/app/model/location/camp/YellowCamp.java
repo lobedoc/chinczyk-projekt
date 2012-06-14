@@ -1,4 +1,5 @@
-package com.ludo.app.model;
+package com.ludo.app.model.location.camp;
+
 
 import java.awt.Color;
 
@@ -7,7 +8,7 @@ public class YellowCamp implements Camp{
 	@Override
 	public int[] getCampLocation() {
 		// TODO Auto-generated method stub
-		return new int[] {64, 66, 67, 68};
+		return new int[] {64, 65, 66, 67};
 	}
 
 	@Override
