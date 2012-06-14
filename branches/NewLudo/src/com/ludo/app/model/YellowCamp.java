@@ -1,5 +1,7 @@
 package com.ludo.app.model;
 
+import java.awt.Color;
+
 public class YellowCamp implements Camp{
 
 	@Override
@@ -14,4 +16,9 @@ public class YellowCamp implements Camp{
 		return 0;
 	}
 
+	@Override
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return Color.YELLOW;
+	}
 }
