@@ -13,7 +13,8 @@ public class Pawn implements PawnSubject{
 	
 	private int startId;
 	private int campId;
-
+	private int[] houseLocation;
+	
 	private Color pawnColor;
 	
 	private int actualyPosition;
@@ -31,7 +32,7 @@ public class Pawn implements PawnSubject{
 		// TODO Auto-generated method stub
 		int i = observer.indexOf(o);
 		if( i >= 0)
-			observer.remove(0);
+			observer.remove(o);
 		
 	}
 	
@@ -77,6 +78,28 @@ public class Pawn implements PawnSubject{
 		this.pawnColor = pawnColor;
 	}
 
+	public int[] getHouseLocation() {
+		return houseLocation;
+	}
+
+	public void setHouseLocation(int[] houseLocation) {
+		this.houseLocation = houseLocation;
+	}
+
+	
+	public void moveHouse(int movement){
+		if(actualyPosition < startId){
+			targetPosition = (actualyPosition + movement)%63;
+			if(targetPosition >= startId){
+				targetPosition = actualyPosition - startId;
+				actualyPosition = targetPosition + 63;
+				targetPosition = actualyPosition + 3; 
+				targetPosition = targetPosition - 63;
+				actualyPosition = houseLocation[targetPosition];
+			}
+		}
+		notifyObserver();
+	}
 	public boolean move(int movement){
 		if(canMove(movement)){
 			targetPosition=actualyPosition - startId;

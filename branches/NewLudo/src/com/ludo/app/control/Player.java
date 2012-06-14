@@ -2,7 +2,8 @@ package com.ludo.app.control;
 
 import java.awt.Color;
 
-import com.ludo.app.model.Camp;
+import com.ludo.app.model.location.camp.Camp;
+import com.ludo.app.model.location.house.House;
 import com.ludo.app.model.Pawn;
 
 public abstract class Player {
@@ -26,6 +27,12 @@ public abstract class Player {
 			pawnPlayer[i].setActualyPosition(campId[i]);
 			pawnPlayer[i].setStartId(start);
 			pawnPlayer[i].setPawnColor(colorPlayer);
+		}
+	}
+	public void setHouse(House house){
+		for(int i = 0; i < pawnPlayer.length; i++){
+			int[] location = house.getHouseLocation();
+			pawnPlayer[i].setHouseLocation(location);
 		}
 	}
 	public Color getColorPlayer() {
