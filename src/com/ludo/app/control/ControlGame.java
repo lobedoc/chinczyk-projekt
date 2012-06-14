@@ -39,9 +39,7 @@ public class ControlGame implements ControlGameInterface{
 		System.out.println(cos[3]);*/
 		redPlayer.getPawns()[0].setActualyPosition(1);
 		redPlayer.getPawns()[0].move(14);
-		redPlayer.getPawns()[0].moveHouse(1);
-
-
+		redPlayer.getPawns()[0].move(1);
 	}
 
 	@Override
