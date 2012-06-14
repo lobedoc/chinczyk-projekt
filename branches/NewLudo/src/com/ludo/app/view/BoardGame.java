@@ -21,7 +21,7 @@ public class BoardGame implements PawnObserver{
 		// TODO Auto-generated method stub
 		for(int i = 0; i < pawns.size(); i++){
 			Pawn p = pawns.get(i);
-			System.out.println("Aktualna pozycja: " + p.getActualPosition() + " kolor pionka: " + p.getPawnColor());
+			System.out.println("Aktualna pozycja: " + p.getActualyPosition() + " kolor pionka: " + p.getPawnColor());
 			//Box[position].add(p);
 		}
 	}

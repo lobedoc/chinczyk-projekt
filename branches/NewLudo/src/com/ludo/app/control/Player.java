@@ -23,7 +23,7 @@ public abstract class Player {
 		colorPlayer = camp.getColor();
 		for(int i = 0; i < campId.length; i++){
 			pawnPlayer[i].setCampId(campId[i]);
-			pawnPlayer[i].setActualPosition(campId[i]);
+			pawnPlayer[i].setActualyPosition(campId[i]);
 			pawnPlayer[i].setStartId(start);
 			pawnPlayer[i].setPawnColor(colorPlayer);
 		}

@@ -28,8 +28,11 @@ public class ControlGame implements ControlGameInterface{
 	@Override
 	public void rollDice() {
 		Random random = new Random();
-		int roll = random.nextInt(6) + 1;
-		redPlayer.getPawns()[0].setActualPosition(roll);
+		redPlayer.getPawns()[0].move(0);
+		
+
+
+
 	}
 
 	@Override
