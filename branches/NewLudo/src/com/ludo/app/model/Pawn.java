@@ -86,27 +86,13 @@ public class Pawn implements PawnSubject{
 		this.houseLocation = houseLocation;
 	}
 
-	
-	public void moveHouse(int movement){
-		if(actualyPosition < startId){
-			targetPosition = (actualyPosition + movement)%63;
-			if(targetPosition >= startId){
-				targetPosition = actualyPosition - startId;
-				actualyPosition = targetPosition + 63;
-				targetPosition = actualyPosition + 3; 
-				targetPosition = targetPosition - 63;
-				actualyPosition = houseLocation[targetPosition];
-			}
-		}
-		notifyObserver();
-	}
 	public boolean move(int movement){
-		if(canMove(movement)){
+		if(!canMove(movement)){
 			targetPosition=actualyPosition - startId;
-			targetPosition +=68;
-			targetPosition -=2;
+			targetPosition +=69;
+			targetPosition -=movement;
 			targetPosition -=64;
-			moveTo(targetPosition);
+			moveTo(houseLocation[targetPosition]);
 			return true;
 		}
 		else{
@@ -117,8 +103,10 @@ public class Pawn implements PawnSubject{
 	}
 	public boolean canMove(int movement){
 		targetPosition = (actualyPosition + movement)%63;
-		if(targetPosition > startId || targetPosition<startId )
-			return false;
+		if(actualyPosition < startId){
+			targetPosition = (actualyPosition + movement)%63;
+			if(targetPosition >= startId)
+			return false;}
 		return true;
 	}
 	private void moveTo(int movement){
