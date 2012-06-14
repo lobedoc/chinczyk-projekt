@@ -1,7 +1,10 @@
 package com.ludo.app.model;
 
-public interface Camp {
+import java.awt.Color;
 
+public interface Camp {
+	
+	public Color getColor();
 	public int[] getCampLocation();
 	public int getStart();
 }

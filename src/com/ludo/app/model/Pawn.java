@@ -1,5 +1,6 @@
 package com.ludo.app.model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -9,8 +10,12 @@ import com.ludo.app.observer.PawnSubject;
 public class Pawn implements PawnSubject{
 	
 	private ArrayList<PawnObserver> observer = new ArrayList<PawnObserver>();
+	
 	private int startId;
 	private int campId;
+
+	private Color pawnColor;
+	
 	private int actualPosition;
 	private int targetPosition;
 	
@@ -21,14 +26,15 @@ public class Pawn implements PawnSubject{
 		
 	}
 
-	public int getActualPosition() {
-		return actualPosition;
+	@Override
+	public void removeObserver(PawnObserver o) {
+		// TODO Auto-generated method stub
+		int i = observer.indexOf(o);
+		if( i >= 0)
+			observer.remove(0);
+		
 	}
-
-	public void setActualPosition(int actualPosition) {
-		this.actualPosition = actualPosition;
-	}
-
+	
 	@Override
 	public void notifyObserver() {
 		// TODO Auto-generated method stub
@@ -54,14 +60,21 @@ public class Pawn implements PawnSubject{
 	public void setCampId(int campId) {
 		this.campId = campId;
 	}
+	
+	public int getActualPosition() {
+		return actualPosition;
+	}
 
-	@Override
-	public void removeObserver(PawnObserver o) {
-		// TODO Auto-generated method stub
-		int i = observer.indexOf(o);
-		if( i >= 0)
-			observer.remove(0);
-		
+	public void setActualPosition(int actualPosition) {
+		this.actualPosition = actualPosition;
+	}
+
+	public Color getPawnColor() {
+		return pawnColor;
+	}
+
+	public void setPawnColor(Color pawnColor) {
+		this.pawnColor = pawnColor;
 	}
 
 }

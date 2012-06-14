@@ -1,10 +1,14 @@
 package com.ludo.app.control;
 
 import java.util.LinkedList;
+import java.util.Random;
 
+import com.ludo.app.model.BlueCamp;
 import com.ludo.app.model.Camp;
+import com.ludo.app.model.GreenCamp;
 import com.ludo.app.model.Pawn;
 import com.ludo.app.model.RedCamp;
+import com.ludo.app.model.YellowCamp;
 import com.ludo.app.view.BoardGame;
 
 
@@ -17,14 +21,15 @@ public class ControlGame implements ControlGameInterface{
 	
 	private BoardGame view;
 	
-	public ControlGame(BoardGame view){
+	public ControlGame(){
 		
 		view = new BoardGame(this);
 	}
 	@Override
 	public void rollDice() {
-		// TODO Auto-generated method stub
-		
+		Random random = new Random();
+		int roll = random.nextInt(6) + 1;
+		redPlayer.getPawns()[0].notifyObserver();
 	}
 
 	@Override
@@ -40,17 +45,17 @@ public class ControlGame implements ControlGameInterface{
 	
 	@Override
 	public void joinGreenPlayer() {
-		// TODO Auto-generated method stub
+		playerList.add(greenPlayer);
 		
 	}
 	@Override
 	public void joinBluePlayer() {
-		// TODO Auto-generated method stub
+		playerList.add(bluePlayer);
 		
 	}
 	@Override
 	public void joinYellowPlayer() {
-		// TODO Auto-generated method stub
+		playerList.add(yellowPlayer);
 		
 	}
 
@@ -58,12 +63,35 @@ public class ControlGame implements ControlGameInterface{
 		Pawn[] pawns = player.getPawns();
 		for(int i = 0; i < pawns.length; i++){
 			view.addPawn(pawns[i]);
+			pawns[i].registerObserver(view);
 		}
 	}
 	public Player createRedPlayer(){
 		redPlayer = new HumanPlayer();
 		redPlayer.setCamp(new RedCamp());
 		addPawn(redPlayer);
+		
 		return redPlayer;
+	}
+	@Override
+	public Player createYellowPlayer() {
+		yellowPlayer = new HumanPlayer();
+		yellowPlayer.setCamp(new YellowCamp());
+		addPawn(yellowPlayer);
+		return yellowPlayer;
+	}
+	@Override
+	public Player createGreenPlayer() {
+		greenPlayer = new HumanPlayer();
+		greenPlayer.setCamp(new GreenCamp());
+		addPawn(greenPlayer);
+		return greenPlayer;
+	}
+	@Override
+	public Player createBluePlayer() {
+		bluePlayer = new HumanPlayer();
+		bluePlayer.setCamp(new BlueCamp());
+		addPawn(bluePlayer);
+		return bluePlayer;
 	}
 }
