@@ -21,6 +21,14 @@ public class Pawn implements PawnSubject{
 		
 	}
 
+	public int getActualPosition() {
+		return actualPosition;
+	}
+
+	public void setActualPosition(int actualPosition) {
+		this.actualPosition = actualPosition;
+	}
+
 	@Override
 	public void notifyObserver() {
 		// TODO Auto-generated method stub
