@@ -14,7 +14,7 @@ import com.ludo.app.model.Pawn;
 public abstract class Box extends JPanel{
 
 	private int id;
-	private static int idStatic = 0;
+	private static int idStatic = 1;
 	protected Color colorBox;
 	private Pawn pawnLast;
 	private ArrayDeque<Pawn> arrayPawn = new ArrayDeque<Pawn>();

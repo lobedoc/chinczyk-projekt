@@ -1,4 +1,5 @@
-package com.ludo.app.model;
+package com.ludo.app.model.location.camp;
+
 
 import java.awt.Color;
 
