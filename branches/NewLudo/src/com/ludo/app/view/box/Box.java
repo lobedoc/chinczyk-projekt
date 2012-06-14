@@ -30,7 +30,7 @@ public abstract class Box extends JPanel{
 	public Pawn addPawn(Pawn pawn){
 		pawnLast = arrayPawn.pollLast();
 		arrayPawn.addFirst(pawn);
-		pawn.setActualPosition(id);
+		pawn.setActualyPosition(id);
 		return pawnLast;
 	}
 	
