@@ -16,7 +16,7 @@ public class Pawn implements PawnSubject{
 
 	private Color pawnColor;
 	
-	private int actualPosition;
+	private int actualyPosition;
 	private int targetPosition;
 	
 	@Override
@@ -40,7 +40,7 @@ public class Pawn implements PawnSubject{
 		// TODO Auto-generated method stub
 		for(int i = 0; i < observer.size(); i++){
 			PawnObserver po = observer.get(i);
-			po.changeBoxPawn(actualPosition);
+			po.changeBoxPawn(actualyPosition);
 		}
 			
 	}
@@ -61,13 +61,12 @@ public class Pawn implements PawnSubject{
 		this.campId = campId;
 	}
 	
-	public int getActualPosition() {
-		return actualPosition;
+	public int getActualyPosition() {
+		return actualyPosition;
 	}
 
-	public void setActualPosition(int actualPosition) {
-		this.actualPosition = actualPosition;
-		notifyObserver();
+	public void setActualyPosition(int actualyPosition) {
+		this.actualyPosition = actualyPosition;
 	}
 
 	public Color getPawnColor() {
@@ -78,4 +77,33 @@ public class Pawn implements PawnSubject{
 		this.pawnColor = pawnColor;
 	}
 
+	public boolean move(int movement){
+		if(!canMove(movement)){
+			targetPosition=actualyPosition - startId;
+			targetPosition +=68;
+			targetPosition -=2;
+			targetPosition -=64;
+			return true;
+		}
+		else{
+		targetPosition = (actualyPosition + movement)%63;
+		moveTo(targetPosition);
+		return true;
+		}
+	}
+	public boolean canMove(int movement){
+		targetPosition = (actualyPosition + movement)%63;
+		if(targetPosition > startId)
+			return false;
+		return true;
+	}
+	private void moveTo(int movement){
+		actualyPosition = movement + actualyPosition;
+		notifyObserver();
+	}
+	public void moveFromBase(int movement) {
+		if (movement == 6) {
+			 moveTo(startId);
+		}
+	}
 }
