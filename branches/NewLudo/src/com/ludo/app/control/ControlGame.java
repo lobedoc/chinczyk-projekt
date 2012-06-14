@@ -29,7 +29,7 @@ public class ControlGame implements ControlGameInterface{
 	public void rollDice() {
 		Random random = new Random();
 		int roll = random.nextInt(6) + 1;
-		redPlayer.getPawns()[0].notifyObserver();
+		redPlayer.getPawns()[0].setActualPosition(roll);
 	}
 
 	@Override
@@ -70,7 +70,6 @@ public class ControlGame implements ControlGameInterface{
 		redPlayer = new HumanPlayer();
 		redPlayer.setCamp(new RedCamp());
 		addPawn(redPlayer);
-		
 		return redPlayer;
 	}
 	@Override

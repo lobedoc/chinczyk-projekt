@@ -67,6 +67,7 @@ public class Pawn implements PawnSubject{
 
 	public void setActualPosition(int actualPosition) {
 		this.actualPosition = actualPosition;
+		notifyObserver();
 	}
 
 	public Color getPawnColor() {

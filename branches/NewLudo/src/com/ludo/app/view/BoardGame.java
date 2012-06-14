@@ -9,7 +9,7 @@ import com.ludo.app.model.Pawn;
 import com.ludo.app.observer.PawnObserver;
 
 public class BoardGame implements PawnObserver{
-	ArrayList<Pawn> pawns;
+	private ArrayList<Pawn> pawns;
 	public BoardGame(ControlGameInterface control){
 		pawns = new ArrayList<Pawn>();
 	}
