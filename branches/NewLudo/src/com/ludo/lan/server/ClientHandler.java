@@ -6,16 +6,18 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import com.ludo.app.control.Player;
 import com.ludo.lan.observer.ClientObserver;
 import com.ludo.lan.observer.ClientSubject;
+import com.ludo.lan.task.Task;
 
-public class ClientHandler implements ClientSubject{
+public class ClientHandler extends Task implements ClientSubject{
 	
 	private ArrayList<ClientObserver> observer = new ArrayList<ClientObserver>();
 	private Socket socket;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
-	
+	private Player player;
 	public ClientHandler(Socket socket){
 		this.socket = socket;
 		
@@ -40,8 +42,15 @@ public class ClientHandler implements ClientSubject{
 	public void notifyObserver() {
 		// TODO Auto-generated method stub
 		for(int i = 0; i < observer.size(); i++){
-			ClientObserver cb = observer.get(i);
+			ClientObserver co = observer.get(i);
+			co.updatePlayer(player);
 		}
+	}
+
+	@Override
+	public void task() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
