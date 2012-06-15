@@ -8,8 +8,8 @@ import com.ludo.app.model.Pawn;
 
 public abstract class Player {
 	private final int PAWN_SIZE = 4;
-	private Color colorPlayer;
-	private Pawn[] pawnPlayer = new Pawn[PAWN_SIZE];
+	protected Color colorPlayer;
+	protected Pawn[] pawnPlayer = new Pawn[PAWN_SIZE];
 	
 	public Player(){
 		for(int i = 0; i < pawnPlayer.length; i++)

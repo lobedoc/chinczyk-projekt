@@ -1,5 +1,8 @@
 package com.ludo.lan.observer;
 
-public class ClientObserver {
+import com.ludo.app.control.Player;
 
+public interface ClientObserver {
+
+	public void updatePlayer(Player player);
 }
