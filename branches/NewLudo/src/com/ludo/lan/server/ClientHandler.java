@@ -10,6 +10,7 @@ import com.ludo.app.control.Player;
 import com.ludo.lan.observer.ClientObserver;
 import com.ludo.lan.observer.ClientSubject;
 import com.ludo.lan.task.Task;
+import com.ludo.lan.testwysylania.TestObject;
 
 public class ClientHandler extends Task implements ClientSubject{
 	
@@ -21,8 +22,6 @@ public class ClientHandler extends Task implements ClientSubject{
 	public ClientHandler(Socket socket){
 		this.socket = socket;
 		
-		
-
 	}
 	
 	@Override
@@ -44,7 +43,13 @@ public class ClientHandler extends Task implements ClientSubject{
 	@Override
 	protected void task() {
 		// TODO Auto-generated method stub
-	
+		TestObject to = new TestObject(1,"object from client");  
+		try {
+			out.writeObject(to);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
 	}
 	@Override
 	protected void taskStream() {
