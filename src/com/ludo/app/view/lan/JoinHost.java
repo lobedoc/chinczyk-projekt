@@ -11,15 +11,19 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.ludo.lan.client.Client;
+import com.ludo.lan.client.ServerHandler;
+import com.ludo.lan.observer.ServerObserver;
 import com.ludo.lan.server.Server;
 import com.ludo.lan.task.ThreadManager;
 
 // usunieta bedzie ta klasa 
-public class JoinHost extends JFrame implements ActionListener{
+public class JoinHost extends JFrame implements ActionListener, ServerObserver{
 
 	private JButton host;
 	private JButton connect;
 	private JButton testowy;
+	private ServerHandler handler;
+	private Client client;
 	public JoinHost(){
 		this.setMinimumSize(new Dimension(200,100));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,23 +44,30 @@ public class JoinHost extends JFrame implements ActionListener{
 		panel.add(testowy);
 		return panel;
 	}
-	public void setDisabled(){
-		testowy.setEnabled(false);
-	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == host){
 			Server server = new Server();
+			
 			ThreadManager.getInstance().execute(server);
 			host.setEnabled(false);
 		}
 		if(e.getSource() == connect){
-			Client client = new Client();
+			client = new Client();
 			client.connect("62.108.173.153");
+			handler = client.getHandler();
+			handler.registerObserver(this);
 		}
 		if(e.getSource() == testowy){
-			setDisabled();
+			testowy.setEnabled(false);
+			handler.sendButtonValue(testowy.isEnabled());
 		}
+	}
+	@Override
+	public void setButtonValue(boolean e) {
+		// TODO Auto-generated method stub
+		testowy.setEnabled(e);
+		
 	}
 }

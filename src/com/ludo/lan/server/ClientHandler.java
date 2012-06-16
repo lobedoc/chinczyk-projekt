@@ -7,10 +7,11 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import com.ludo.app.control.Player;
+import com.ludo.lan.head.Head;
+import com.ludo.lan.head.HeadButton;
 import com.ludo.lan.observer.ClientObserver;
 import com.ludo.lan.observer.ClientSubject;
 import com.ludo.lan.task.Task;
-import com.ludo.lan.testwysylania.TestObject;
 
 public class ClientHandler extends Task implements ClientSubject{
 	
@@ -44,7 +45,23 @@ public class ClientHandler extends Task implements ClientSubject{
 	protected void task() {
 		// TODO Auto-generated method stub
 		
-		TestObject to;
+		Head h;
+		try {
+			h = (Head) in.readObject();
+			int value = h.getID();
+			switch(value){
+			
+			case 0x1: 
+				System.out.println("Kliknieto") ;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*TestObject to;
 		try {
 			to = (TestObject)in.readObject();
 			System.out.println("Odebrano obiekt: " + to.toString());
@@ -54,7 +71,9 @@ public class ClientHandler extends Task implements ClientSubject{
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+		
+		
 	}
 	@Override
 	protected void taskStream() {

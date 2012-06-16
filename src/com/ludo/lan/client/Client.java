@@ -7,11 +7,11 @@ import java.net.UnknownHostException;
 import com.ludo.lan.task.ThreadManager;
 
 public class Client {
-
+	private ServerHandler serverHandler;
 	public void connect(String ip){
 		try {
 			Socket clientSocket = new Socket(ip, 8125);
-			ServerHandler serverHandler = new ServerHandler(clientSocket);
+			serverHandler = new ServerHandler(clientSocket);
 			ThreadManager.getInstance().execute(serverHandler);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
@@ -20,5 +20,8 @@ public class Client {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public ServerHandler getHandler(){
+		return serverHandler;
 	}
 }
