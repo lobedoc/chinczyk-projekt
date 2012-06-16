@@ -5,7 +5,7 @@ public abstract class Task implements Runnable{
 	private boolean stop;
 	
 	public Task(){
-		stop  = false;
+
 	}
 
 	public void stop(){
@@ -13,6 +13,7 @@ public abstract class Task implements Runnable{
 	}
 	@Override
 	public void run() {
+		stop  = false;
 		// TODO Auto-generated method stub
 		while(!stop){
 			task();
@@ -20,6 +21,6 @@ public abstract class Task implements Runnable{
 		
 	}
 	
-	public abstract void task();
+	protected abstract void task();
 	
 }
