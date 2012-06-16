@@ -8,8 +8,9 @@ import java.util.ArrayList;
 
 import com.ludo.lan.observer.ServerObserver;
 import com.ludo.lan.observer.ServerSubject;
+import com.ludo.lan.task.Task;
 
-public class ServerHandler implements ServerSubject{
+public class ServerHandler extends Task implements ServerSubject{
 
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
@@ -37,6 +38,11 @@ public class ServerHandler implements ServerSubject{
 		for(int i = 0; i < observer.size(); i++){
 			ServerObserver so = observer.get(i);
 		}
+		
+	}
+	@Override
+	protected void task() {
+		// TODO Auto-generated method stub
 		
 	}
 }

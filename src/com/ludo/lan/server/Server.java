@@ -9,12 +9,12 @@ import com.ludo.lan.control.TCPGameControl;
 import com.ludo.lan.task.Task;
 
 public class Server extends Task{
-
 	private ServerSocket serverSocket;
 	private GameControl gameControl = new TCPGameControl();
 	public Server(){
 			try {
 				serverSocket = new ServerSocket(8125);
+				System.out.println("Odpalono serwer");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -23,7 +23,7 @@ public class Server extends Task{
 	}
 
 	@Override
-	public void task() {
+	protected void task() {
 		// TODO Auto-generated method stub
 		try {
 			Socket in = serverSocket.accept();

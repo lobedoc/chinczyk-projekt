@@ -48,7 +48,7 @@ public class ClientHandler extends Task implements ClientSubject{
 	}
 
 	@Override
-	public void task() {
+	protected void task() {
 		// TODO Auto-generated method stub
 		
 	}
