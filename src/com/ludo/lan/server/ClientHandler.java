@@ -43,7 +43,7 @@ public class ClientHandler extends Task implements ClientSubject{
 	@Override
 	protected void task() {
 		// TODO Auto-generated method stub
-		TestObject to = new TestObject(1,"object from client");  
+		TestObject to = new TestObject(1,"wyslany obiekt");  
 		try {
 			out.writeObject(to);
 		} catch (IOException e) {
