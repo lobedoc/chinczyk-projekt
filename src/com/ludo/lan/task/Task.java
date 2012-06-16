@@ -15,6 +15,7 @@ public abstract class Task implements Runnable{
 	public void run() {
 		stop  = false;
 		// TODO Auto-generated method stub
+		taskStream();
 		while(!stop){
 			task();
 		}
@@ -22,5 +23,7 @@ public abstract class Task implements Runnable{
 	}
 	
 	protected abstract void task();
-	
+	protected void taskStream(){
+		
+	}
 }
