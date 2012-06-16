@@ -19,6 +19,7 @@ public class ClientHandler extends Task implements ClientSubject{
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private Player player;
+	private int i = 0;
 	public ClientHandler(Socket socket){
 		this.socket = socket;
 		
@@ -36,20 +37,24 @@ public class ClientHandler extends Task implements ClientSubject{
 		// TODO Auto-generated method stub
 		for(int i = 0; i < observer.size(); i++){
 			ClientObserver co = observer.get(i);
-			co.updatePlayer(player);
 		}
 	}
 
 	@Override
 	protected void task() {
 		// TODO Auto-generated method stub
-		TestObject to = new TestObject(1,"wyslany obiekt");  
+		
+		TestObject to;
 		try {
-			out.writeObject(to);
+			to = (TestObject)in.readObject();
+			System.out.println("Odebrano obiekt: " + to.toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}  
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	@Override
 	protected void taskStream() {

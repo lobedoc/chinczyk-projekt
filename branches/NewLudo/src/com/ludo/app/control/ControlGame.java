@@ -24,7 +24,7 @@ public class ControlGame implements ControlGameInterface{
 	
 	public ControlGame(){
 		
-		view = new BoardGame(this);
+		
 	}
 	@Override
 	public void rollDice() {

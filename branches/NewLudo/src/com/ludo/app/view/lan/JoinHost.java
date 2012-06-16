@@ -19,13 +19,16 @@ public class JoinHost extends JFrame implements ActionListener{
 
 	private JButton host;
 	private JButton connect;
+	private JButton testowy;
 	public JoinHost(){
 		this.setMinimumSize(new Dimension(200,100));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		host = new JButton("Hostuj");
 		connect = new JButton("Polacz");
 		host.addActionListener(this);
+		testowy = new JButton("Testowy");
 		connect.addActionListener(this);
+		testowy.addActionListener(this);
 		this.setLayout(new BorderLayout());
 		this.add(flowPanel(), BorderLayout.CENTER);
 	}
@@ -34,7 +37,11 @@ public class JoinHost extends JFrame implements ActionListener{
 		panel.setLayout(new FlowLayout());
 		panel.add(host);
 		panel.add(connect);
+		panel.add(testowy);
 		return panel;
+	}
+	public void setDisabled(){
+		testowy.setEnabled(false);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -46,7 +53,10 @@ public class JoinHost extends JFrame implements ActionListener{
 		}
 		if(e.getSource() == connect){
 			Client client = new Client();
-			client.connect("localhost");
+			client.connect("62.108.173.153");
+		}
+		if(e.getSource() == testowy){
+			setDisabled();
 		}
 	}
 }
