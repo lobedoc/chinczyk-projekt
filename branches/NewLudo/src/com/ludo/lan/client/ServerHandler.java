@@ -40,10 +40,14 @@ public class ServerHandler extends Task implements ServerSubject{
 	@Override
 	protected void task() {
 		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	protected void taskStream() {
 		try {
 			out = new ObjectOutputStream(socket.getOutputStream());
 			in = new ObjectInputStream(socket.getInputStream());
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
