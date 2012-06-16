@@ -18,7 +18,6 @@ public class TCPGameControl implements GameControl, ClientObserver{
 		// TODO Auto-generated method stub
 		handler.registerObserver(this);
 		clientList.add(handler);
-
 		ThreadManager.getInstance().execute(handler);
 		System.out.println("Ilosc klientow: " + clientList.size());
 		

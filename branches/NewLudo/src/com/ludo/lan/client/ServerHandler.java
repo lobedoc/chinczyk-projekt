@@ -10,6 +10,7 @@ import com.ludo.lan.observer.ServerObserver;
 import com.ludo.lan.observer.ServerSubject;
 import com.ludo.lan.task.Task;
 import com.ludo.lan.task.ThreadManager;
+import com.ludo.lan.testwysylania.TestObject;
 
 public class ServerHandler extends Task implements ServerSubject{
 
@@ -40,6 +41,18 @@ public class ServerHandler extends Task implements ServerSubject{
 	@Override
 	protected void task() {
 		// TODO Auto-generated method stub
+		TestObject to;
+		try {
+			to = (TestObject)in.readObject();
+			System.out.println(to.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+	
 		
 	}
 	@Override
