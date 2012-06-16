@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import com.ludo.app.control.Player;
 import com.ludo.lan.head.Head;
-import com.ludo.lan.head.HeadButton;
 import com.ludo.lan.observer.ClientObserver;
 import com.ludo.lan.observer.ClientSubject;
 import com.ludo.lan.task.Task;
@@ -61,17 +60,7 @@ public class ClientHandler extends Task implements ClientSubject{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/*TestObject to;
-		try {
-			to = (TestObject)in.readObject();
-			System.out.println("Odebrano obiekt: " + to.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+
 		
 		
 	}
