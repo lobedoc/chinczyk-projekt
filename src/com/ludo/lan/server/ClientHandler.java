@@ -21,13 +21,7 @@ public class ClientHandler extends Task implements ClientSubject{
 	public ClientHandler(Socket socket){
 		this.socket = socket;
 		
-		try {
-			out = new ObjectOutputStream(socket.getOutputStream());
-			in = new ObjectInputStream(socket.getInputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 
 	}
 	
@@ -50,7 +44,13 @@ public class ClientHandler extends Task implements ClientSubject{
 	@Override
 	protected void task() {
 		// TODO Auto-generated method stub
-		
+		try {
+			out = new ObjectOutputStream(socket.getOutputStream());
+			in = new ObjectInputStream(socket.getInputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
