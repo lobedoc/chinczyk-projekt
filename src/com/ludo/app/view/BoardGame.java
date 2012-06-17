@@ -73,7 +73,7 @@ public class BoardGame implements ActionListener,PawnObserver{
 	private JPanel panel(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
-		panel.setBackground(Color.GRAY);
+		panel.setBackground(Color.decode("0xf1f1f0"));
 		panel.add(panelBoard(), BorderLayout.CENTER);
 		panel.add(buttonPanel(), BorderLayout.EAST);
 		return panel;
