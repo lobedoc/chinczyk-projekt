@@ -1,12 +1,13 @@
 package com.ludo.app.control;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 import com.ludo.app.model.location.camp.Camp;
 import com.ludo.app.model.location.house.House;
 import com.ludo.app.model.Pawn;
 
-public abstract class Player {
+public abstract class Player implements Serializable {
 	private final int PAWN_SIZE = 4;
 	protected Color colorPlayer;
 	protected Pawn[] pawnPlayer = new Pawn[PAWN_SIZE];
@@ -38,4 +39,6 @@ public abstract class Player {
 	public Color getColorPlayer() {
 		return colorPlayer;
 	}
+	
+	public abstract void sendReady();
 }

@@ -5,5 +5,5 @@ import com.ludo.app.control.Player;
 
 public interface ClientObserver {
 	
-	public void updateGui();
+	public void joinRedPlayer(Player player);
 }

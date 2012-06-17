@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import com.ludo.app.control.Player;
 import com.ludo.lan.head.Head;
+import com.ludo.lan.head.HeadConst;
+import com.ludo.lan.head.RedPlayerHead;
 import com.ludo.lan.observer.ClientObserver;
 import com.ludo.lan.observer.ClientSubject;
 import com.ludo.lan.task.Task;
@@ -33,11 +35,7 @@ public class ClientHandler extends Task implements ClientSubject{
 	@Override
 	public void notifyObserver() {
 		// TODO Auto-generated method stub
-		for(int i = 0; i < observer.size(); i++){
-			ClientObserver co = observer.get(i);
-			//co.updateGui();
 		}
-	}
 
 	@Override
 	protected void task() {
@@ -51,12 +49,10 @@ public class ClientHandler extends Task implements ClientSubject{
 			int value = h.getID();
 			switch(value){
 			
-			case 0x1: 
-				System.out.println("Kliknieto") ;
-				for(int i = 0; i < observer.size(); i++){
-					ClientObserver co = observer.get(i);
-					co.updateGui();
-					}
+			case HeadConst.redPlayer: 
+				Player p = (Player) h.getObject();
+				System.out.println("Przyszedl player");
+				notifyyy(p);
 				break;
 			}
 		} catch (IOException e) {
@@ -70,10 +66,16 @@ public class ClientHandler extends Task implements ClientSubject{
 		
 		
 	}
-	public void changeButton(){
+	public void notifyyy(Player p){
+		for(ClientObserver ob: observer)
+			ob.joinRedPlayer(p);
+	}
+	public void addPlayer(Player p){
 		try {
-			//out.writeObject(head);
-		} catch (Exception e) {
+			Head h = new RedPlayerHead();
+			h.setObject(p);
+			out.writeObject(h);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
