@@ -334,9 +334,11 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		if(e.getSource() == joinYellow){
 			//control.createYellowPlayer();
 			player.rollDice();
-			//Pawn p = player.getPawn(0);
+			Pawn p = player.getPawn(0);
 			//p.moveFromBase(6);
-			player.movePawn(0);
+			//player.movePawn(0);
+			p.move(10);
+			//p.move(2);
 			//p.moveFromBase(6);
 			//player.movePawn(0);
 			//addPawn(p);
@@ -346,10 +348,12 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			player = new HumanPlayer();
 			player.setCamp(new RedCamp());
 			player.setHouse(new RedHouse());
-			for(Pawn p : player.getPawns()){
-				addPawn(p);
-				p.registerObserver(this);}
+
 			handler.sendRedPlayer(player);
+			for(Pawn p : player.getPawns()){
+				p.registerObserver(this);
+				addPawn(p);
+				}
 		}
 		if(e.getSource() == joinGreen){
 			//control.createRedPlayer();
