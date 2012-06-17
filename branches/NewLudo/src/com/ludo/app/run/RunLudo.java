@@ -4,6 +4,8 @@ import com.ludo.app.control.ControlGame;
 import com.ludo.app.control.ControlGameInterface;
 import com.ludo.app.view.BoardGame;
 import com.ludo.app.view.lan.JoinHost;
+import com.ludo.lan.control.GameControl;
+import com.ludo.lan.control.TCPGameControl;
 
 public class RunLudo {
 	
@@ -11,8 +13,8 @@ public class RunLudo {
 		//ControlGameInterface game = new ControlGame();
 		//game.createRedPlayer();
 		//game.rollDice();
-		JoinHost test = new JoinHost();
-		test.setVisible(true);
+		JoinHost h = new JoinHost();
+		h.setVisible(true);
 		
 	}
 }

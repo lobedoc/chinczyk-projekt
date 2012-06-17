@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.ludo.app.control.Player;
 import com.ludo.lan.head.Head;
+import com.ludo.lan.head.HeadButton;
 import com.ludo.lan.observer.ClientObserver;
 import com.ludo.lan.observer.ClientSubject;
 import com.ludo.lan.task.Task;
@@ -20,6 +21,7 @@ public class ClientHandler extends Task implements ClientSubject{
 	private ObjectInputStream in;
 	private Player player;
 	private int i = 0;
+	private Head head = new HeadButton();
 	public ClientHandler(Socket socket){
 		this.socket = socket;
 		
@@ -37,6 +39,7 @@ public class ClientHandler extends Task implements ClientSubject{
 		// TODO Auto-generated method stub
 		for(int i = 0; i < observer.size(); i++){
 			ClientObserver co = observer.get(i);
+			//co.updateGui();
 		}
 	}
 
@@ -45,13 +48,21 @@ public class ClientHandler extends Task implements ClientSubject{
 		// TODO Auto-generated method stub
 		
 		Head h;
+
 		try {
 			h = (Head) in.readObject();
+
 			int value = h.getID();
 			switch(value){
 			
 			case 0x1: 
 				System.out.println("Kliknieto") ;
+				head = (HeadButton)h;
+				for(int i = 0; i < observer.size(); i++){
+					ClientObserver co = observer.get(i);
+					co.updateGui();
+					}
+				break;
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -63,6 +74,14 @@ public class ClientHandler extends Task implements ClientSubject{
 
 		
 		
+	}
+	public void changeButton(){
+		try {
+			out.writeObject(head);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	@Override
 	protected void taskStream() {
