@@ -13,7 +13,7 @@ public class BlueCamp implements Camp{
 	@Override
 	public int getStart() {
 		// TODO Auto-generated method stub
-		return 48;
+		return 52;
 	}
 
 	@Override
