@@ -20,7 +20,7 @@ public class Pawn implements PawnSubject, Serializable{
 	
 	private int actualyPosition;
 	private int targetPosition;
-	
+	private int lastPosition;
 	@Override
 	public void registerObserver(PawnObserver o) {
 		// TODO Auto-generated method stub
@@ -111,6 +111,7 @@ public class Pawn implements PawnSubject, Serializable{
 		return true;
 	}
 	private void moveTo(int movement){
+		lastPosition = actualyPosition;
 		actualyPosition = movement;
 		notifyObserver();
 	}
@@ -122,5 +123,8 @@ public class Pawn implements PawnSubject, Serializable{
 			 actualyPosition = startId;
 			 notifyObserver();
 		}
+	}
+	public int getLastPosition(){
+		return lastPosition;
 	}
 }

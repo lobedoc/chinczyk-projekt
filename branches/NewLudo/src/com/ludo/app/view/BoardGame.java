@@ -325,6 +325,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		for(int i = 0; i < pawns.size(); i++){
 			Pawn p = pawns.get(i);
 			System.out.println("Aktualna pozycja: " + p.getActualyPosition() + " kolor pionka: " + p.getPawnColor());
+			box[p.getLastPosition()].removePawn();
 			box[p.getActualyPosition()].addPawn(p);
 		}
 	}
@@ -334,8 +335,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		if(e.getSource() == joinYellow){
 			//control.createYellowPlayer();
 			player.rollDice();
-			Pawn p = player.getPawn(0);
-			//p.moveFromBase(6);
+			
 			//player.movePawn(0);
 				player.movePawn(0);
 			//p.move(2);
@@ -377,6 +377,8 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	public void updateRedButton(Player player) {
 		// TODO Auto-generated method stub
 		playerList.add(player);
+		Pawn p = player.getPawn(0);
+		p.moveFromBase(6);
 		/*for(Pawn p : player.getPawns())
 			addPawn(p);*/
 		System.out.println(playerList.size());
