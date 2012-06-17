@@ -73,7 +73,7 @@ public class JoinHost extends JFrame implements ActionListener, ServerObserver{
 		
 	}
 	@Override
-	public void updateRedButton() {
+	public void updateRedButton(Player player) {
 		// TODO Auto-generated method stub
 		
 	}

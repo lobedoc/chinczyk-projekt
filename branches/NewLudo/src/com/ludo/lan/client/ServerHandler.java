@@ -38,7 +38,8 @@ public class ServerHandler extends Task implements ServerSubject{
 			switch(value){
 			
 			case HeadConst.redPlayer: 
-				notifyObserver();
+				Player p = (Player) h.getObject();
+				addRedPlayer(p);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -82,8 +83,12 @@ public class ServerHandler extends Task implements ServerSubject{
 	@Override
 	public void notifyObserver() {
 		// TODO Auto-generated method stub
-		for( ServerObserver ob : observer)
-			ob.updateRedButton();
+
 		
+	}
+	
+	public void addRedPlayer(Player p){
+		for( ServerObserver ob : observer)
+			ob.updateRedButton(p);
 	}
 }

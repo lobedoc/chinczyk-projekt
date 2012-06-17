@@ -5,5 +5,5 @@ import com.ludo.app.control.Player;
 public interface ServerObserver {
 	
 	public void updatePawn(Player player);
-	public void updateRedButton();
+	public void updateRedButton(Player player);
 }
