@@ -6,8 +6,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import com.ludo.app.control.Player;
 import com.ludo.lan.head.Head;
 import com.ludo.lan.head.HeadConst;
+import com.ludo.lan.head.RedPlayerHead;
 
 import com.ludo.lan.observer.ServerObserver;
 import com.ludo.lan.observer.ServerSubject;
@@ -18,6 +20,7 @@ public class ServerHandler extends Task implements ServerSubject{
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private Socket socket;
+	private Head redPlayerHead = new RedPlayerHead();
 	private ArrayList<ServerObserver> observer = new ArrayList<ServerObserver>();
 	public ServerHandler(Socket socket){
 		this.socket = socket;
@@ -67,14 +70,20 @@ public class ServerHandler extends Task implements ServerSubject{
 		
 	}
 	
-	public void sendRedPlayer(){
-		
+	public void sendRedPlayer(Player player){
+		redPlayerHead.setObject(player);
+		try {
+			out.writeObject(redPlayerHead);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	@Override
 	public void notifyObserver() {
 		// TODO Auto-generated method stub
-		for( ServerObserver ob : observer);
-
+		for( ServerObserver ob : observer)
+			ob.updateRedButton();
 		
 	}
 }
