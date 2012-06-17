@@ -337,7 +337,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			Pawn p = player.getPawn(0);
 			//p.moveFromBase(6);
 			//player.movePawn(0);
-			p.move(10);
+				player.movePawn(0);
 			//p.move(2);
 			//p.moveFromBase(6);
 			//player.movePawn(0);
