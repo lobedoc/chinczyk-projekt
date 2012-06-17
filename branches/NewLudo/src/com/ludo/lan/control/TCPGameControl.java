@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.ludo.app.control.Player;
 import com.ludo.app.view.lan.JoinHost;
 import com.ludo.lan.observer.ClientObserver;
 import com.ludo.lan.server.ClientHandler;
@@ -23,11 +24,12 @@ public class TCPGameControl implements GameControl, ClientObserver{
 		
 	}
 	@Override
-	public void updateGui() {
+	public void joinRedPlayer(Player player) {
 		// TODO Auto-generated method stub
-		for(ClientHandler client : clientList)
-			client.changeButton();
+		for(ClientHandler handler : clientList)
+			handler.addPlayer(player);
 	}
+	
 	
 	
 	}

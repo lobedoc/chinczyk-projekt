@@ -1,13 +1,14 @@
 package com.ludo.app.model;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.ludo.app.observer.PawnObserver;
 import com.ludo.app.observer.PawnSubject;
 
-public class Pawn implements PawnSubject{
+public class Pawn implements PawnSubject, Serializable{
 	
 	private ArrayList<PawnObserver> observer = new ArrayList<PawnObserver>();
 	

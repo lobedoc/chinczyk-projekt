@@ -20,7 +20,11 @@ import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import com.ludo.app.control.HumanPlayer;
+import com.ludo.app.control.Player;
 import com.ludo.app.model.Pawn;
+import com.ludo.app.model.location.camp.RedCamp;
+import com.ludo.app.model.location.house.RedHouse;
 import com.ludo.app.observer.PawnObserver;
 import com.ludo.app.view.box.BlueBox;
 import com.ludo.app.view.box.Box;
@@ -32,18 +36,23 @@ import com.ludo.app.view.box.StartRedBox;
 import com.ludo.app.view.box.StartYellowBox;
 import com.ludo.app.view.box.WhiteBox;
 import com.ludo.app.view.box.YellowBox;
+import com.ludo.lan.client.ServerHandler;
+import com.ludo.lan.observer.ServerObserver;
 
-public class BoardGame implements ActionListener,PawnObserver{
+public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	
 	private JButton joinYellow;
 	private JButton joinRed;
 	private JButton joinGreen;
 	private JButton joinBlue;
 	private JFrame view;
+	private ServerHandler handler;
 	private Box[] box = new Box[96];
 	private ArrayList<Pawn> pawns;
+	private Player player;
 	public BoardGame(){
 		pawns = new ArrayList<Pawn>();
+
 	}
 	public void createView(){
 		view = new JFrame();
@@ -67,6 +76,7 @@ public class BoardGame implements ActionListener,PawnObserver{
 	private void createElements(){
 		joinYellow = new JButton("Dołącz");
 		joinRed = new JButton("Dołącz");
+		joinRed.addActionListener(this);
 		joinGreen = new JButton("Dołącz");
 		joinBlue = new JButton("Dołącz");
 	}
@@ -320,17 +330,42 @@ public class BoardGame implements ActionListener,PawnObserver{
 		// TODO Auto-generated method stub
 		if(e.getSource() == joinYellow){
 			//control.createYellowPlayer();
+
 		}
 		if(e.getSource() == joinRed){
 			//control.createRedPlayer();
+			player = new HumanPlayer();
+			player.setCamp(new RedCamp());
+			player.setHouse(new RedHouse());
+			for(Pawn p : player.getPawns())
+				addPawn(p);
+			handler.sendRedPlayer(player);
+
 		}
 		if(e.getSource() == joinGreen){
 			//control.createRedPlayer();
 			
+			
 		}
+	}
+	
+	public void setHandler(ServerHandler handler){
+		this.handler = handler;
+		this.handler.registerObserver(this);
 	}
 	private enum Position{
 		UP, RIGHT, DOWN, LEFT
+	}
+	@Override
+	public void updatePawn(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void updateRedButton() {
+		// TODO Auto-generated method stub
+		joinRed.setEnabled(false);
+		
 	}
 }
 

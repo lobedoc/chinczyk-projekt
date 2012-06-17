@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.ludo.app.control.Player;
+import com.ludo.app.view.BoardGame;
 import com.ludo.lan.client.Client;
 import com.ludo.lan.client.ServerHandler;
 import com.ludo.lan.control.GameControl;
@@ -57,9 +59,23 @@ public class JoinHost extends JFrame implements ActionListener, ServerObserver{
 			Client client = new Client();
 			client.connect("62.108.173.153");
 			handler = client.getHandler();
-			handler.registerObserver(this);
+		}
+		if(e.getSource() == testowy){
+			BoardGame boardGame = new BoardGame();
+			boardGame.createView();
+			boardGame.setHandler(handler);
 		}
 	
+	}
+	@Override
+	public void updatePawn(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void updateRedButton() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
