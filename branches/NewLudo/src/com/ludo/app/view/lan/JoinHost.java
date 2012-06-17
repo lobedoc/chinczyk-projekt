@@ -59,15 +59,7 @@ public class JoinHost extends JFrame implements ActionListener, ServerObserver{
 			handler = client.getHandler();
 			handler.registerObserver(this);
 		}
-		if(e.getSource() == testowy){
-			testowy.setEnabled(false);
-			handler.sendButtonValue(testowy.isEnabled());
-		}
+	
 	}
-	@Override
-	public void setButtonValue(boolean e) {
-		// TODO Auto-generated method stub
-		testowy.setEnabled(e);
-		
-	}
+
 }
