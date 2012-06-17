@@ -44,7 +44,10 @@ public abstract class Box extends JPanel{
 		repaint();
 		//return pawnLast;
 	}
-	
+	public void removePawn(){
+		pawnLast = null;
+		repaint();
+	}
 	public int getBoxId(){
 		return id;
 	}
