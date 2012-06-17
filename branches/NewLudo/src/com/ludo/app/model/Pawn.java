@@ -42,7 +42,7 @@ public class Pawn implements PawnSubject, Serializable{
 		// TODO Auto-generated method stub
 		for(int i = 0; i < observer.size(); i++){
 			PawnObserver po = observer.get(i);
-			po.changeBoxPawn(actualyPosition);
+			po.changeBoxPawn();
 		}
 			
 	}
