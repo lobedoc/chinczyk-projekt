@@ -10,7 +10,6 @@ import com.ludo.app.model.Pawn;
 
 public abstract class Player implements Serializable {
 	private final int PAWN_SIZE = 4;
-	protected Color colorPlayer;
 	protected Pawn[] pawnPlayer = new Pawn[PAWN_SIZE];
 	private Random r = new Random();
 	private int numberRoll ;
@@ -24,12 +23,11 @@ public abstract class Player implements Serializable {
 	public void setCamp(Camp camp){
 		int[] campId = camp.getCampLocation();
 		int start = camp.getStart();
-		colorPlayer = camp.getColor();
 		for(int i = 0; i < campId.length; i++){
 			pawnPlayer[i].setCampId(campId[i]);
 			pawnPlayer[i].setActualyPosition(campId[i]);
 			pawnPlayer[i].setStartId(start);
-			pawnPlayer[i].setPawnColor(colorPlayer);
+			pawnPlayer[i].setPawnColor(camp.getColor());
 		}
 	}
 	public void setHouse(House house){
@@ -37,9 +35,6 @@ public abstract class Player implements Serializable {
 			int[] location = house.getHouseLocation();
 			pawnPlayer[i].setHouseLocation(location);
 		}
-	}
-	public Color getColorPlayer() {
-		return colorPlayer;
 	}
 	public Pawn getPawn(int i){
 		return pawnPlayer[i];
