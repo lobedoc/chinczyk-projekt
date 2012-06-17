@@ -47,12 +47,13 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	private JButton joinBlue;
 	private JFrame view;
 	private ServerHandler handler;
+	private ArrayList<Player> playerList = new ArrayList<Player>();
 	private Box[] box = new Box[96];
 	private ArrayList<Pawn> pawns;
 	private Player player;
 	public BoardGame(){
 		pawns = new ArrayList<Pawn>();
-
+		System.out.println(playerList.size());
 	}
 	public void createView(){
 		view = new JFrame();
@@ -362,10 +363,13 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		
 	}
 	@Override
-	public void updateRedButton() {
+	public void updateRedButton(Player player) {
 		// TODO Auto-generated method stub
+		playerList.add(player);
+		for(Pawn p : player.getPawns())
+			addPawn(p);
+		System.out.println(playerList.size());
 		joinRed.setEnabled(false);
-		
 	}
 }
 
