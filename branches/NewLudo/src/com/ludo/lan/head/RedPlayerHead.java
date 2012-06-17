@@ -1,24 +1,24 @@
 package com.ludo.lan.head;
 
-public class HeadButton implements Head{
+public class RedPlayerHead implements Head{
+	private Object o;
 
-	private boolean e = false;
 	@Override
 	public int getID() {
 		// TODO Auto-generated method stub
-		return 0x1;
+		return HeadConst.redPlayer;
 	}
 
 	@Override
-	public void setEnabled(boolean e) {
+	public Object getObject() {
 		// TODO Auto-generated method stub
-		this.e = e;
+		return o;
 	}
 
 	@Override
-	public boolean isEnabled() {
+	public void setObject(Object o) {
 		// TODO Auto-generated method stub
-		return e;
+		this.o = o;
 	}
-	
+
 }
