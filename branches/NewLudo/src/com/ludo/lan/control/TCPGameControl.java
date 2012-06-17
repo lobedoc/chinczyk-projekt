@@ -29,6 +29,7 @@ public class TCPGameControl implements GameControl, ClientObserver{
 			client.changeButton();
 	}
 	
+	
 	}
 	
 	

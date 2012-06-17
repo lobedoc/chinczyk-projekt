@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class BlueBox extends Box{
 
 	public BlueBox(){
-		colorBox = Color.BLUE;
+		super("src/com/ludo/app/resources/images/blueBox.png");
 	}
 	
 	protected void paintComponent(Graphics g){
