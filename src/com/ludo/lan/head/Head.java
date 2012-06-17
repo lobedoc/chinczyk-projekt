@@ -5,6 +5,6 @@ import java.io.Serializable;
 public interface Head extends Serializable{
 	
 	public int getID();
-	public void setEnabled(boolean e);
-	public boolean isEnabled();
+	public Object getObject();
+	public void setObject(Object o);
 }
