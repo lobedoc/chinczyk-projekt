@@ -114,6 +114,9 @@ public class Pawn implements PawnSubject, Serializable{
 		actualyPosition = movement;
 		notifyObserver();
 	}
+	public void setPosition(){
+		notifyObserver();
+	}
 	public void moveFromBase(int movement) {
 		if (movement == 6) {
 			 actualyPosition = startId;
