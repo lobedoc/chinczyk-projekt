@@ -320,12 +320,12 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		box[p.getActualyPosition()].addPawn(p);
 	}
 	@Override
-	public void changeBoxPawn(int position) {
+	public void changeBoxPawn() {
 		// TODO Auto-generated method stub
 		for(int i = 0; i < pawns.size(); i++){
 			Pawn p = pawns.get(i);
 			System.out.println("Aktualna pozycja: " + p.getActualyPosition() + " kolor pionka: " + p.getPawnColor());
-			box[position].addPawn(p);
+			box[p.getActualyPosition()].addPawn(p);
 		}
 	}
 	@Override
