@@ -76,6 +76,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	}
 	private void createElements(){
 		joinYellow = new JButton("Dołącz");
+		joinYellow.addActionListener(this);
 		joinRed = new JButton("Dołącz");
 		joinRed.addActionListener(this);
 		joinGreen = new JButton("Dołącz");
@@ -316,6 +317,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	}
 	public void addPawn(Pawn p){
 		pawns.add(p);
+		box[p.getActualyPosition()].addPawn(p);
 	}
 	@Override
 	public void changeBoxPawn(int position) {
@@ -331,22 +333,25 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		// TODO Auto-generated method stub
 		if(e.getSource() == joinYellow){
 			//control.createYellowPlayer();
-
+			player.rollDice();
+			Pawn p = player.getPawn(0);
+			p.moveFromBase(6);
+			player.movePawn(1);
+			addPawn(p);
 		}
 		if(e.getSource() == joinRed){
 			//control.createRedPlayer();
 			player = new HumanPlayer();
 			player.setCamp(new RedCamp());
 			player.setHouse(new RedHouse());
-			for(Pawn p : player.getPawns())
+			for(Pawn p : player.getPawns()){
 				addPawn(p);
+				p.notifyObserver();}
 			handler.sendRedPlayer(player);
-
 		}
 		if(e.getSource() == joinGreen){
 			//control.createRedPlayer();
-			
-			
+	
 		}
 	}
 	
