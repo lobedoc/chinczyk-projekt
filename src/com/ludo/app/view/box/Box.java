@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
 import java.util.ArrayDeque;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import com.ludo.app.model.Pawn;
@@ -14,11 +17,17 @@ import com.ludo.app.model.Pawn;
 public abstract class Box extends JPanel{
 
 	private int id;
-	private static int idStatic = 1;
-	protected Color colorBox;
+	private static int idStatic = 0;
+	private Image image;
 	private Pawn pawnLast;
 	private ArrayDeque<Pawn> arrayPawn = new ArrayDeque<Pawn>();
-	public Box(){
+	public Box(String path){
+		try{
+			image = ImageIO.read(new File(path));
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
 		id = idStatic;
 		idStatic++;
 		this.setLayout(new FlowLayout());
@@ -37,18 +46,12 @@ public abstract class Box extends JPanel{
 	public int getBoxId(){
 		return id;
 	}
-	public Color getBoxColor(){
-		return colorBox;
-	}
 	private Dimension getBoxSize(){
 		return new Dimension(30,30);
 	}
 	@Override
 	protected void paintComponent(Graphics g){
-		g.setColor(colorBox);
-		g.fillRect(0, 0, 30, 30);
-		g.setColor(Color.BLACK);
-		g.drawRect(0, 0, 30, 30);
+		g.drawImage(image, 0, 0, null);
 	}
 	
 	

@@ -24,7 +24,6 @@ public class ClientHandler extends Task implements ClientSubject{
 	private Head head = new HeadButton();
 	public ClientHandler(Socket socket){
 		this.socket = socket;
-		
 	}
 	
 	@Override
