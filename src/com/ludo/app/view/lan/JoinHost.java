@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import com.ludo.lan.client.Client;
 import com.ludo.lan.client.ServerHandler;
+import com.ludo.lan.control.GameControl;
 import com.ludo.lan.observer.ServerObserver;
 import com.ludo.lan.server.Server;
 import com.ludo.lan.task.ThreadManager;
@@ -23,7 +24,6 @@ public class JoinHost extends JFrame implements ActionListener, ServerObserver{
 	private JButton connect;
 	private JButton testowy;
 	private ServerHandler handler;
-	private Client client;
 	public JoinHost(){
 		this.setMinimumSize(new Dimension(200,100));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,7 +54,7 @@ public class JoinHost extends JFrame implements ActionListener, ServerObserver{
 			host.setEnabled(false);
 		}
 		if(e.getSource() == connect){
-			client = new Client();
+			Client client = new Client();
 			client.connect("62.108.173.153");
 			handler = client.getHandler();
 			handler.registerObserver(this);
