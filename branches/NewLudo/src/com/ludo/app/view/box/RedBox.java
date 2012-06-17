@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class RedBox extends Box{
 	
 	public RedBox(){
-		colorBox = Color.RED;
+		super("src/com/ludo/app/resources/images/redBox.png");
 	}
 	
 	protected void paintComponent(Graphics g){

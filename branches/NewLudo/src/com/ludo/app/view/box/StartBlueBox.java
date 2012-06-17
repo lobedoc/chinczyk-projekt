@@ -1,11 +1,11 @@
 package com.ludo.app.view.box;
-import java.awt.Color;
+
 import java.awt.Graphics;
 
-public class GreenBox extends Box{
+public class StartBlueBox extends Box{
 
-	public GreenBox(){
-		super("src/com/ludo/app/resources/images/greenBox.png");
+	public StartBlueBox(){
+		super("src/com/ludo/app/resources/images/startBlueBox.png");
 	}
 	
 	public void paintComponent(Graphics g){
