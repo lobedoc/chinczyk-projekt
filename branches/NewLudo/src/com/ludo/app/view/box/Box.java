@@ -20,6 +20,7 @@ public abstract class Box extends JPanel{
 	private static int idStatic = 0;
 	private Image image;
 	private Pawn pawnLast;
+	private Color pawnColor;
 	private ArrayDeque<Pawn> arrayPawn = new ArrayDeque<Pawn>();
 	public Box(String path){
 		try{
@@ -48,6 +49,9 @@ public abstract class Box extends JPanel{
 		pawnLast = null;
 		repaint();
 	}
+	public void setColor(Color color){
+		this.pawnColor = color;
+	}
 	public int getBoxId(){
 		return id;
 	}
@@ -62,7 +66,7 @@ public abstract class Box extends JPanel{
 	}
 	
 	protected void paintPawn(Graphics g){
-		g.setColor(Color.BLACK);
+		g.setColor(pawnColor);
 		g.fillOval(0, 0, 20, 20);
 	}
 	

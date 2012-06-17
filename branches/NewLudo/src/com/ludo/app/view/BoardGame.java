@@ -325,6 +325,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		for(int i = 0; i < pawns.size(); i++){
 			Pawn p = pawns.get(i);
 			System.out.println("Aktualna pozycja: " + p.getActualyPosition() + " kolor pionka: " + p.getPawnColor());
+			box[p.getActualyPosition()].setColor(p.getPawnColor());
 			box[p.getLastPosition()].removePawn();
 			box[p.getActualyPosition()].addPawn(p);
 		}
@@ -348,10 +349,10 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			player = new HumanPlayer();
 			player.setCamp(new RedCamp());
 			player.setHouse(new RedHouse());
-
 			handler.sendRedPlayer(player);
 			for(Pawn p : player.getPawns()){
 				p.registerObserver(this);
+				box[p.getActualyPosition()].setColor(p.getPawnColor());
 				addPawn(p);
 				}
 		}
