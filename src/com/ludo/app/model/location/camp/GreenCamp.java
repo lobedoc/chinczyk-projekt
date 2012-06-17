@@ -14,7 +14,7 @@ public class GreenCamp implements Camp{
 	@Override
 	public int getStart() {
 		// TODO Auto-generated method stub
-		return 32;
+		return 36;
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public class YellowCamp implements Camp{
 	@Override
 	public int getStart() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 4;
 	}
 
 	@Override

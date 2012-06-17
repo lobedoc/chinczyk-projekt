@@ -13,7 +13,7 @@ public class RedCamp implements Camp{
 	@Override
 	public int getStart() {
 		// TODO Auto-generated method stub
-		return 16;
+		return 20;
 	}
  
 	@Override
