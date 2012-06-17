@@ -325,7 +325,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		for(int i = 0; i < pawns.size(); i++){
 			Pawn p = pawns.get(i);
 			System.out.println("Aktualna pozycja: " + p.getActualyPosition() + " kolor pionka: " + p.getPawnColor());
-			//Box[position].add(p);
+			box[position].addPawn(p);
 		}
 	}
 	@Override
@@ -334,10 +334,12 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		if(e.getSource() == joinYellow){
 			//control.createYellowPlayer();
 			player.rollDice();
-			Pawn p = player.getPawn(0);
-			p.moveFromBase(6);
-			player.movePawn(1);
-			addPawn(p);
+			//Pawn p = player.getPawn(0);
+			//p.moveFromBase(6);
+			player.movePawn(0);
+			//p.moveFromBase(6);
+			//player.movePawn(0);
+			//addPawn(p);
 		}
 		if(e.getSource() == joinRed){
 			//control.createRedPlayer();
@@ -346,7 +348,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			player.setHouse(new RedHouse());
 			for(Pawn p : player.getPawns()){
 				addPawn(p);
-				p.notifyObserver();}
+				p.registerObserver(this);}
 			handler.sendRedPlayer(player);
 		}
 		if(e.getSource() == joinGreen){
@@ -371,8 +373,8 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	public void updateRedButton(Player player) {
 		// TODO Auto-generated method stub
 		playerList.add(player);
-		for(Pawn p : player.getPawns())
-			addPawn(p);
+		/*for(Pawn p : player.getPawns())
+			addPawn(p);*/
 		System.out.println(playerList.size());
 		joinRed.setEnabled(false);
 	}
