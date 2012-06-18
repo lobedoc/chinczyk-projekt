@@ -18,7 +18,7 @@ public class RedCamp implements Camp{
 	@Override
 	public int getColor() {
 		// TODO Auto-generated method stub
-		return 1;
+		return 2;
 	}
 
 	@Override

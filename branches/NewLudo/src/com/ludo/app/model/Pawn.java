@@ -12,10 +12,7 @@ public class Pawn implements PawnSubject, Serializable{
 	private int startId;
 	private int campId;
 	private int[] houseLocation;
-	
-
 	private String path;
-
 	private int actualyPosition;
 	private int targetPosition;
 	private int lastPosition;
