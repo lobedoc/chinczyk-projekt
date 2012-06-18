@@ -348,17 +348,19 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			}
 		joinRed.setEnabled(false);
 		joinBlue.setEnabled(false);
-		joinYellow.setEnabled(false);
+		//joinYellow.setEnabled(false);
 		joinGreen.setEnabled(false);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == joinYellow){
-			player.setCamp(new YellowCamp());
+			/*player.setCamp(new YellowCamp());
 			player.setHouse(new YellowHouse());
 			handler.sendYellowPlayer(player);
-			addPlayer();
+			addPlayer();*/
+			player.rollDice();
+			player.movePawn(0);
 		}
 		if(e.getSource() == joinRed){
 			player.setCamp(new RedCamp());
