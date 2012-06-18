@@ -348,19 +348,19 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			}
 		joinRed.setEnabled(false);
 		joinBlue.setEnabled(false);
-		//joinYellow.setEnabled(false);
+		joinYellow.setEnabled(false);
 		joinGreen.setEnabled(false);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == joinYellow){
-			/*player.setCamp(new YellowCamp());
+			player.setCamp(new YellowCamp());
 			player.setHouse(new YellowHouse());
 			handler.sendYellowPlayer(player);
-			addPlayer();*/
-			player.rollDice();
-			player.movePawn(0);
+			addPlayer();
+			//player.rollDice();
+			//player.movePawn(0);
 		}
 		if(e.getSource() == joinRed){
 			player.setCamp(new RedCamp());
@@ -404,17 +404,18 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 					}
 			}
 		}
+		System.out.println("Lista: " + playerList.size());
 		switch(c){
-		case 0:
+		case 1:
 			joinYellow.setEnabled(false);
 			break;
-		case 1:
+		case 2:
 			joinRed.setEnabled(false);
 			break;
-		case 2:
+		case 3:
 			joinGreen.setEnabled(false);
 			break;
-		case 3:
+		case 4:
 			joinBlue.setEnabled(false);
 			break;
 		}
