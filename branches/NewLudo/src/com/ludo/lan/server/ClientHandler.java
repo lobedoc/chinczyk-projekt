@@ -89,16 +89,16 @@ public class ClientHandler extends Task implements ClientSubject{
 			Head h = new RedPlayerHead();
 			int c = p.getColor();
 			switch(c){
-			case 0:
+			case 1:
 				h = new YellowPlayerHead();
 				break;
-			case 1:
+			case 2:
 				h = new RedPlayerHead();
 				break;
-			case 2:
+			case 3:
 				h = new GreenPlayerHead();
 				break;
-			case 3:
+			case 4:
 				h = new BluePlayerHead();
 				break;
 			}

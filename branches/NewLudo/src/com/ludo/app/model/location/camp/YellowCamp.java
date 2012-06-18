@@ -19,7 +19,7 @@ public class YellowCamp implements Camp{
 	@Override
 	public int getColor() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override

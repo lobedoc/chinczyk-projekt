@@ -19,7 +19,7 @@ public class GreenCamp implements Camp{
 	@Override
 	public int getColor() {
 		// TODO Auto-generated method stub
-		return 2;
+		return 3;
 	}
 
 	@Override
