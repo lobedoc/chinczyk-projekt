@@ -48,11 +48,23 @@ public class ClientHandler extends Task implements ClientSubject{
 		try {
 			h = (Head) in.readObject();
 
-			int value = h.getID();
+			int value = h.getID();			
+			Player p = (Player) h.getObject();
 			switch(value){
-			
+
 			case HeadConst.redPlayer: 
-				Player p = (Player) h.getObject();
+				System.out.println("Przyszedl player");
+				notifyyy(p);
+				break;
+			case HeadConst.bluePlayer: 
+				System.out.println("Przyszedl player");
+				notifyyy(p);
+				break;
+			case HeadConst.yellowPlayer: 
+				System.out.println("Przyszedl player");
+				notifyyy(p);
+				break;
+			case HeadConst.greenPlayer: 
 				System.out.println("Przyszedl player");
 				notifyyy(p);
 				break;
