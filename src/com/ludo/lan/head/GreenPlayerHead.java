@@ -1,11 +1,10 @@
 package com.ludo.lan.head;
 
-public class RedPlayerHead extends Head{
+public class GreenPlayerHead extends Head{
 
 	@Override
 	public int getID() {
 		// TODO Auto-generated method stub
-		return HeadConst.redPlayer;
+		return HeadConst.greenPlayer;
 	}
-
 }

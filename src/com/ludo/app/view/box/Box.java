@@ -20,7 +20,7 @@ public abstract class Box extends JPanel{
 	private static int idStatic = 0;
 	private Image image;
 	private Pawn pawnLast;
-	private Color pawnColor;
+	private Image pawnImage = null;
 	private ArrayDeque<Pawn> arrayPawn = new ArrayDeque<Pawn>();
 	public Box(String path){
 		try{
@@ -47,10 +47,16 @@ public abstract class Box extends JPanel{
 	}
 	public void removePawn(){
 		pawnLast = null;
+		pawnImage = null;
 		repaint();
 	}
-	public void setColor(Color color){
-		this.pawnColor = color;
+	public void setImage(String path){
+		try{
+			pawnImage = ImageIO.read(new File(path));
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 	public int getBoxId(){
 		return id;
@@ -66,8 +72,7 @@ public abstract class Box extends JPanel{
 	}
 	
 	protected void paintPawn(Graphics g){
-		g.setColor(pawnColor);
-		g.fillOval(0, 0, 20, 20);
+		g.drawImage(pawnImage, 0, 0, null);
 	}
 	
 	
