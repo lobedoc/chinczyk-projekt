@@ -1,10 +1,7 @@
 package com.ludo.app.model;
 
-import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import com.ludo.app.observer.PawnObserver;
 import com.ludo.app.observer.PawnSubject;
 
@@ -15,7 +12,10 @@ public class Pawn implements PawnSubject, Serializable{
 	private int startId;
 	private int campId;
 	private int[] houseLocation;
+	
+
 	private String path;
+
 	private int actualyPosition;
 	private int targetPosition;
 	private int lastPosition;
@@ -44,7 +44,6 @@ public class Pawn implements PawnSubject, Serializable{
 		}
 			
 	}
-
 	public int getStartId() {
 		return startId;
 	}
@@ -88,12 +87,14 @@ public class Pawn implements PawnSubject, Serializable{
 
 	public boolean move(int movement){
 		if(!canMove(movement)){
-			targetPosition=actualyPosition - startId;
-			targetPosition +=69;
-			targetPosition -=movement;
-			targetPosition -=64;
-			moveTo(houseLocation[targetPosition]);
-			return true;
+			targetPosition = (actualyPosition + movement)%63;
+			targetPosition-= startId;
+			
+			if(targetPosition >4)return false;
+			else{
+			int a=houseLocation[targetPosition];
+			moveTo(a);
+			return true;}
 		}
 		else{
 		targetPosition = (actualyPosition + movement)%63;
