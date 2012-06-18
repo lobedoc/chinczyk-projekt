@@ -42,13 +42,26 @@ public class ServerHandler extends Task implements ServerSubject{
 		try {
 			h = (Head) in.readObject();
 			int value = h.getID();
-			switch(value){
-			
-			case HeadConst.redPlayer | HeadConst.greenPlayer | HeadConst.bluePlayer | HeadConst.yellowPlayer: 
-				Player p = (Player) h.getObject();
+			Player p = (Player) h.getObject();
+			System.out.println("Jaks wartoscL :" +value);
+			switch(value){	
+			case HeadConst.redPlayer: 
 				addPlayer(p);
+				System.out.println("Color playera: " + p.getColor());
 				break;
-			}
+			case HeadConst.bluePlayer: 
+				addPlayer(p);
+				System.out.println("Color playera: " + p.getColor());
+				break;
+			case HeadConst.yellowPlayer: 
+				addPlayer(p);
+				System.out.println("Color playera: " + p.getColor());
+				break;
+			case HeadConst.greenPlayer: 
+				addPlayer(p);
+				System.out.println("Color playera: " + p.getColor());
+				break;
+		}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,7 +136,7 @@ public class ServerHandler extends Task implements ServerSubject{
 	}
 	
 	public void addPlayer(Player p){
-		for( ServerObserver ob : observer)
+		for(ServerObserver ob : observer)
 			ob.updatePlayerList(p);
 	}
 }
