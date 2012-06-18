@@ -20,7 +20,7 @@ import com.ludo.lan.server.Server;
 import com.ludo.lan.task.ThreadManager;
 
 // usunieta bedzie ta klasa 
-public class JoinHost extends JFrame implements ActionListener, ServerObserver{
+public class JoinHost extends JFrame implements ActionListener{
 
 	private JButton host;
 	private JButton connect;
@@ -66,16 +66,6 @@ public class JoinHost extends JFrame implements ActionListener, ServerObserver{
 			boardGame.setHandler(handler);
 		}
 	
-	}
-	@Override
-	public void updatePawn(Player player) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void updateRedButton(Player player) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

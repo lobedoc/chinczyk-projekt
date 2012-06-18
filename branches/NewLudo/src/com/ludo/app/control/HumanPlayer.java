@@ -3,18 +3,13 @@ package com.ludo.app.control;
 import com.ludo.lan.client.ServerHandler;
 import com.ludo.lan.observer.ServerObserver;
 
-public class HumanPlayer extends Player implements ServerObserver{
+public class HumanPlayer extends Player{
 	
 	private ServerHandler handler;
 	public HumanPlayer(){
 		super();
 	}
 	
-	@Override
-	public void updatePawn(Player player) {
-		// TODO Auto-generated method stub
-		this.pawnPlayer = player.getPawns();
-	}
 
 	public ServerHandler getHandler() {
 		return handler;
@@ -26,12 +21,6 @@ public class HumanPlayer extends Player implements ServerObserver{
 
 	@Override
 	public void sendReady() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateRedButton(Player player) {
 		// TODO Auto-generated method stub
 		
 	}

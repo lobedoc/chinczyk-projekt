@@ -15,9 +15,7 @@ public class Pawn implements PawnSubject, Serializable{
 	private int startId;
 	private int campId;
 	private int[] houseLocation;
-	
-	private Color pawnColor;
-	
+	private String path;
 	private int actualyPosition;
 	private int targetPosition;
 	private int lastPosition;
@@ -71,20 +69,21 @@ public class Pawn implements PawnSubject, Serializable{
 		this.actualyPosition = actualyPosition;
 	}
 
-	public Color getPawnColor() {
-		return pawnColor;
-	}
-
-	public void setPawnColor(Color pawnColor) {
-		this.pawnColor = pawnColor;
-	}
-
 	public int[] getHouseLocation() {
 		return houseLocation;
 	}
 
 	public void setHouseLocation(int[] houseLocation) {
 		this.houseLocation = houseLocation;
+	}
+	
+	
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public boolean move(int movement){
