@@ -1,6 +1,5 @@
 package com.ludo.app.model.location.camp;
 
-import java.awt.Color;
 
 public class BlueCamp implements Camp{
 
@@ -17,9 +16,15 @@ public class BlueCamp implements Camp{
 	}
 
 	@Override
-	public Color getColor() {
+	public int getColor() {
 		// TODO Auto-generated method stub
-		return Color.BLUE;
+		return 3;
+	}
+
+	@Override
+	public String getPath() {
+		// TODO Auto-generated method stub
+		return "src/com/ludo/app/resources/images/bluePawn.png";
 	}
 
 }

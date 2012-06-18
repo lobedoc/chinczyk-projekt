@@ -1,6 +1,6 @@
 package com.ludo.app.control;
 
-import java.awt.Color;
+
 import java.io.Serializable;
 import java.util.Random;
 
@@ -11,6 +11,7 @@ import com.ludo.app.model.Pawn;
 public abstract class Player implements Serializable {
 	private final int PAWN_SIZE = 4;
 	protected Pawn[] pawnPlayer = new Pawn[PAWN_SIZE];
+	private int playerColor;
 	private Random r = new Random();
 	private int numberRoll ;
 	public Player(){
@@ -22,12 +23,13 @@ public abstract class Player implements Serializable {
 	}
 	public void setCamp(Camp camp){
 		int[] campId = camp.getCampLocation();
+		playerColor = camp.getColor();
 		int start = camp.getStart();
 		for(int i = 0; i < campId.length; i++){
 			pawnPlayer[i].setCampId(campId[i]);
 			pawnPlayer[i].setActualyPosition(campId[i]);
 			pawnPlayer[i].setStartId(start);
-			pawnPlayer[i].setPawnColor(camp.getColor());
+			pawnPlayer[i].setPath(camp.getPath());
 		}
 	}
 	public void setHouse(House house){
@@ -38,6 +40,10 @@ public abstract class Player implements Serializable {
 	}
 	public Pawn getPawn(int i){
 		return pawnPlayer[i];
+	}
+	
+	public int getColor(){
+		return playerColor;
 	}
 	public void movePawn(int pawn){
 		pawnPlayer[pawn].move(numberRoll);

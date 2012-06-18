@@ -23,8 +23,14 @@ import javax.swing.border.TitledBorder;
 import com.ludo.app.control.HumanPlayer;
 import com.ludo.app.control.Player;
 import com.ludo.app.model.Pawn;
+import com.ludo.app.model.location.camp.BlueCamp;
+import com.ludo.app.model.location.camp.GreenCamp;
 import com.ludo.app.model.location.camp.RedCamp;
+import com.ludo.app.model.location.camp.YellowCamp;
+import com.ludo.app.model.location.house.BlueHouse;
+import com.ludo.app.model.location.house.GreenHouse;
 import com.ludo.app.model.location.house.RedHouse;
+import com.ludo.app.model.location.house.YellowHouse;
 import com.ludo.app.observer.PawnObserver;
 import com.ludo.app.view.box.BlueBox;
 import com.ludo.app.view.box.Box;
@@ -53,6 +59,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	private Player player;
 	public BoardGame(){
 		pawns = new ArrayList<Pawn>();
+		player = new HumanPlayer();
 		System.out.println(playerList.size());
 	}
 	public void createView(){
@@ -80,7 +87,9 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		joinRed = new JButton("Dołącz");
 		joinRed.addActionListener(this);
 		joinGreen = new JButton("Dołącz");
+		joinGreen.addActionListener(this);
 		joinBlue = new JButton("Dołącz");
+		joinBlue.addActionListener(this);
 	}
 	private JPanel panel(){
 		JPanel panel = new JPanel();
@@ -317,48 +326,57 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	}
 	public void addPawn(Pawn p){
 		pawns.add(p);
-		box[p.getActualyPosition()].addPawn(p);
 	}
 	@Override
 	public void changeBoxPawn() {
 		// TODO Auto-generated method stub
 		for(int i = 0; i < pawns.size(); i++){
 			Pawn p = pawns.get(i);
-			System.out.println("Aktualna pozycja: " + p.getActualyPosition() + " kolor pionka: " + p.getPawnColor());
-			box[p.getActualyPosition()].setColor(p.getPawnColor());
+			System.out.println("Aktualna pozycja: " + p.getActualyPosition());
+			box[p.getActualyPosition()].setImage(p.getPath());
 			box[p.getLastPosition()].removePawn();
 			box[p.getActualyPosition()].addPawn(p);
 		}
+	}
+	private void addPlayer(){
+
+		for(Pawn p : player.getPawns()){
+			p.registerObserver(this);
+			box[p.getActualyPosition()].setImage(p.getPath());
+			addPawn(p);
+			p.notifyObserver();
+			}
+		joinRed.setEnabled(false);
+		joinBlue.setEnabled(false);
+		joinYellow.setEnabled(false);
+		joinGreen.setEnabled(false);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == joinYellow){
-			//control.createYellowPlayer();
-			player.rollDice();
-			
-			//player.movePawn(0);
-				player.movePawn(0);
-			//p.move(2);
-			//p.moveFromBase(6);
-			//player.movePawn(0);
-			//addPawn(p);
+			player.setCamp(new YellowCamp());
+			player.setHouse(new YellowHouse());
+			handler.sendYellowPlayer(player);
+			addPlayer();
 		}
 		if(e.getSource() == joinRed){
-			//control.createRedPlayer();
-			player = new HumanPlayer();
 			player.setCamp(new RedCamp());
 			player.setHouse(new RedHouse());
 			handler.sendRedPlayer(player);
-			for(Pawn p : player.getPawns()){
-				p.registerObserver(this);
-				box[p.getActualyPosition()].setColor(p.getPawnColor());
-				addPawn(p);
-				}
+			addPlayer();
 		}
 		if(e.getSource() == joinGreen){
-			//control.createRedPlayer();
-	
+			player.setCamp(new GreenCamp());
+			player.setHouse(new GreenHouse());
+			handler.sendGreenPlayer(player);
+			addPlayer();
+		}
+		if(e.getSource() == joinBlue){
+			player.setCamp(new BlueCamp());
+			player.setHouse(new BlueHouse());
+			handler.sendBluePlayer(player);
+			addPlayer();
 		}
 	}
 	
@@ -370,20 +388,36 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		UP, RIGHT, DOWN, LEFT
 	}
 	@Override
-	public void updatePawn(Player player) {
+	public void updatePlayerList(Player player) {
 		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void updateRedButton(Player player) {
-		// TODO Auto-generated method stub
-		playerList.add(player);
-		Pawn p = player.getPawn(0);
-		p.moveFromBase(6);
-		/*for(Pawn p : player.getPawns())
-			addPawn(p);*/
+		int c = player.getColor();
+		if(c != this.player.getColor()){
+			playerList.add(player);
+			for(Player player1 : playerList){
+				for(Pawn p : player1.getPawns()){
+					p.registerObserver(this);
+					addPawn(p);
+					box[p.getActualyPosition()].setImage(p.getPath());
+					p.notifyObserver();
+					}
+			}
+		}
+		switch(c){
+		case 0:
+			joinYellow.setEnabled(false);
+			break;
+		case 1:
+			joinRed.setEnabled(false);
+			break;
+		case 2:
+			joinGreen.setEnabled(false);
+			break;
+		case 3:
+			joinBlue.setEnabled(false);
+			break;
+		}
 		System.out.println(playerList.size());
-		joinRed.setEnabled(false);
+		
 	}
 }
 

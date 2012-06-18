@@ -7,9 +7,12 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import com.ludo.app.control.Player;
+import com.ludo.lan.head.BluePlayerHead;
+import com.ludo.lan.head.GreenPlayerHead;
 import com.ludo.lan.head.Head;
 import com.ludo.lan.head.HeadConst;
 import com.ludo.lan.head.RedPlayerHead;
+import com.ludo.lan.head.YellowPlayerHead;
 import com.ludo.lan.observer.ClientObserver;
 import com.ludo.lan.observer.ClientSubject;
 import com.ludo.lan.task.Task;
@@ -20,7 +23,6 @@ public class ClientHandler extends Task implements ClientSubject{
 	private Socket socket;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
-	private int i = 0;
 	public ClientHandler(Socket socket){
 		this.socket = socket;
 	}
@@ -68,11 +70,26 @@ public class ClientHandler extends Task implements ClientSubject{
 	}
 	public void notifyyy(Player p){
 		for(ClientObserver ob: observer)
-			ob.joinRedPlayer(p);
+			ob.joinPlayer(p);
 	}
 	public void addPlayer(Player p){
 		try {
 			Head h = new RedPlayerHead();
+			int c = p.getColor();
+			switch(c){
+			case 0:
+				h = new YellowPlayerHead();
+				break;
+			case 1:
+				h = new RedPlayerHead();
+				break;
+			case 2:
+				h = new GreenPlayerHead();
+				break;
+			case 3:
+				h = new BluePlayerHead();
+				break;
+			}
 			h.setObject(p);
 			out.writeObject(h);
 		} catch (IOException e) {

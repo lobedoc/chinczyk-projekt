@@ -7,9 +7,12 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import com.ludo.app.control.Player;
+import com.ludo.lan.head.BluePlayerHead;
+import com.ludo.lan.head.GreenPlayerHead;
 import com.ludo.lan.head.Head;
 import com.ludo.lan.head.HeadConst;
 import com.ludo.lan.head.RedPlayerHead;
+import com.ludo.lan.head.YellowPlayerHead;
 
 import com.ludo.lan.observer.ServerObserver;
 import com.ludo.lan.observer.ServerSubject;
@@ -20,7 +23,11 @@ public class ServerHandler extends Task implements ServerSubject{
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private Socket socket;
-	private Head redPlayerHead = new RedPlayerHead();
+	private Head redPlayer = new RedPlayerHead();
+	private Head yellowPlayer = new YellowPlayerHead();
+	private Head greenPlayer = new GreenPlayerHead();
+	private Head bluePlayer = new BluePlayerHead();
+	
 	private ArrayList<ServerObserver> observer = new ArrayList<ServerObserver>();
 	public ServerHandler(Socket socket){
 		this.socket = socket;
@@ -37,9 +44,10 @@ public class ServerHandler extends Task implements ServerSubject{
 			int value = h.getID();
 			switch(value){
 			
-			case HeadConst.redPlayer: 
+			case HeadConst.redPlayer | HeadConst.greenPlayer | HeadConst.bluePlayer | HeadConst.yellowPlayer: 
 				Player p = (Player) h.getObject();
-				addRedPlayer(p);
+				addPlayer(p);
+				break;
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -72,9 +80,36 @@ public class ServerHandler extends Task implements ServerSubject{
 	}
 	
 	public void sendRedPlayer(Player player){
-		redPlayerHead.setObject(player);
+		redPlayer.setObject(player);
 		try {
-			out.writeObject(redPlayerHead);
+			out.writeObject(redPlayer);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void sendBluePlayer(Player player){
+		bluePlayer.setObject(player);
+		try {
+			out.writeObject(bluePlayer);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void sendGreenPlayer(Player player){
+		greenPlayer.setObject(player);
+		try {
+			out.writeObject(greenPlayer);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void sendYellowPlayer(Player player){
+		yellowPlayer.setObject(player);
+		try {
+			out.writeObject(yellowPlayer);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -87,8 +122,8 @@ public class ServerHandler extends Task implements ServerSubject{
 		
 	}
 	
-	public void addRedPlayer(Player p){
+	public void addPlayer(Player p){
 		for( ServerObserver ob : observer)
-			ob.updateRedButton(p);
+			ob.updatePlayerList(p);
 	}
 }

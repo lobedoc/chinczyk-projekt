@@ -24,7 +24,7 @@ public class TCPGameControl implements GameControl, ClientObserver{
 		
 	}
 	@Override
-	public void joinRedPlayer(Player player) {
+	public void joinPlayer(Player player) {
 		// TODO Auto-generated method stub
 		for(ClientHandler handler : clientList)
 			handler.addPlayer(player);
