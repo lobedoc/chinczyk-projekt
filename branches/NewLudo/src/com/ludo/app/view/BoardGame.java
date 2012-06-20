@@ -254,6 +254,156 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			}
 		}
 	}
+	
+	public void addPawn(Pawn p){
+		pawns.add(p);
+	}
+	@Override
+	public void changeBoxPawn() {
+		// TODO Auto-generated method stub
+		for(int i = 0; i < pawns.size(); i++){
+			Pawn p = pawns.get(i);
+			System.out.println("Aktualna pozycja: " + p.getActualyPosition());
+			box[p.getActualyPosition()].setImage(p.getPath());
+			box[p.getLastPosition()].removePawn();
+			box[p.getActualyPosition()].addPawn(p);
+		}
+	}
+	private void setDisabledJoinButton(){
+		joinRed.setEnabled(false);
+		joinBlue.setEnabled(false);
+		joinYellow.setEnabled(false);
+		joinGreen.setEnabled(false);
+	}
+	private void createYellowPlayer(Player player){
+		player.setCamp(new YellowCamp());
+		player.setHouse(new YellowHouse());
+	}
+	private void createRedPlayer(Player player){
+		player.setCamp(new RedCamp());
+		player.setHouse(new RedHouse());
+	}
+	private void createGreenPlayer(Player player){
+		player.setCamp(new GreenCamp());
+		player.setHouse(new GreenHouse());
+	}
+	private void createBluePlayer(Player player){
+		player.setCamp(new BlueCamp());
+		player.setHouse(new BlueHouse());
+	}
+	
+	private JPanel rightPanel(){
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		panel.setOpaque(false);
+		panel.add(buttonPanel(), BorderLayout.NORTH);
+		panel.add(centerPanel());
+		return panel;
+	}
+	private JPanel centerPanel(){
+		JPanel panel = new JPanel();
+		JPanel panelArea = new JPanel();
+		Border blackLine = BorderFactory.createLineBorder(Color.gray);
+		TitledBorder titledBorder = BorderFactory.createTitledBorder(blackLine,
+			"Informacje");
+		titledBorder.setTitleJustification(TitledBorder.CENTER);	
+		panelArea.setBorder(titledBorder);
+		panelArea.setLayout(new BorderLayout());
+		panelArea.add(new JScrollPane(infoArea),BorderLayout.CENTER);
+		panel.setLayout(new BorderLayout());
+		panel.add(cubeRoll, BorderLayout.NORTH);
+		panel.add(panelArea, BorderLayout.CENTER);
+		return panel;
+	}
+	public void setHandler(ServerHandler handler){
+		this.handler = handler;
+		this.handler.registerObserver(this);
+	}
+	private enum Position{
+		UP, RIGHT, DOWN, LEFT
+	}
+	@Override
+	public void updatePlayerList(int color) {
+		Player player = new HumanPlayer();
+		switch(color){
+		case 1: 
+			createYellowPlayer(player);
+			joinYellow.setEnabled(false);
+			break;
+		case 2: 
+			createRedPlayer(player);
+			joinRed.setEnabled(false);
+			break;
+		case 3: 
+			createGreenPlayer(player);
+			joinGreen.setEnabled(false);
+			break;
+		case 4: 
+			createBluePlayer(player);
+			joinBlue.setEnabled(false);
+			break;
+		}
+		playerList.put(color, player);
+		for(Player player1 : playerList.values()){
+			for(Pawn p : player1.getPawns()){
+				p.registerObserver(this);
+				addPawn(p);
+				box[p.getActualyPosition()].setImage(p.getPath());
+				p.notifyObserver();
+				}
+		System.out.println("Lista: " + playerList.size());
+		}
+	}
+	private void notifyPawns(Player player){
+		for(Pawn p : player.getPawns()){
+			p.notifyObserver();
+			}
+	}
+	@Override
+	public void updatePawn(int player, int p0, int p1, int p2, int p3, 
+			int l0, int l1, int l2, int l3) {
+				playerList.get(player).setPawnPosition(0, p0);
+				playerList.get(player).setPawnLastPosition(0, l0);
+				playerList.get(player).setPawnPosition(1, p1);
+				playerList.get(player).setPawnLastPosition(1, l1);
+				playerList.get(player).setPawnPosition(2, p2);
+				playerList.get(player).setPawnLastPosition(2, l2);
+				playerList.get(player).setPawnPosition(3, p3);
+				playerList.get(player).setPawnLastPosition(3, l3);
+		notifyPawns(playerList.get(player));
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == joinYellow){
+			createYellowPlayer(this.player);
+			setDisabledJoinButton();
+			handler.sendPlayer(player);
+		}
+		if(e.getSource() == joinRed){
+			createRedPlayer(this.player);
+			setDisabledJoinButton();
+			handler.sendPlayer(player);
+
+		}
+		if(e.getSource() == joinGreen){
+			createGreenPlayer(this.player);
+			setDisabledJoinButton();
+			handler.sendPlayer(player);
+
+		}
+		if(e.getSource() == joinBlue){
+			createBluePlayer(this.player);
+			setDisabledJoinButton();
+			handler.sendPlayer(player);
+		}
+		if(e.getSource() == cubeRoll){
+			int move = player.rollDice();
+			infoArea.append("Gracz wyrzucił: " + move + "\n");
+			player.movePawn(0, move);
+			handler.sendPawn(player);
+		}
+	}
 	private JPanel panelBoard(){
 		initBox();
 		JPanel panel = new JPanel();
@@ -333,150 +483,6 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		addHousePosition(lay, 72, 39, Position.LEFT);
 		addHousePosition(lay, 76, 1, Position.LEFT);
 		return panel;
-	}
-	public void addPawn(Pawn p){
-		pawns.add(p);
-	}
-	@Override
-	public void changeBoxPawn() {
-		// TODO Auto-generated method stub
-		for(int i = 0; i < pawns.size(); i++){
-			Pawn p = pawns.get(i);
-			System.out.println("Aktualna pozycja: " + p.getActualyPosition());
-			box[p.getActualyPosition()].setImage(p.getPath());
-			box[p.getLastPosition()].removePawn();
-			box[p.getActualyPosition()].addPawn(p);
-		}
-	}
-	private void addPlayer(){
-		joinRed.setEnabled(false);
-		joinBlue.setEnabled(false);
-		joinYellow.setEnabled(false);
-		joinGreen.setEnabled(false);
-	}
-	private void createYellowPlayer(Player player){
-		player.setCamp(new YellowCamp());
-		player.setHouse(new YellowHouse());
-	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		if(e.getSource() == joinYellow){
-			createYellowPlayer(this.player);
-			addPlayer();
-			handler.sendPlayer(player);
-			//addPlayer();
-		}
-		if(e.getSource() == joinRed){
-			player.setCamp(new RedCamp());
-			player.setHouse(new RedHouse());
-			addPlayer();
-			handler.sendPlayer(player);
-
-		}
-		if(e.getSource() == joinGreen){
-			player.setCamp(new GreenCamp());
-			player.setHouse(new GreenHouse());
-			handler.sendPlayer(player);
-			addPlayer();
-		}
-		if(e.getSource() == joinBlue){
-			player.setCamp(new BlueCamp());
-			player.setHouse(new BlueHouse());
-			handler.sendPlayer(player);
-			addPlayer();
-		}
-		if(e.getSource() == cubeRoll){
-			int move = player.rollDice();
-			infoArea.append("Gracz wyrzucił: " + move + "\n");
-			player.movePawn(0, move);
-			handler.sendPawn(player);
-		}
-	}
-	private JPanel rightPanel(){
-		JPanel panel = new JPanel();
-		panel.setLayout(new BorderLayout());
-		panel.setOpaque(false);
-		panel.add(buttonPanel(), BorderLayout.NORTH);
-		panel.add(centerPanel());
-		return panel;
-	}
-	private JPanel centerPanel(){
-		JPanel panel = new JPanel();
-		JPanel panelArea = new JPanel();
-		Border blackLine = BorderFactory.createLineBorder(Color.gray);
-		TitledBorder titledBorder = BorderFactory.createTitledBorder(blackLine,
-			"Informacje");
-		titledBorder.setTitleJustification(TitledBorder.CENTER);	
-		panelArea.setBorder(titledBorder);
-		panelArea.setLayout(new BorderLayout());
-		
-
-		panelArea.add(new JScrollPane(infoArea),BorderLayout.CENTER);
-		panel.setLayout(new BorderLayout());
-		panel.add(cubeRoll, BorderLayout.NORTH);
-		panel.add(panelArea, BorderLayout.CENTER);
-		return panel;
-	}
-	public void setHandler(ServerHandler handler){
-		this.handler = handler;
-		this.handler.registerObserver(this);
-	}
-	private enum Position{
-		UP, RIGHT, DOWN, LEFT
-	}
-	@Override
-	public void updatePlayerList(int color) {
-		Player player;
-		switch(color){
-		case 1: 
-			player = new HumanPlayer();
-			createYellowPlayer(player);
-			playerList.put(color, player);
-			break;
-		}
-		for(Player player1 : playerList.values()){
-			for(Pawn p : player1.getPawns()){
-				p.registerObserver(this);
-				addPawn(p);
-				box[p.getActualyPosition()].setImage(p.getPath());
-				p.notifyObserver();
-				}
-		System.out.println("Lista: " + playerList.size());
-		switch(color){
-		case 1:
-			joinYellow.setEnabled(false);
-			break;
-		case 2:
-			joinRed.setEnabled(false);
-			break;
-		case 3:
-			joinGreen.setEnabled(false);
-			break;
-		case 4:
-			joinBlue.setEnabled(false);
-			break;
-		}
-		System.out.println(playerList.size());
-		}
-	}
-	private void notifyPawns(Player player){
-		for(Pawn p : player.getPawns()){
-			p.notifyObserver();
-			}
-	}
-	@Override
-	public void updatePawn(int player, int p0, int p1, int p2, int p3) {
-		// TODO Auto-generated method stub
-		switch(player){
-		case 1:
-			playerList.get(1).setPawnPosition(0, p0);
-			playerList.get(1).setPawnPosition(1, p1);
-			playerList.get(1).setPawnPosition(2, p2);
-			playerList.get(1).setPawnPosition(3, p3);
-			notifyPawns(playerList.get(1));
-			
-		}
 	}
 }
 
