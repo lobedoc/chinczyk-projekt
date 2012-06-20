@@ -418,29 +418,33 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		}
 		if(e.getSource() == cubeRoll){
 			int move = player.rollDice();
-			infoArea.append("Gracz wyrzucił: " + move + "\n");
 			player.movePawn(0, move);
 			handler.sendPlayerListSize(playerList.size());
 			handler.sendCurrentRound(player.getColor());
+			String msg = message() + " wyrzucił: " + move;
+			handler.sendMsg(msg);
 			handler.sendPawn(player);
 		}
 		if(e.getSource() == sendMsg){
-			String msg;
-			switch(player.getColor()){
-			case 1: msg = "Żółty gracz: ";
-				break;
-			case 2: msg = "Czerwony gracz: ";
-				break;
-			case 3: msg = "Zielony gracz: ";
-				break;
-			case 4: msg = "Niebieski gracz: ";
-				break;
-			default : msg = "Gość: ";
-			}
-			msg = msg + msgField.getText();
+			String msg = message() + ": " + msgField.getText();
 			msgField.setText("");
 			handler.sendMsg(msg);
 		}
+	}
+	private String message(){
+		String msg;
+		switch(player.getColor()){
+		case 1: msg = "Żółty gracz";
+			break;
+		case 2: msg = "Czerwony gracz";
+			break;
+		case 3: msg = "Zielony gracz";
+			break;
+		case 4: msg = "Niebieski gracz";
+			break;
+		default : msg = "Gość: ";
+		}
+		return msg;
 	}
 	private JPanel panelBoard(){
 		initBox();
