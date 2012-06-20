@@ -7,11 +7,13 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import com.ludo.app.control.Player;
+import com.ludo.app.model.Pawn;
 import com.ludo.lan.head.BluePlayerHead;
 import com.ludo.lan.head.GreenPlayerHead;
 import com.ludo.lan.head.Head;
 import com.ludo.lan.head.HeadConst;
 import com.ludo.lan.head.RedPlayerHead;
+import com.ludo.lan.head.YellowPawnHead;
 import com.ludo.lan.head.YellowPlayerHead;
 import com.ludo.lan.observer.ClientObserver;
 import com.ludo.lan.observer.ClientSubject;
@@ -49,25 +51,34 @@ public class ClientHandler extends Task implements ClientSubject{
 			h = (Head) in.readObject();
 
 			int value = h.getID();			
-			Player p = (Player) h.getObject();
+			Player p;
 			switch(value){
 
 			case HeadConst.redPlayer: 
+				p = (Player) h.getObject();
 				System.out.println("Przyszedl player");
 				notifyyy(p);
 				break;
 			case HeadConst.bluePlayer: 
+				p = (Player) h.getObject();
 				System.out.println("Przyszedl player");
 				notifyyy(p);
 				break;
 			case HeadConst.yellowPlayer: 
 				System.out.println("Przyszedl player");
+				p = (Player) h.getObject();
 				notifyyy(p);
 				break;
 			case HeadConst.greenPlayer: 
 				System.out.println("Przyszedl player");
+				p = (Player) h.getObject();
 				notifyyy(p);
 				break;
+			case HeadConst.yellowPawn:
+				p = (Player) h.getObject();
+				changePawn(p);
+				System.out.println("Przyszedl pionek");
+				
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -79,6 +90,10 @@ public class ClientHandler extends Task implements ClientSubject{
 
 		
 		
+	}
+	public void changePawn(Player p){
+		for(ClientObserver ob: observer)
+			ob.changePawn(p);
 	}
 	public void notifyyy(Player p){
 		for(ClientObserver ob: observer)
@@ -105,6 +120,7 @@ public class ClientHandler extends Task implements ClientSubject{
 			h.setObject(p);
 			out.writeObject(h);
 			out.flush();
+			out.reset();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -119,5 +135,19 @@ public class ClientHandler extends Task implements ClientSubject{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void sendPawn(Player p) {
+		// TODO Auto-generated method stub
+		try {
+			Head h = new YellowPawnHead();
+			h.setObject(p);
+			out.writeObject(h);
+			out.flush();
+			out.reset();
+			} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 	}
 }

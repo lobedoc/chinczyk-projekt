@@ -9,6 +9,6 @@ public class HeadConst {
 	public static final int startGame = 0x5;
 	public static final int endGame = 0x6;
 	
-	public static final int redPawn = 0x7;
+	public static final int yellowPawn = 0x7;
 	
 }

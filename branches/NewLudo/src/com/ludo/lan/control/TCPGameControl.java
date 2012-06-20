@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.ludo.app.control.Player;
+import com.ludo.app.model.Pawn;
 import com.ludo.app.view.lan.JoinHost;
 import com.ludo.lan.observer.ClientObserver;
 import com.ludo.lan.server.ClientHandler;
@@ -28,6 +29,12 @@ public class TCPGameControl implements GameControl, ClientObserver{
 		// TODO Auto-generated method stub
 		for(ClientHandler handler : clientList)
 			handler.addPlayer(player);
+	}
+	@Override
+	public void changePawn(Player p) {
+		// TODO Auto-generated method stub
+		for(ClientHandler handler : clientList)
+			handler.sendPawn(p);
 	}
 	
 	
