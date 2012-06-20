@@ -51,7 +51,6 @@ public class JoinHost extends JFrame implements ActionListener{
 		// TODO Auto-generated method stub
 		if(e.getSource() == host){
 			Server server = new Server();
-			
 			ThreadManager.getInstance().execute(server);
 			host.setEnabled(false);
 		}
