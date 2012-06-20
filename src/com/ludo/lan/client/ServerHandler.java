@@ -12,8 +12,8 @@ import com.ludo.lan.head.BluePlayerHead;
 import com.ludo.lan.head.GreenPlayerHead;
 import com.ludo.lan.head.Head;
 import com.ludo.lan.head.HeadConst;
-import com.ludo.lan.head.RedPawnHead;
 import com.ludo.lan.head.RedPlayerHead;
+import com.ludo.lan.head.YellowPawnHead;
 import com.ludo.lan.head.YellowPlayerHead;
 
 import com.ludo.lan.observer.ServerObserver;
@@ -30,7 +30,7 @@ public class ServerHandler extends Task implements ServerSubject{
 	private Head greenPlayer = new GreenPlayerHead();
 	private Head bluePlayer = new BluePlayerHead();
 	
-	private Head redPawn = new RedPawnHead();
+	private Head yellowPawn = new YellowPawnHead();
 	
 	private ArrayList<ServerObserver> observer = new ArrayList<ServerObserver>();
 	public ServerHandler(Socket socket){
@@ -46,26 +46,35 @@ public class ServerHandler extends Task implements ServerSubject{
 		try {
 			h = (Head) in.readObject();
 			int value = h.getID();
-			Player p = (Player) h.getObject();
+			Player p;
 			
-			System.out.println("Przyszedł player: " + "Pozycja pionka 0: " + p.getPawnPosition(0) +  " Pozycja pionka 1: " + p.getPawnPosition(1));
+			//System.out.println("Przyszedł player: " + "Pozycja pionka 0: " + p.getPawnPosition(0) +  " Pozycja pionka 1: " + p.getPawnPosition(1));
 			switch(value){	
 			case HeadConst.redPlayer: 
-				addPlayer(p);
+				 p = (Player) h.getObject();
+				 p.getColor(); p.getPawns();
+				//addPlayer(p);
 				System.out.println("Color playera: " + p.getColor());
 				break;
 			case HeadConst.bluePlayer: 
-				addPlayer(p);
+				 p = (Player) h.getObject();
+				//addPlayer(p);
 				System.out.println("Color playera: " + p.getColor());
 				break;
 			case HeadConst.yellowPlayer: 
-				addPlayer(p);
+				 p = (Player) h.getObject();
+				addPlayer(p.getColor());
 				System.out.println("Color playera: " + p.getColor());
 				break;
 			case HeadConst.greenPlayer: 
-				addPlayer(p);
+				 p = (Player) h.getObject();
+				//addPlayer(p);
 				System.out.println("Color playera: " + p.getColor());
 				break;
+			case HeadConst.yellowPawn:
+				p = (Player) h.getObject();
+				changePawns(p.getColor(), p.getPawnPosition(0), p.getPawnPosition(1), p.getPawnPosition(2), p.getPawnPosition(3));
+				//System.out.println("Przyszedl pionek klient " + pawn.getActualyPosition());
 		}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -78,7 +87,10 @@ public class ServerHandler extends Task implements ServerSubject{
 	
 		
 	}
-	
+	public void changePawns(int player, int p0, int p1, int p2, int p3){
+		for(ServerObserver ob : observer)
+			ob.updatePawn(player, p0, p1, p2, p3);
+	}
 	@Override
 	protected void taskStream() {
 		try {
@@ -94,7 +106,6 @@ public class ServerHandler extends Task implements ServerSubject{
 	public void registerObserver(ServerObserver o) {
 		// TODO Auto-generated method stub
 		observer.add(o);
-		
 	}
 	
 	public void sendPlayer(Player player){
@@ -116,6 +127,7 @@ public class ServerHandler extends Task implements ServerSubject{
 				break;
 			}
 			out.flush();
+			out.reset();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -128,19 +140,22 @@ public class ServerHandler extends Task implements ServerSubject{
 
 		
 	}
-	public void sendPawn(Pawn p, int array, int player){
-		switch(player){
-		case 2: redPawn.setObject(p);
+	public void sendPawn(Player player){
+		int c = player.getColor();
+		switch(c){
+		case 1: yellowPawn.setObject(player);
 		}
 		try {
-			out.writeObject(redPawn);
+			out.writeObject(yellowPawn);
+			out.flush();
+			out.reset();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public void addPlayer(Player p){
+	public void addPlayer(int color){
 		for(ServerObserver ob : observer)
-			ob.updatePlayerList(p);
+			ob.updatePlayerList(color);
 	}
 }
