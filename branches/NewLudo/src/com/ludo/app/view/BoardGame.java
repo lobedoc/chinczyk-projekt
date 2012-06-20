@@ -430,8 +430,11 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			case 1: msg = "Żółty gracz: ";
 				break;
 			case 2: msg = "Czerwony gracz: ";
+				break;
 			case 3: msg = "Zielony gracz: ";
+				break;
 			case 4: msg = "Niebieski gracz: ";
+				break;
 			default : msg = "Gość: ";
 			}
 			msg = msg + msgField.getText();
