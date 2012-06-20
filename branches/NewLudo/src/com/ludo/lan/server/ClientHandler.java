@@ -8,13 +8,10 @@ import java.util.ArrayList;
 
 import com.ludo.app.control.Player;
 import com.ludo.app.model.Pawn;
-import com.ludo.lan.head.BluePlayerHead;
-import com.ludo.lan.head.GreenPlayerHead;
 import com.ludo.lan.head.Head;
 import com.ludo.lan.head.HeadConst;
-import com.ludo.lan.head.RedPlayerHead;
-import com.ludo.lan.head.YellowPawnHead;
-import com.ludo.lan.head.YellowPlayerHead;
+import com.ludo.lan.head.PawnHead;
+import com.ludo.lan.head.PlayerHead;
 import com.ludo.lan.observer.ClientObserver;
 import com.ludo.lan.observer.ClientSubject;
 import com.ludo.lan.task.Task;
@@ -51,33 +48,17 @@ public class ClientHandler extends Task implements ClientSubject{
 			h = (Head) in.readObject();
 
 			int value = h.getID();			
-			Player p;
 			switch(value){
 
-			case HeadConst.redPlayer: 
-				p = (Player) h.getObject();
+			case HeadConst.PLAYER: 
+				Player player = (Player) h.getObject();
 				System.out.println("Przyszedl player");
-				notifyyy(p);
+				joinPlayer(player);
 				break;
-			case HeadConst.bluePlayer: 
-				p = (Player) h.getObject();
-				System.out.println("Przyszedl player");
-				notifyyy(p);
-				break;
-			case HeadConst.yellowPlayer: 
-				System.out.println("Przyszedl player");
-				p = (Player) h.getObject();
-				notifyyy(p);
-				break;
-			case HeadConst.greenPlayer: 
-				System.out.println("Przyszedl player");
-				p = (Player) h.getObject();
-				notifyyy(p);
-				break;
-			case HeadConst.yellowPawn:
-				p = (Player) h.getObject();
-				changePawn(p);
-				System.out.println("Przyszedl pionek");
+			case HeadConst.PAWN:
+				Player pawn = (Player) h.getObject();
+				changePawn(pawn);
+			break;
 				
 			}
 		} catch (IOException e) {
@@ -95,30 +76,15 @@ public class ClientHandler extends Task implements ClientSubject{
 		for(ClientObserver ob: observer)
 			ob.changePawn(p);
 	}
-	public void notifyyy(Player p){
+	public void joinPlayer(Player p){
 		for(ClientObserver ob: observer)
 			ob.joinPlayer(p);
 	}
 	public void addPlayer(Player p){
-		try {
-			Head h = new RedPlayerHead();
-			int c = p.getColor();
-			switch(c){
-			case 1:
-				h = new YellowPlayerHead();
-				break;
-			case 2:
-				h = new RedPlayerHead();
-				break;
-			case 3:
-				h = new GreenPlayerHead();
-				break;
-			case 4:
-				h = new BluePlayerHead();
-				break;
-			}
-			h.setObject(p);
-			out.writeObject(h);
+		try{
+			Head playerHead = new PlayerHead();
+			playerHead.setObject(p);
+			out.writeObject(playerHead);
 			out.flush();
 			out.reset();
 		} catch (IOException e) {
@@ -140,7 +106,7 @@ public class ClientHandler extends Task implements ClientSubject{
 	public void sendPawn(Player p) {
 		// TODO Auto-generated method stub
 		try {
-			Head h = new YellowPawnHead();
+			Head h = new PawnHead();
 			h.setObject(p);
 			out.writeObject(h);
 			out.flush();
