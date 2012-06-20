@@ -7,7 +7,7 @@ import com.ludo.app.observer.PawnSubject;
 
 public class Pawn implements PawnSubject, Serializable{
 	
-	private ArrayList<PawnObserver> observer = new ArrayList<PawnObserver>();
+	private transient ArrayList<PawnObserver> observer = new ArrayList<PawnObserver>();
 	
 	private int startId;
 	private int campId;

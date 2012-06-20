@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -349,31 +350,36 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	}
 	private void addPlayer(){
 		//playerList.put(player.getColor(), player);
-		for(Pawn p : player.getPawns()){
+		/*for(Pawn p : player.getPawns()){
 			p.registerObserver(this);
 			box[p.getActualyPosition()].setImage(p.getPath());
 			addPawn(p);
 			p.notifyObserver();
-			}
+			}*/
 		joinRed.setEnabled(false);
 		joinBlue.setEnabled(false);
 		joinYellow.setEnabled(false);
 		joinGreen.setEnabled(false);
 	}
+	private void createYellowPlayer(Player player){
+		player.setCamp(new YellowCamp());
+		player.setHouse(new YellowHouse());
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == joinYellow){
-			player.setCamp(new YellowCamp());
-			player.setHouse(new YellowHouse());
-			handler.sendPlayer(player);
+			createYellowPlayer(this.player);
 			addPlayer();
+			handler.sendPlayer(player);
+			//addPlayer();
 		}
 		if(e.getSource() == joinRed){
 			player.setCamp(new RedCamp());
 			player.setHouse(new RedHouse());
-			handler.sendPlayer(player);
 			addPlayer();
+			handler.sendPlayer(player);
+
 		}
 		if(e.getSource() == joinGreen){
 			player.setCamp(new GreenCamp());
@@ -391,7 +397,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			int move = player.rollDice();
 			infoArea.append("Gracz wyrzucił: " + move + "\n");
 			player.movePawn(0, move);
-			handler.sendPlayer(player);
+			handler.sendPawn(player);
 		}
 	}
 	private JPanel rightPanel(){
@@ -427,63 +433,24 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		UP, RIGHT, DOWN, LEFT
 	}
 	@Override
-	public void updatePlayerList(Player player) {
-		// TODO Auto-generated method stub
-		int c = player.getColor();
-		//playerList.put(c, player);
-		if(playerList.get(c) != null){
-			Player localPlayer = playerList.get(c);
-			int pawn0 = player.getPawnPosition(0);
-			int pawn1 = player.getPawnPosition(1);
-			int pawn2 = player.getPawnPosition(2);
-			int pawn3 = player.getPawnPosition(3);
-			localPlayer.setPawnPosition(0, pawn0);
-			localPlayer.setPawnPosition(0, pawn1);
-			localPlayer.setPawnPosition(0, pawn2);
-			localPlayer.setPawnPosition(0, pawn3);
-			playerList.put(c, localPlayer);
-			for(Player player1 : playerList.values()){
-				for(Pawn p : player1.getPawns()){
-					//p.registerObserver(this);
-					//addPawn(p);
-					//box[p.getActualyPosition()].setImage(p.getPath());
-					p.notifyObserver();
-					System.out.println("Notify w if");
-					}
-			}
+	public void updatePlayerList(int color) {
+		Player player;
+		switch(color){
+		case 1: 
+			player = new HumanPlayer();
+			createYellowPlayer(player);
+			playerList.put(color, player);
+			break;
 		}
-		else{
-			playerList.put(c, player);
-			for(Pawn p : player.getPawns()){
-				p.registerObserver(this);
-				addPawn(p);
-				//box[p.getActualyPosition()].setImage(p.getPath());
-				p.notifyObserver();
-				System.out.println("Notify w else");
-			}
-		}
-		/*for(Player player1 : playerList.values()){
+		for(Player player1 : playerList.values()){
 			for(Pawn p : player1.getPawns()){
 				p.registerObserver(this);
 				addPawn(p);
 				box[p.getActualyPosition()].setImage(p.getPath());
 				p.notifyObserver();
 				}
-		}*/
-		
-		/*if(c != this.player.getColor()){
-			playerList.add(player);
-			for(Player player1 : playerList){
-				for(Pawn p : player1.getPawns()){
-					p.registerObserver(this);
-					addPawn(p);
-					box[p.getActualyPosition()].setImage(p.getPath());
-					p.notifyObserver();
-					}
-			}
-		}*/
 		System.out.println("Lista: " + playerList.size());
-		switch(c){
+		switch(color){
 		case 1:
 			joinYellow.setEnabled(false);
 			break;
@@ -498,7 +465,25 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			break;
 		}
 		System.out.println(playerList.size());
-		
+		}
+	}
+	private void notifyPawns(Player player){
+		for(Pawn p : player.getPawns()){
+			p.notifyObserver();
+			}
+	}
+	@Override
+	public void updatePawn(int player, int p0, int p1, int p2, int p3) {
+		// TODO Auto-generated method stub
+		switch(player){
+		case 1:
+			playerList.get(1).setPawnPosition(0, p0);
+			playerList.get(1).setPawnPosition(1, p1);
+			playerList.get(1).setPawnPosition(2, p2);
+			playerList.get(1).setPawnPosition(3, p3);
+			notifyPawns(playerList.get(1));
+			
+		}
 	}
 }
 
