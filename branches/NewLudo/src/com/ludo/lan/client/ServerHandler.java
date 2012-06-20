@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import com.ludo.app.control.Player;
+import com.ludo.lan.head.CurrentRoundHead;
 import com.ludo.lan.head.Head;
 import com.ludo.lan.head.HeadConst;
 import com.ludo.lan.head.PawnHead;
@@ -50,6 +51,10 @@ public class ServerHandler extends Task implements ServerSubject{
 				Player pawn = (Player) h.getObject();
 				pawnIncoming(pawn);
 				break;
+			case HeadConst.CURRENT:
+				int i = (Integer) h.getObject();
+				currentRound(i);
+				break;
 		}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -61,6 +66,10 @@ public class ServerHandler extends Task implements ServerSubject{
 	
 	
 		
+	}
+	public void currentRound(int i){
+		for(ServerObserver ob : observer)
+			ob.currentRound(i);
 	}
 	private void pawnIncoming(Player p){
 		int p0 = p.getPawnPosition(0);
@@ -76,6 +85,21 @@ public class ServerHandler extends Task implements ServerSubject{
 	public void changePawns(int player, int p0, int p1, int p2, int p3, int l0, int l1, int l2, int l3){
 		for(ServerObserver ob : observer)
 			ob.updatePawn(player, p0, p1, p2, p3, l0, l1, l2, l3);
+	}
+	private void clearSocket() throws IOException{
+		out.flush();
+		out.reset();
+	}
+	public void sendCurrentRound(int i){
+		Head currentRound = new CurrentRoundHead();
+		currentRound.setObject(i);
+		try {
+			out.writeObject(currentRound);
+			clearSocket();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	@Override
 	protected void taskStream() {
@@ -104,8 +128,7 @@ public class ServerHandler extends Task implements ServerSubject{
 			headPlayer.setObject(player);
 			}
 			out.writeObject(headPlayer);
-			out.flush();
-			out.reset();
+			clearSocket();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -129,8 +152,7 @@ public class ServerHandler extends Task implements ServerSubject{
 		}
 		try {
 			out.writeObject(headPawn);
-			out.flush();
-			out.reset();
+			clearSocket();
 			} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

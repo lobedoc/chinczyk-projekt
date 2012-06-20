@@ -99,6 +99,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		joinBlue.addActionListener(this);
 		cubeRoll = new JButton("Rzuć kostką");
 		cubeRoll.addActionListener(this);
+		cubeRoll.setEnabled(false);
 		
 		infoArea = new JTextArea(10,10);
 		infoArea.setLineWrap(true);
@@ -379,6 +380,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			createYellowPlayer(this.player);
 			setDisabledJoinButton();
 			handler.sendPlayer(player);
+			cubeRoll.setEnabled(true);
 		}
 		if(e.getSource() == joinRed){
 			createRedPlayer(this.player);
@@ -390,7 +392,6 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			createGreenPlayer(this.player);
 			setDisabledJoinButton();
 			handler.sendPlayer(player);
-
 		}
 		if(e.getSource() == joinBlue){
 			createBluePlayer(this.player);
@@ -401,6 +402,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			int move = player.rollDice();
 			infoArea.append("Gracz wyrzucił: " + move + "\n");
 			player.movePawn(0, move);
+			handler.sendCurrentRound(player.getColor());
 			handler.sendPawn(player);
 		}
 	}
@@ -483,6 +485,15 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		addHousePosition(lay, 72, 39, Position.LEFT);
 		addHousePosition(lay, 76, 1, Position.LEFT);
 		return panel;
+	}
+	@Override
+	public void currentRound(int i) {
+		// TODO Auto-generated method stub
+		if(i == player.getColor())
+			cubeRoll.setEnabled(true);
+		else
+			cubeRoll.setEnabled(false);
+		
 	}
 }
 

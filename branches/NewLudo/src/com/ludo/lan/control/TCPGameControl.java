@@ -36,6 +36,13 @@ public class TCPGameControl implements GameControl, ClientObserver{
 		for(ClientHandler handler : clientList)
 			handler.sendPawn(p);
 	}
+	@Override
+	public void sendCurrentRound(int i) {
+		// TODO Auto-generated method stub
+		for(ClientHandler handler : clientList)
+			handler.sendCurrentRound(i);
+		
+	}
 	
 	
 	

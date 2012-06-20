@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.ludo.app.control.Player;
 import com.ludo.app.model.Pawn;
+import com.ludo.lan.head.CurrentRoundHead;
 import com.ludo.lan.head.Head;
 import com.ludo.lan.head.HeadConst;
 import com.ludo.lan.head.PawnHead;
@@ -58,8 +59,10 @@ public class ClientHandler extends Task implements ClientSubject{
 			case HeadConst.PAWN:
 				Player pawn = (Player) h.getObject();
 				changePawn(pawn);
-			break;
-				
+				break;
+			case HeadConst.CURRENT:
+				int j = (Integer) h.getObject();
+				currentRound(j);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -72,6 +75,10 @@ public class ClientHandler extends Task implements ClientSubject{
 		
 		
 	}
+	private void clearSocket() throws IOException{
+		out.flush();
+		out.reset();
+	}
 	public void changePawn(Player p){
 		for(ClientObserver ob: observer)
 			ob.changePawn(p);
@@ -80,13 +87,29 @@ public class ClientHandler extends Task implements ClientSubject{
 		for(ClientObserver ob: observer)
 			ob.joinPlayer(p);
 	}
+	public void currentRound(int i){
+		for(ClientObserver ob: observer)
+			ob.sendCurrentRound(i);
+	}
+	public void sendCurrentRound(int i){
+		i = i+1;
+		if(i > 4)
+			i = 1;
+		try {
+			Head currentHead = new CurrentRoundHead();
+			currentHead.setObject(i);
+			out.writeObject(currentHead);
+			clearSocket();
+		} catch (IOException e) {
+			// TODO: handle exception
+		}
+	}
 	public void addPlayer(Player p){
 		try{
 			Head playerHead = new PlayerHead();
 			playerHead.setObject(p);
 			out.writeObject(playerHead);
-			out.flush();
-			out.reset();
+			clearSocket();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -109,8 +132,7 @@ public class ClientHandler extends Task implements ClientSubject{
 			Head h = new PawnHead();
 			h.setObject(p);
 			out.writeObject(h);
-			out.flush();
-			out.reset();
+			clearSocket();
 			} catch (Exception e) {
 			// TODO: handle exception
 		}
