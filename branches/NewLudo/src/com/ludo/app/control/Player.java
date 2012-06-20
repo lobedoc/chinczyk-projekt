@@ -44,6 +44,8 @@ public abstract class Player implements Serializable {
 		return pawnPlayer[i].getActualyPosition();
 	}
 	public void setPawnPosition(int pawn, int position){
+		int actualy = this.pawnPlayer[pawn].getActualyPosition();
+		this.pawnPlayer[pawn].setLastPosition(actualy);
 		this.pawnPlayer[pawn].setActualyPosition(position);
 	}
 	public int getColor(){
