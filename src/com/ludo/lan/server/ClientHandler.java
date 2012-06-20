@@ -104,6 +104,7 @@ public class ClientHandler extends Task implements ClientSubject{
 			}
 			h.setObject(p);
 			out.writeObject(h);
+			out.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
