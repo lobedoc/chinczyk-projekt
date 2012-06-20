@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import com.ludo.app.control.Player;
+import com.ludo.app.model.Pawn;
 import com.ludo.lan.head.BluePlayerHead;
 import com.ludo.lan.head.GreenPlayerHead;
 import com.ludo.lan.head.Head;
@@ -120,7 +121,9 @@ public class ServerHandler extends Task implements ServerSubject{
 
 		
 	}
-	
+	public void sendPawn(Pawn p, int array, int player){
+		
+	}
 	public void addPlayer(Player p){
 		for(ServerObserver ob : observer)
 			ob.updatePlayerList(p);
