@@ -12,8 +12,8 @@ public abstract class Player implements Serializable {
 	private final int PAWN_SIZE = 4;
 	protected Pawn[] pawnPlayer = new Pawn[PAWN_SIZE];
 	private int playerColor;
-	private Random r = new Random();
-	private int numberRoll ;
+	protected Random r = new Random();
+	protected int numberRoll ;
 	public Player(){
 		for(int i = 0; i < pawnPlayer.length; i++)
 			pawnPlayer[i] = new Pawn();
