@@ -92,37 +92,23 @@ public class ServerHandler extends Task implements ServerSubject{
 		
 	}
 	
-	public void sendRedPlayer(Player player){
-		redPlayer.setObject(player);
+	public void sendPlayer(Player player){
+		int c = player.getColor();
 		try {
-			out.writeObject(redPlayer);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	public void sendBluePlayer(Player player){
-		bluePlayer.setObject(player);
-		try {
-			out.writeObject(bluePlayer);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	public void sendGreenPlayer(Player player){
-		greenPlayer.setObject(player);
-		try {
-			out.writeObject(greenPlayer);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	public void sendYellowPlayer(Player player){
-		yellowPlayer.setObject(player);
-		try {
-			out.writeObject(yellowPlayer);
+			switch(c){
+			case 1: yellowPlayer.setObject(player);
+				out.writeObject(yellowPlayer);
+				break;
+			case 2: redPlayer.setObject(player);
+				out.writeObject(redPlayer);
+				break;
+			case 3: greenPlayer.setObject(player);
+				out.writeObject(greenPlayer);
+				break;
+			case 4: bluePlayer.setObject(player);
+				out.writeObject(bluePlayer);
+				break;
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
