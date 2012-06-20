@@ -10,9 +10,10 @@ public class RunLudo {
 		//ControlGameInterface game = new ControlGame();
 		//game.createRedPlayer();
 		//game.rollDice();
-		//JoinHost h = new JoinHost();
-		//h.setVisible(true);
+		JoinHost h = new JoinHost();
+		h.setVisible(true);
 		//ControlGameInterface game = new ControlGame();
-		MainWindow main = new MainWindow();
+		//MainWindow main = new MainWindow();
+		
 	}
 }
