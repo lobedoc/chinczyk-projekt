@@ -10,8 +10,10 @@ import com.ludo.app.control.Player;
 import com.ludo.lan.head.CurrentRoundHead;
 import com.ludo.lan.head.Head;
 import com.ludo.lan.head.HeadConst;
+import com.ludo.lan.head.MessageHead;
 import com.ludo.lan.head.PawnHead;
 import com.ludo.lan.head.PlayerHead;
+import com.ludo.lan.head.PlayerListHead;
 
 import com.ludo.lan.observer.ServerObserver;
 import com.ludo.lan.observer.ServerSubject;
@@ -54,7 +56,11 @@ public class ServerHandler extends Task implements ServerSubject{
 			case HeadConst.CURRENT:
 				int i = (Integer) h.getObject();
 				currentRound(i);
-				break;
+				break;	
+			case HeadConst.MESSAGE:
+				String msg = (String) h.getObject();
+				appendMsg(msg);
+				
 		}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -70,6 +76,11 @@ public class ServerHandler extends Task implements ServerSubject{
 	public void currentRound(int i){
 		for(ServerObserver ob : observer)
 			ob.currentRound(i);
+	}
+	
+	public void appendMsg(String msg){
+		for(ServerObserver ob : observer)
+			ob.updateMsg(msg);
 	}
 	private void pawnIncoming(Player p){
 		int p0 = p.getPawnPosition(0);
@@ -95,6 +106,28 @@ public class ServerHandler extends Task implements ServerSubject{
 		currentRound.setObject(i);
 		try {
 			out.writeObject(currentRound);
+			clearSocket();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void sendPlayerListSize(int i){
+		Head playerListSize = new PlayerListHead();
+		playerListSize.setObject(i);
+		try {
+			out.writeObject(playerListSize);
+			clearSocket();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void sendMsg(String msg){
+		Head msgHead = new MessageHead();
+		msgHead.setObject(msg);
+		try {
+			out.writeObject(msgHead);
 			clearSocket();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
