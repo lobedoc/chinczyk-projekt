@@ -11,6 +11,7 @@ import com.ludo.app.model.Pawn;
 import com.ludo.lan.head.CurrentRoundHead;
 import com.ludo.lan.head.Head;
 import com.ludo.lan.head.HeadConst;
+import com.ludo.lan.head.MessageHead;
 import com.ludo.lan.head.PawnHead;
 import com.ludo.lan.head.PlayerHead;
 import com.ludo.lan.observer.ClientObserver;
@@ -23,6 +24,7 @@ public class ClientHandler extends Task implements ClientSubject{
 	private Socket socket;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
+	private int playersNumber;
 	public ClientHandler(Socket socket){
 		this.socket = socket;
 	}
@@ -63,6 +65,13 @@ public class ClientHandler extends Task implements ClientSubject{
 			case HeadConst.CURRENT:
 				int j = (Integer) h.getObject();
 				currentRound(j);
+				break;
+			case HeadConst.PLAYERLIST:
+				playersNumber = (Integer) h.getObject();
+				break;
+			case HeadConst.MESSAGE:
+				String msg = (String) h.getObject();
+				updateMsg(msg);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -79,6 +88,22 @@ public class ClientHandler extends Task implements ClientSubject{
 		out.flush();
 		out.reset();
 	}
+	public void updateMsg(String msg){
+		for(ClientObserver ob: observer)
+			ob.sendMsg(msg);
+	}
+	
+	public void sendMsg(String msg){
+		try {
+			Head msgHead = new MessageHead();
+			msgHead.setObject(msg);
+			out.writeObject(msgHead);
+			clearSocket();
+		} catch (IOException e) {
+			// TODO: handle exception
+		}
+	}
+	
 	public void changePawn(Player p){
 		for(ClientObserver ob: observer)
 			ob.changePawn(p);
@@ -93,7 +118,7 @@ public class ClientHandler extends Task implements ClientSubject{
 	}
 	public void sendCurrentRound(int i){
 		i = i+1;
-		if(i > 4)
+		if(i > 2)
 			i = 1;
 		try {
 			Head currentHead = new CurrentRoundHead();

@@ -9,4 +9,5 @@ public interface ClientObserver {
 	public void joinPlayer(Player player);
 	public void changePawn(Player p);
 	public void sendCurrentRound(int i);
+	public void sendMsg(String msg);
 }
