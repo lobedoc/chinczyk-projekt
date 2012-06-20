@@ -56,7 +56,7 @@ public class JoinHost extends JFrame implements ActionListener{
 		}
 		if(e.getSource() == connect){
 			Client client = new Client();
-			client.connect("localhost");
+			client.connect("62.108.173.153");
 			handler = client.getHandler();
 		}
 		if(e.getSource() == testowy){
