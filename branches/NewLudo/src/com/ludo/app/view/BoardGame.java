@@ -348,7 +348,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		}
 	}
 	private void addPlayer(){
-
+		//playerList.put(player.getColor(), player);
 		for(Pawn p : player.getPawns()){
 			p.registerObserver(this);
 			box[p.getActualyPosition()].setImage(p.getPath());
@@ -457,7 +457,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			for(Pawn p : player.getPawns()){
 				p.registerObserver(this);
 				addPawn(p);
-				box[p.getActualyPosition()].setImage(p.getPath());
+				//box[p.getActualyPosition()].setImage(p.getPath());
 				p.notifyObserver();
 				System.out.println("Notify w else");
 			}
