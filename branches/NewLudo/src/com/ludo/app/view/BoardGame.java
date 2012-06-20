@@ -57,9 +57,11 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	private JButton joinGreen;
 	private JButton joinBlue;
 	private JButton cubeRoll;
+	private JButton sendMsg;
 	private JFrame view;
 	private JTextArea infoArea;
 	private ServerHandler handler;
+	private JTextField msgField;
 	private HashMap<Integer, Player> playerList = new HashMap<Integer, Player>();
 	private Box[] box = new Box[96];
 	private ArrayList<Pawn> pawns;
@@ -104,6 +106,10 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		infoArea = new JTextArea(10,10);
 		infoArea.setLineWrap(true);
 	 	infoArea.setEditable(false);
+	 	
+	 	msgField = new JTextField(10);
+	 	sendMsg = new JButton("Wyślij");
+	 	sendMsg.addActionListener(this);
 	}
 	private JPanel panel(){
 		JPanel panel = new JPanel();
@@ -304,6 +310,16 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	private JPanel centerPanel(){
 		JPanel panel = new JPanel();
 		JPanel panelArea = new JPanel();
+		JPanel panelSouth = new JPanel();
+		panelSouth.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 1.0;
+		panelSouth.add(msgField, c);
+		c.weightx = 0.5;
+		c.gridx = 1;
+		panelSouth.add(sendMsg, c);
 		Border blackLine = BorderFactory.createLineBorder(Color.gray);
 		TitledBorder titledBorder = BorderFactory.createTitledBorder(blackLine,
 			"Informacje");
@@ -314,6 +330,8 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		panel.setLayout(new BorderLayout());
 		panel.add(cubeRoll, BorderLayout.NORTH);
 		panel.add(panelArea, BorderLayout.CENTER);
+		panel.add(panelSouth, BorderLayout.SOUTH);
+		
 		return panel;
 	}
 	public void setHandler(ServerHandler handler){
@@ -402,8 +420,23 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			int move = player.rollDice();
 			infoArea.append("Gracz wyrzucił: " + move + "\n");
 			player.movePawn(0, move);
+			handler.sendPlayerListSize(playerList.size());
 			handler.sendCurrentRound(player.getColor());
 			handler.sendPawn(player);
+		}
+		if(e.getSource() == sendMsg){
+			String msg;
+			switch(player.getColor()){
+			case 1: msg = "Żółty gracz: ";
+				break;
+			case 2: msg = "Czerwony gracz: ";
+			case 3: msg = "Zielony gracz: ";
+			case 4: msg = "Niebieski gracz: ";
+			default : msg = "Gość: ";
+			}
+			msg = msg + msgField.getText();
+			msgField.setText("");
+			handler.sendMsg(msg);
 		}
 	}
 	private JPanel panelBoard(){
@@ -494,6 +527,11 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		else
 			cubeRoll.setEnabled(false);
 		
+	}
+	@Override
+	public void updateMsg(String msg) {
+		// TODO Auto-generated method stub
+		infoArea.append(msg + "\n");
 	}
 }
 

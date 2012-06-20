@@ -43,6 +43,12 @@ public class TCPGameControl implements GameControl, ClientObserver{
 			handler.sendCurrentRound(i);
 		
 	}
+	@Override
+	public void sendMsg(String msg) {
+		// TODO Auto-generated method stub
+		for(ClientHandler handler : clientList)
+			handler.sendMsg(msg);
+	}
 	
 	
 	

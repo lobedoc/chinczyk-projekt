@@ -10,4 +10,5 @@ public interface ServerObserver {
 			int l0, int l1, int l2, int l3);
 	
 	public void currentRound(int i);
+	public void updateMsg(String msg);
 }
