@@ -349,13 +349,6 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		}
 	}
 	private void addPlayer(){
-		//playerList.put(player.getColor(), player);
-		/*for(Pawn p : player.getPawns()){
-			p.registerObserver(this);
-			box[p.getActualyPosition()].setImage(p.getPath());
-			addPawn(p);
-			p.notifyObserver();
-			}*/
 		joinRed.setEnabled(false);
 		joinBlue.setEnabled(false);
 		joinYellow.setEnabled(false);
