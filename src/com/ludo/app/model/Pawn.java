@@ -112,11 +112,11 @@ public class Pawn implements PawnSubject, Serializable{
 		actualyPosition = movement;
 		notifyObserver();
 	}
-	public void setLastPosition(int p){
-		this.lastPosition = p;
-	}
 	public void setPosition(){
 		notifyObserver();
+	}
+	public void setLastPosition(int position){
+		this.lastPosition = position;
 	}
 	public void moveFromBase(int movement) {
 		if (movement == 6) {
