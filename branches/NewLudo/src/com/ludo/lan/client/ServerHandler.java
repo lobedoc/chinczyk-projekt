@@ -12,6 +12,7 @@ import com.ludo.lan.head.BluePlayerHead;
 import com.ludo.lan.head.GreenPlayerHead;
 import com.ludo.lan.head.Head;
 import com.ludo.lan.head.HeadConst;
+import com.ludo.lan.head.RedPawnHead;
 import com.ludo.lan.head.RedPlayerHead;
 import com.ludo.lan.head.YellowPlayerHead;
 
@@ -29,6 +30,8 @@ public class ServerHandler extends Task implements ServerSubject{
 	private Head greenPlayer = new GreenPlayerHead();
 	private Head bluePlayer = new BluePlayerHead();
 	
+	private Head redPawn = new RedPawnHead();
+	
 	private ArrayList<ServerObserver> observer = new ArrayList<ServerObserver>();
 	public ServerHandler(Socket socket){
 		this.socket = socket;
@@ -44,7 +47,8 @@ public class ServerHandler extends Task implements ServerSubject{
 			h = (Head) in.readObject();
 			int value = h.getID();
 			Player p = (Player) h.getObject();
-			System.out.println("Jaks wartoscL :" +value);
+			
+			System.out.println("Przyszedł player: " + "Pozycja pionka 0: " + p.getPawnPosition(0) +  " Pozycja pionka 1: " + p.getPawnPosition(1));
 			switch(value){	
 			case HeadConst.redPlayer: 
 				addPlayer(p);
@@ -99,6 +103,7 @@ public class ServerHandler extends Task implements ServerSubject{
 			switch(c){
 			case 1: yellowPlayer.setObject(player);
 				out.writeObject(yellowPlayer);
+				
 				break;
 			case 2: redPlayer.setObject(player);
 				out.writeObject(redPlayer);
@@ -110,6 +115,8 @@ public class ServerHandler extends Task implements ServerSubject{
 				out.writeObject(bluePlayer);
 				break;
 			}
+			out.flush();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -122,7 +129,15 @@ public class ServerHandler extends Task implements ServerSubject{
 		
 	}
 	public void sendPawn(Pawn p, int array, int player){
-		
+		switch(player){
+		case 2: redPawn.setObject(p);
+		}
+		try {
+			out.writeObject(redPawn);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void addPlayer(Player p){
 		for(ServerObserver ob : observer)
