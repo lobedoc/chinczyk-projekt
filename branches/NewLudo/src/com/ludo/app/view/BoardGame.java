@@ -10,12 +10,16 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -51,9 +55,11 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	private JButton joinRed;
 	private JButton joinGreen;
 	private JButton joinBlue;
+	private JButton cubeRoll;
 	private JFrame view;
+	private JTextArea infoArea;
 	private ServerHandler handler;
-	private ArrayList<Player> playerList = new ArrayList<Player>();
+	private HashMap<Integer, Player> playerList = new HashMap<Integer, Player>();
 	private Box[] box = new Box[96];
 	private ArrayList<Pawn> pawns;
 	private Player player;
@@ -90,18 +96,22 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		joinGreen.addActionListener(this);
 		joinBlue = new JButton("Dołącz");
 		joinBlue.addActionListener(this);
+		cubeRoll = new JButton("Rzuć kostką");
+		cubeRoll.addActionListener(this);
+		
+		infoArea = new JTextArea(10,10);
+		infoArea.setLineWrap(true);
+	 	infoArea.setEditable(false);
 	}
 	private JPanel panel(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.setBackground(Color.decode("0xf1f1f0"));
 		panel.add(panelBoard(), BorderLayout.CENTER);
-		panel.add(buttonPanel(), BorderLayout.EAST);
+		panel.add(rightPanel(), BorderLayout.EAST);
 		return panel;
 	}
 	private JPanel buttonPanel(){
-		JPanel panelBorder = new JPanel(new BorderLayout());
-		panelBorder.setOpaque(false);
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(180, 250));
 		Border blackline = BorderFactory.createLineBorder(Color.black);
@@ -141,8 +151,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		panel.add(joinGreen, c);
 		c.gridy = 3;
 		panel.add(joinBlue, c);
-		panelBorder.add(panel, BorderLayout.NORTH);
-		return panelBorder;
+		return panel;
 	}
 	private void initBox(){
 		for(int i = 0; i < box.length; i++){
@@ -348,43 +357,70 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			}
 		joinRed.setEnabled(false);
 		joinBlue.setEnabled(false);
-		//joinYellow.setEnabled(false);
+		joinYellow.setEnabled(false);
 		joinGreen.setEnabled(false);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == joinYellow){
-			/*player.setCamp(new YellowCamp());
+			player.setCamp(new YellowCamp());
 			player.setHouse(new YellowHouse());
-			handler.sendYellowPlayer(player);
-			addPlayer();*/
-			player.rollDice();
-			player.movePawn(0);
+			handler.sendPlayer(player);
+			addPlayer();
 		}
 		if(e.getSource() == joinRed){
 			player.setCamp(new RedCamp());
 			player.setHouse(new RedHouse());
-			handler.sendRedPlayer(player);
+			handler.sendPlayer(player);
 			addPlayer();
 		}
 		if(e.getSource() == joinGreen){
 			player.setCamp(new GreenCamp());
 			player.setHouse(new GreenHouse());
-			handler.sendGreenPlayer(player);
+			handler.sendPlayer(player);
 			addPlayer();
 		}
 		if(e.getSource() == joinBlue){
 			player.setCamp(new BlueCamp());
 			player.setHouse(new BlueHouse());
-			handler.sendBluePlayer(player);
+			handler.sendPlayer(player);
 			addPlayer();
 		}
+		if(e.getSource() == cubeRoll){
+			int move = player.rollDice();
+			infoArea.append("Gracz wyrzucił: " + move + "\n");
+			player.movePawn(0, move);
+			handler.sendPlayer(player);
+		}
 	}
-	
+	private JPanel rightPanel(){
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		panel.setOpaque(false);
+		panel.add(buttonPanel(), BorderLayout.NORTH);
+		panel.add(centerPanel());
+		return panel;
+	}
+	private JPanel centerPanel(){
+		JPanel panel = new JPanel();
+		JPanel panelArea = new JPanel();
+		Border blackLine = BorderFactory.createLineBorder(Color.gray);
+		TitledBorder titledBorder = BorderFactory.createTitledBorder(blackLine,
+			"Informacje");
+		titledBorder.setTitleJustification(TitledBorder.CENTER);	
+		panelArea.setBorder(titledBorder);
+		panelArea.setLayout(new BorderLayout());
+		
+
+		panelArea.add(new JScrollPane(infoArea),BorderLayout.CENTER);
+		panel.setLayout(new BorderLayout());
+		panel.add(cubeRoll, BorderLayout.NORTH);
+		panel.add(panelArea, BorderLayout.CENTER);
+		return panel;
+	}
 	public void setHandler(ServerHandler handler){
 		this.handler = handler;
-		((HumanPlayer) player).setHandler(handler);
 		this.handler.registerObserver(this);
 	}
 	private enum Position{
@@ -394,7 +430,48 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	public void updatePlayerList(Player player) {
 		// TODO Auto-generated method stub
 		int c = player.getColor();
-		if(c != this.player.getColor()){
+		//playerList.put(c, player);
+		if(playerList.get(c) != null){
+			Player localPlayer = playerList.get(c);
+			int pawn0 = player.getPawnPosition(0);
+			int pawn1 = player.getPawnPosition(1);
+			int pawn2 = player.getPawnPosition(2);
+			int pawn3 = player.getPawnPosition(3);
+			localPlayer.setPawnPosition(0, pawn0);
+			localPlayer.setPawnPosition(0, pawn1);
+			localPlayer.setPawnPosition(0, pawn2);
+			localPlayer.setPawnPosition(0, pawn3);
+			playerList.put(c, localPlayer);
+			for(Player player1 : playerList.values()){
+				for(Pawn p : player1.getPawns()){
+					//p.registerObserver(this);
+					//addPawn(p);
+					//box[p.getActualyPosition()].setImage(p.getPath());
+					p.notifyObserver();
+					System.out.println("Notify w if");
+					}
+			}
+		}
+		else{
+			playerList.put(c, player);
+			for(Pawn p : player.getPawns()){
+				p.registerObserver(this);
+				addPawn(p);
+				box[p.getActualyPosition()].setImage(p.getPath());
+				p.notifyObserver();
+				System.out.println("Notify w else");
+			}
+		}
+		/*for(Player player1 : playerList.values()){
+			for(Pawn p : player1.getPawns()){
+				p.registerObserver(this);
+				addPawn(p);
+				box[p.getActualyPosition()].setImage(p.getPath());
+				p.notifyObserver();
+				}
+		}*/
+		
+		/*if(c != this.player.getColor()){
 			playerList.add(player);
 			for(Player player1 : playerList){
 				for(Pawn p : player1.getPawns()){
@@ -404,7 +481,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 					p.notifyObserver();
 					}
 			}
-		}
+		}*/
 		System.out.println("Lista: " + playerList.size());
 		switch(c){
 		case 1:
