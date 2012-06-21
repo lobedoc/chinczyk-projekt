@@ -12,6 +12,7 @@ public abstract class Player implements Serializable {
 	private final int PAWN_SIZE = 4;
 	protected Pawn[] pawnPlayer = new Pawn[PAWN_SIZE];
 	private int playerColor;
+	private int numberRoll;
 	protected Random r = new Random();
 	public Player(){
 		for(int i = 0; i < pawnPlayer.length; i++)
@@ -55,15 +56,18 @@ public abstract class Player implements Serializable {
 	public int getColor(){
 		return playerColor;
 	}
-	public void movePawn(int pawn, int move){
-		pawnPlayer[pawn].move(move);
+	public void movePawn(int pawn){
+		pawnPlayer[pawn].move(numberRoll);
+		numberRoll = 0;
 	}
 	public void setPawns(Pawn[] pawns){
 		this.pawnPlayer = pawns;
 	}
-	public int rollDice(){
-		int numberRoll = r.nextInt(6)+1;
+	public int getRoll(){
 		return numberRoll;
+	}
+	public void rollDice(){
+		numberRoll = r.nextInt(6)+1;
 	}
 	public abstract void sendReady();
 }

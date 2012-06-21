@@ -310,6 +310,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			box[p.getActualyPosition()].setImage(p.getPath());
 			box[p.getLastPosition()].removePawn();
 			box[p.getActualyPosition()].addPawn(p);
+			System.out.println();
 		}
 	}
 	private void setDisabledJoinButton(){
@@ -400,6 +401,9 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		}
 		playerList.put(color, player);
 		for(Player player1 : playerList.values()){
+			if(player1.getColor() == player.getColor()){
+				this.player.setPawns(player1.getPawns());
+			}
 			for(Pawn p : player1.getPawns()){
 				p.registerObserver(this);
 				addPawn(p);
@@ -453,13 +457,12 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			handler.sendPlayer(player);
 		}
 		if(e.getSource() == cubeRoll){
-			int move = player.rollDice();
-			//player.movePawn(0, move);
+			player.rollDice();
 			handler.sendPlayerListSize(playerList.size());
-			handler.sendCurrentRound(player.getColor());
-			String msg = message() + " wyrzucił: " + move;
+			cubeRoll.setEnabled(false);
+			String msg = message() + " wyrzucił: " + player.getRoll();
 			handler.sendMsg(msg);
-			handler.sendPawn(player);
+			
 		}
 		if(e.getSource() == sendMsg){
 			String msg = message() + ": " + msgField.getText();
@@ -579,16 +582,28 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	private class PawnMoveListener extends MouseAdapter{
 		
 		 public void mouseReleased(MouseEvent me) { 
-//			 if(me.getSource() == box[64])
-	          /*player.movePawn(0, 20);
-			 handler.sendPawn(player);*/
 			 Box b = (Box) me.getComponent();
-			 if(b.getPawn() != null){
-				 player.movePawn(0, 3);
+			 if(b.getPawn() != null && b.getPawn() == player.getPawn(0) && player.getRoll() != 0){
+				 player.movePawn(0);
 				 handler.sendPawn(player);
+				 handler.sendCurrentRound(player.getColor());
 			 }
-
-			// System.out.println(b.getBoxId());
+			 if(b.getPawn() != null && b.getPawn() == player.getPawn(1) && player.getRoll() != 0){
+				 player.movePawn(1);
+				 handler.sendPawn(player);
+				 handler.sendCurrentRound(player.getColor());
+			 }
+			 if(b.getPawn() != null && b.getPawn() == player.getPawn(2) && player.getRoll() != 0){
+				 player.movePawn(2);
+				 handler.sendPawn(player);
+				 handler.sendCurrentRound(player.getColor());
+			 }
+			 if(b.getPawn() != null && b.getPawn() == player.getPawn(3) && player.getRoll() != 0){
+				 player.movePawn(3);
+				 handler.sendPawn(player);
+				 handler.sendCurrentRound(player.getColor());
+			 }
+			
 		 }
 	}
 }
