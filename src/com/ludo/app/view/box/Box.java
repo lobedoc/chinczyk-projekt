@@ -38,12 +38,15 @@ public abstract class Box extends JPanel{
 	}
 	
 	public void addPawn(Pawn pawn){
-		pawnLast = arrayPawn.pollLast();
+		//pawnLast = arrayPawn.pollLast();
 		//arrayPawn.addFirst(pawn);
 		pawn.setActualyPosition(id);
 		pawnLast = pawn;
 		repaint();
 		//return pawnLast;
+	}
+	public Pawn getPawn(){
+		return pawnLast;
 	}
 	public void removePawn(){
 		pawnLast = null;
