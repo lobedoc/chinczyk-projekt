@@ -401,7 +401,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		}
 		playerList.put(color, player);
 		for(Player player1 : playerList.values()){
-			if(player1.getColor() == player.getColor()){
+			if(player1.getColor() == this.player.getColor()){
 				this.player.setPawns(player1.getPawns());
 			}
 			for(Pawn p : player1.getPawns()){
@@ -584,6 +584,10 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		 public void mouseReleased(MouseEvent me) { 
 			 Box b = (Box) me.getComponent();
 			 if(b.getPawn() != null && b.getPawn() == player.getPawn(0) && player.getRoll() != 0){
+				/* if(b.getBoxId() == player.getPawn(0).getCampId() && player.getRoll() == 6){
+					 player.movePawnBase(0);
+				 }
+				 if(b.getBoxId() != player.getPawn(0).getCampId() )*/
 				 player.movePawn(0);
 				 handler.sendPawn(player);
 				 handler.sendCurrentRound(player.getColor());
