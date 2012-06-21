@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,11 +27,14 @@ public class JoinHost extends JFrame implements ActionListener{
 	private JButton connect;
 	private JButton testowy;
 	private ServerHandler handler;
+	private ImageIcon serwerIcon,connectIcon;
 	public JoinHost(){
-		this.setMinimumSize(new Dimension(200,100));
+		this.setMinimumSize(new Dimension(200,200));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		host = new JButton("Hostuj");
-		connect = new JButton("Polacz");
+		serwerIcon = new ImageIcon("src/com/ludo/app/resources/images/serwer.jpg");
+		connectIcon = new ImageIcon("src/com/ludo/app/resources/images/connect.jpg");
+		host = new JButton(serwerIcon);
+		connect = new JButton(connectIcon);
 		host.addActionListener(this);
 		testowy = new JButton("Testowy");
 		connect.addActionListener(this);
