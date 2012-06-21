@@ -9,6 +9,8 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,6 +61,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	private JButton cubeRoll;
 	private JButton sendMsg;
 	private JFrame view;
+	private MouseAdapter pawnListener;
 	private JTextArea infoArea;
 	private ServerHandler handler;
 	private JTextField msgField;
@@ -69,6 +72,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	public BoardGame(){
 		pawns = new ArrayList<Pawn>();
 		player = new HumanPlayer();
+		pawnListener = new PawnMoveListener();
 		System.out.println(playerList.size());
 	}
 	public void createView(){
@@ -163,24 +167,51 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	}
 	private void initBox(){
 		for(int i = 0; i < box.length; i++){
-			if(i == 4)
+			if(i == 4){
 				box[i] = new StartYellowBox();
-			else if(i == 20)
+				box[i].addMouseListener(pawnListener);
+			}
+				
+			else if(i == 20){
 				box[i] = new StartRedBox();
-			else if(i == 36)
+				box[i].addMouseListener(pawnListener);
+			}
+				
+			else if(i == 36){
 				box[i] = new StartGreenBox();
-			else if(i == 52)
+				box[i].addMouseListener(pawnListener);
+			}
+				
+			else if(i == 52){
 				box[i] = new StartBlueBox();
-			else if(i == 80 || i == 81 || i == 82 || i == 83 || i == 64 || i == 65 || i == 66 || i == 67)
+				box[i].addMouseListener(pawnListener);
+			}
+				
+			else if(i == 80 || i == 81 || i == 82 || i == 83 || i == 64 || i == 65 || i == 66 || i == 67){
 				box[i] = new YellowBox();
-			else if(i == 84 || i == 85 || i == 86 || i == 87 || i == 68 || i == 69 || i == 70 || i == 71)
+				box[i].addMouseListener(pawnListener);
+			}
+				
+			else if(i == 84 || i == 85 || i == 86 || i == 87 || i == 68 || i == 69 || i == 70 || i == 71){
 				box[i] = new RedBox();
-			else if(i == 88 || i == 89 || i == 90 || i == 91 || i == 72 || i == 73 || i == 74 || i == 75)
+				box[i].addMouseListener(pawnListener);
+			}
+				
+			else if(i == 88 || i == 89 || i == 90 || i == 91 || i == 72 || i == 73 || i == 74 || i == 75){
 				box[i] = new GreenBox();
-			else if(i == 92 || i == 93 || i == 94 || i == 95 || i == 76 || i == 77 || i == 78 || i == 79)
+				box[i].addMouseListener(pawnListener);
+			}
+				
+			else if(i == 92 || i == 93 || i == 94 || i == 95 || i == 76 || i == 77 || i == 78 || i == 79){
 				box[i] = new BlueBox();
-			else
+				box[i].addMouseListener(pawnListener);
+			}
+				
+			else{
 				box[i] = new WhiteBox();
+				box[i].addMouseListener(pawnListener);
+			}
+				
 		}
 	}
 	
@@ -540,5 +571,19 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		// TODO Auto-generated method stub
 		infoArea.append(msg + "\n");
 	}
+	private class PawnMoveListener extends MouseAdapter{
+		
+		 public void mouseReleased(MouseEvent me) { 
+//			 if(me.getSource() == box[64])
+	          /*player.movePawn(0, 20);
+			 handler.sendPawn(player);*/
+			 Box b = (Box) me.getComponent();
+			 if(b.getPawn() != null)
+				 player.movePawn(0, 3);
+			 handler.sendPawn(player);
+			// System.out.println(b.getBoxId());
+		 }
+	}
 }
+
 
