@@ -185,27 +185,32 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			else if(i == 52){
 				box[i] = new StartBlueBox();
 				box[i].addMouseListener(pawnListener);
-			}
-				
-			else if(i == 80 || i == 81 || i == 82 || i == 83 || i == 64 || i == 65 || i == 66 || i == 67){
+			}	
+			else if(i == 64 || i == 65 || i == 66 || i == 67){
 				box[i] = new YellowBox();
 				box[i].addMouseListener(pawnListener);
 			}
-				
-			else if(i == 84 || i == 85 || i == 86 || i == 87 || i == 68 || i == 69 || i == 70 || i == 71){
+			else if(i == 80 || i == 81 || i == 82 || i == 83 )
+				box[i] = new YellowBox();
+			else if(i == 68 || i == 69 || i == 70 || i == 71){
 				box[i] = new RedBox();
 				box[i].addMouseListener(pawnListener);
 			}
-				
-			else if(i == 88 || i == 89 || i == 90 || i == 91 || i == 72 || i == 73 || i == 74 || i == 75){
+			else if(i == 84 || i == 85 || i == 86 || i == 87)
+				box[i] = new RedBox();
+			else if(i == 72 || i == 73 || i == 74 || i == 75){
 				box[i] = new GreenBox();
 				box[i].addMouseListener(pawnListener);
 			}
-				
-			else if(i == 92 || i == 93 || i == 94 || i == 95 || i == 76 || i == 77 || i == 78 || i == 79){
+			else if(i == 88 || i == 89 || i == 90 || i == 91)
+				box[i] = new GreenBox();
+			
+			else if(i == 76 || i == 77 || i == 78 || i == 79){
 				box[i] = new BlueBox();
 				box[i].addMouseListener(pawnListener);
 			}
+			else if(i == 92 || i == 93 || i == 94 || i == 95)
+				box[i] = new BlueBox();
 				
 			else{
 				box[i] = new WhiteBox();
@@ -449,7 +454,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		}
 		if(e.getSource() == cubeRoll){
 			int move = player.rollDice();
-			player.movePawn(0, move);
+			//player.movePawn(0, move);
 			handler.sendPlayerListSize(playerList.size());
 			handler.sendCurrentRound(player.getColor());
 			String msg = message() + " wyrzucił: " + move;
@@ -578,9 +583,11 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	          /*player.movePawn(0, 20);
 			 handler.sendPawn(player);*/
 			 Box b = (Box) me.getComponent();
-			 if(b.getPawn() != null)
+			 if(b.getPawn() != null){
 				 player.movePawn(0, 3);
-			 handler.sendPawn(player);
+				 handler.sendPawn(player);
+			 }
+
 			// System.out.println(b.getBoxId());
 		 }
 	}
