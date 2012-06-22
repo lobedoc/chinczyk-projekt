@@ -13,6 +13,16 @@ public class RunLudo {
 		//JoinHost h = new JoinHost();
 		//h.setVisible(true);
 		//ControlGameInterface game = new ControlGame();
-		MainWindow main = new MainWindow();
+		try {	
+	        javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
+	            public void run() {
+	            	MainWindow main = new MainWindow();
+	            }
+	        });	
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 }
