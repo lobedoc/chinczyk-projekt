@@ -38,14 +38,14 @@ public abstract class Box extends JPanel{
 		this.setPreferredSize(getBoxSize());
 	}
 	
-	public void addPawn(Pawn pawn){
-		//pawnLast = arrayPawn.pollLast();
-		//arrayPawn.addFirst(pawn);
+	public Pawn addPawn(Pawn pawn){
+		pawnLast = arrayPawn.pollLast();
+		arrayPawn.addFirst(pawn);
 		pawn.setActualyPosition(id);
-		pawnLast = pawn;
+		//pawnLast = pawn;
 		isFree=false;
 		repaint();
-		//return pawnLast;
+		return pawnLast;
 	}
 	public Pawn getPawn(){
 		return pawnLast;
@@ -76,7 +76,7 @@ public abstract class Box extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g){
 		g.drawImage(image, 0, 0, null);
-		if(pawnLast != null)
+		if(!arrayPawn.isEmpty())
 			paintPawn(g);
 	}
 	
