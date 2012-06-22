@@ -7,6 +7,6 @@ public class HeadConst {
 	public static final int CURRENT = 0x3;
 	public static final int PLAYERLIST = 0x4;
 	public static final int MESSAGE = 0x5;
-	public static final int GAMEEND = 0x3;
+	public static final int GAMEEND = 0x6;
 	
 }

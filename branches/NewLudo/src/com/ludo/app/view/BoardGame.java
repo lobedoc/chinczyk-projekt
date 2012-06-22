@@ -69,14 +69,14 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	private Box[] box = new Box[96];
 	private ArrayList<Pawn> pawns;
 	private Player player;
-	public BoardGame(){
+	public BoardGame(String name){
 		pawns = new ArrayList<Pawn>();
-		player = new HumanPlayer();
+		player = new HumanPlayer(name);
 		pawnListener = new PawnMoveListener();
 		System.out.println(playerList.size());
 	}
 	public void createView(){
-		view = new JFrame();
+		view = new JFrame("Plansza");
 		view.setPreferredSize(new Dimension(800, 600));
 		view.setMinimumSize(new Dimension(800, 600));
 		view.setLayout(new BorderLayout());
@@ -319,6 +319,16 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		joinYellow.setEnabled(false);
 		joinGreen.setEnabled(false);
 	}
+	private void setEnabledJoinButton(){
+		joinRed.setEnabled(true);
+		joinBlue.setEnabled(true);
+		joinYellow.setEnabled(true);
+		joinGreen.setEnabled(true);
+		joinRed.setText("Dołącz");
+		joinBlue.setText("Dołącz");
+		joinYellow.setText("Dołącz");
+		joinGreen.setText("Dołącz");
+	}
 	private void createYellowPlayer(Player player){
 		player.setCamp(new YellowCamp());
 		player.setHouse(new YellowHouse());
@@ -379,24 +389,28 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		UP, RIGHT, DOWN, LEFT
 	}
 	@Override
-	public void updatePlayerList(int color) {
-		Player player = new HumanPlayer();
+	public void updatePlayerList(int color, String name) {
+		Player player = new HumanPlayer(name);
 		switch(color){
 		case 1: 
 			createYellowPlayer(player);
 			joinYellow.setEnabled(false);
+			joinYellow.setText(player.getName());
 			break;
 		case 2: 
 			createRedPlayer(player);
 			joinRed.setEnabled(false);
+			joinRed.setText(player.getName());
 			break;
 		case 3: 
 			createGreenPlayer(player);
 			joinGreen.setEnabled(false);
+			joinGreen.setText(player.getName());
 			break;
 		case 4: 
 			createBluePlayer(player);
 			joinBlue.setEnabled(false);
+			joinBlue.setText(player.getName());
 			break;
 		}
 		playerList.put(color, player);
@@ -474,30 +488,15 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 					)){
 						handler.sendCurrentRound(player.getColor());
 						}
-			String msg = message() + " wyrzucił: " + player.getRoll();
+			String msg = player.getName() + " wyrzucił: " + player.getRoll();
 			handler.sendMsg(msg);
 			
 		}
 		if(e.getSource() == sendMsg){
-			String msg = message() + ": " + msgField.getText();
+			String msg = player.getName() + ": " + msgField.getText();
 			msgField.setText("");
 			handler.sendMsg(msg);
 		}
-	}
-	private String message(){
-		String msg;
-		switch(player.getColor()){
-		case 1: msg = "Żółty gracz";
-			break;
-		case 2: msg = "Czerwony gracz";
-			break;
-		case 3: msg = "Zielony gracz";
-			break;
-		case 4: msg = "Niebieski gracz";
-			break;
-		default : msg = "Gość: ";
-		}
-		return msg;
 	}
 	private JPanel panelBoard(){
 		initBox();
@@ -579,11 +578,16 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		addHousePosition(lay, 76, 1, Position.LEFT);
 		return panel;
 	}
-/*	private boolean isEnd(){
+	private boolean isEnd(){
 		int f = player.getHouse()[0];
 		int s = player.getHouse()[1];
 		int t = player.getHouse()[2];
-	}*/
+		int f1 = player.getHouse()[3];
+		if(!(box[f].isFree() && box[s].isFree() && box[t].isFree() && box[f1].isFree()))
+			return true;
+		else
+			return false;
+	}
 	@Override
 	public void currentRound(int i) {
 		// TODO Auto-generated method stub
@@ -607,6 +611,8 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		 else if(b.getBoxId() != player.getPawn(p).getCampId()){
 			 player.movePawn(p);
 			 handler.sendPawn(player);
+			 if(isEnd())
+				 handler.sendEnd();
 			 handler.sendCurrentRound(player.getColor());
 		 }
 	}
@@ -629,6 +635,17 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			 }
 			
 		 }
+	}
+	@Override
+	public void updateGame() {
+		// TODO Auto-generated method stub
+		handler.sendMsg("GRA ZAKONCZONA!!");
+		setEnabledJoinButton();
+		for(int i = 0; i < box.length; i++)
+			box[i].removePawn();
+		pawns.clear();
+		playerList.clear();
+
 	}
 }
 

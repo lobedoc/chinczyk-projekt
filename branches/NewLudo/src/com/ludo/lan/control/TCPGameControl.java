@@ -49,6 +49,11 @@ public class TCPGameControl implements GameControl, ClientObserver{
 		for(ClientHandler handler : clientList)
 			handler.sendMsg(msg);
 	}
+	@Override
+	public void sendGameEnd() {
+		for(ClientHandler handler : clientList)
+			handler.sendGameEnd();
+	}
 	
 	
 	
