@@ -24,8 +24,10 @@ import com.ludo.lan.task.ThreadManager;
 
 public class MainWindow extends JFrame implements ActionListener {
 
-	private JButton singlePlayerButton,multiPlayerButton,exitButton,infoButton;
+	private JButton singlePlayerButton,multiPlayerButton,exitButton,infoButton,helpButton;
 	private Font font;
+	private Info info;
+	private Help help;
 	public MainWindow(){
 		super("Chińczyk");
 			InputStream inputStream = MainWindow.class.getResourceAsStream("/com/ludo/app/resources/jappernees.ttf");
@@ -41,6 +43,9 @@ public class MainWindow extends JFrame implements ActionListener {
 		singlePlayerButton.setFont(font1);
 		multiPlayerButton = new JButton("GRA WIELOOSOBOWA");
 		multiPlayerButton.setFont(font1);
+		helpButton = new JButton("POMOC");
+		helpButton.setFont(font1);
+		helpButton.addActionListener(this);
 		infoButton = new JButton("INFORMACJE");
 		infoButton.setFont(font1);
 		infoButton.addActionListener(this);
@@ -74,11 +79,12 @@ public class MainWindow extends JFrame implements ActionListener {
 	
 	private JPanel flowPanel(){
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(4,1));
+		panel.setLayout(new GridLayout(5,1));
 		panel.add(singlePlayerButton);
 		panel.add(multiPlayerButton);
-		panel.add(exitButton);
 		panel.add(infoButton);
+		panel.add(helpButton);
+		panel.add(exitButton);
 		return panel;
 	}
 	
@@ -101,6 +107,18 @@ public class MainWindow extends JFrame implements ActionListener {
 			view.setVisible(true);
 			this.setVisible(false);
 			
+		}
+		if(e.getSource() == infoButton){
+			if(info != null)
+				info.setVisible(true);
+			else{
+				info = new Info();
+				info.setVisible(true);
+			}
+		}
+		if(e.getSource() == helpButton){
+			Help help = new Help();
+			help.setVisible(true);
 		}
 		if(e.getSource() == exitButton){
 			System.exit(0);

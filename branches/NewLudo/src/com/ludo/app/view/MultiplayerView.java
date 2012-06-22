@@ -44,7 +44,7 @@ public class MultiplayerView extends JDialog implements ActionListener{
 		fieldName = new JTextField(15);
 		initListeners();
 		this.setLayout(new BorderLayout());
-		this.setMinimumSize(new Dimension(450, 100));
+		this.setMinimumSize(new Dimension(500, 130));
 		Dimension dialogSize = 	this.getSize();		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();  
 		if(dialogSize.height > screenSize.height) 
