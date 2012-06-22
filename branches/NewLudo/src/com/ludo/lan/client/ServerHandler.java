@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.ludo.app.control.Player;
 import com.ludo.lan.head.CurrentRoundHead;
+import com.ludo.lan.head.GameEndHead;
 import com.ludo.lan.head.Head;
 import com.ludo.lan.head.HeadConst;
 import com.ludo.lan.head.MessageHead;
@@ -47,7 +48,7 @@ public class ServerHandler extends Task implements ServerSubject{
 			case HeadConst.PLAYER: 
 				Player p = (Player) h.getObject();
 				p.getColor(); p.getPawns();
-				addPlayer(p.getColor());
+				addPlayer(p.getColor(), p.getName());
 				break;
 			case HeadConst.PAWN:
 				Player pawn = (Player) h.getObject();
@@ -60,7 +61,10 @@ public class ServerHandler extends Task implements ServerSubject{
 			case HeadConst.MESSAGE:
 				String msg = (String) h.getObject();
 				appendMsg(msg);
-				
+				break;
+			case HeadConst.GAMEEND:
+				updateGame();
+				break;
 		}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -81,6 +85,10 @@ public class ServerHandler extends Task implements ServerSubject{
 	public void appendMsg(String msg){
 		for(ServerObserver ob : observer)
 			ob.updateMsg(msg);
+	}
+	public void updateGame(){
+		for(ServerObserver ob : observer)
+			ob.updateGame();
 	}
 	private void pawnIncoming(Player p){
 		int p0 = p.getPawnPosition(0);
@@ -128,6 +136,16 @@ public class ServerHandler extends Task implements ServerSubject{
 		msgHead.setObject(msg);
 		try {
 			out.writeObject(msgHead);
+			clearSocket();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void sendEnd(){
+		Head endHead = new GameEndHead();
+		try {
+			out.writeObject(endHead);
 			clearSocket();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -191,8 +209,8 @@ public class ServerHandler extends Task implements ServerSubject{
 			e.printStackTrace();
 		}
 	}
-	public void addPlayer(int color){
+	public void addPlayer(int color, String name){
 		for(ServerObserver ob : observer)
-			ob.updatePlayerList(color);
+			ob.updatePlayerList(color, name);
 	}
 }

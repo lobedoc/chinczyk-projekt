@@ -10,4 +10,5 @@ public interface ClientObserver {
 	public void changePawn(Player p);
 	public void sendCurrentRound(int i);
 	public void sendMsg(String msg);
+	public void sendGameEnd();
 }

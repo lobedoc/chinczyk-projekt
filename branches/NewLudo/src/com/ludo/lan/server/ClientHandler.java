@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.ludo.app.control.Player;
 import com.ludo.app.model.Pawn;
 import com.ludo.lan.head.CurrentRoundHead;
+import com.ludo.lan.head.GameEndHead;
 import com.ludo.lan.head.Head;
 import com.ludo.lan.head.HeadConst;
 import com.ludo.lan.head.MessageHead;
@@ -72,6 +73,10 @@ public class ClientHandler extends Task implements ClientSubject{
 			case HeadConst.MESSAGE:
 				String msg = (String) h.getObject();
 				updateMsg(msg);
+				break;
+			case HeadConst.GAMEEND:
+				gameEnd();
+				break;
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -103,7 +108,10 @@ public class ClientHandler extends Task implements ClientSubject{
 			// TODO: handle exception
 		}
 	}
-	
+	public void gameEnd(){
+		for(ClientObserver ob: observer)
+			ob.sendGameEnd();
+	}
 	public void changePawn(Player p){
 		for(ClientObserver ob: observer)
 			ob.changePawn(p);
@@ -161,6 +169,14 @@ public class ClientHandler extends Task implements ClientSubject{
 			} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+	}
+	public void sendGameEnd(){
+		try {
+			Head h = new GameEndHead();
+			out.writeObject(h);
+			clearSocket();
+			} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }
