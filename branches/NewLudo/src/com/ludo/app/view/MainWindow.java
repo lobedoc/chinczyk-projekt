@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
@@ -49,9 +50,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		exitButton.addActionListener(this);
 		singlePlayerButton.addActionListener(this);
 		JPanel imagePanel = new ImagePanel();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(true);
-        this.setVisible(true);
+
         this.setMinimumSize(new Dimension(575,453));
         this.setLayout(new BorderLayout());
         GridBagLayout layout = new GridBagLayout();
@@ -59,6 +58,18 @@ public class MainWindow extends JFrame implements ActionListener {
         imagePanel.setLayout(layout);
         imagePanel.add(flowPanel());
 		this.add(imagePanel);
+		Dimension dialogSize = 	this.getSize();		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();  
+		if(dialogSize.height > screenSize.height) 
+			dialogSize.height = screenSize.height;
+		if(dialogSize.width > screenSize.width)
+			dialogSize.height = screenSize.width;
+		this.setLocation((screenSize.width-dialogSize.width)/2,   
+						(screenSize.height-dialogSize.height)/2);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setVisible(true);
 	}
 	
 	private JPanel flowPanel(){
@@ -86,8 +97,6 @@ public class MainWindow extends JFrame implements ActionListener {
 			this.setVisible(false);
 		}
 		if(e.getSource() == multiPlayerButton){
-			/*JoinHost h = new JoinHost();
-			h.setVisible(true);*/
 			MultiplayerView view = new MultiplayerView();
 			view.setVisible(true);
 			this.setVisible(false);

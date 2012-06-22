@@ -8,10 +8,12 @@ import com.ludo.lan.task.ThreadManager;
 
 public class Client {
 	private ServerHandler serverHandler;
+	private boolean connected = false;
 	public void connect(String ip){
 		try {
 			Socket clientSocket = new Socket(ip, 8125);
 			serverHandler = new ServerHandler(clientSocket);
+			connected = true;
 			ThreadManager.getInstance().execute(serverHandler);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
@@ -20,6 +22,9 @@ public class Client {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public boolean getConnected(){
+		return connected;
 	}
 	public ServerHandler getHandler(){
 		return serverHandler;

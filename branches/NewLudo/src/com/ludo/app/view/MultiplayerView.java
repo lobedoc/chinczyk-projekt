@@ -59,7 +59,7 @@ public class MultiplayerView extends JDialog implements ActionListener{
 		this.setVisible(true);
 	}
 	private void initListeners(){
-		buttonHost = new JButton("Hostuj");
+		buttonHost = new JButton("Host");
 		buttonHost.setFont(font);
 		buttonConnect = new JButton("Polacz");
 		buttonConnect.setFont(font);
@@ -101,19 +101,23 @@ public class MultiplayerView extends JDialog implements ActionListener{
 			}
 		if(e.getSource() == buttonConnect){
 			Client client = new Client();
-			String str = JOptionPane.showInputDialog(null, "Podaj ip : ", 
+			String str = JOptionPane.showInputDialog(null, "Podaj ip serwera: ", 
 					 "", 1);
-			if(str != null){
 				client.connect(str);
-				ServerHandler handler = client.getHandler();
-				BoardGame boardGame = new BoardGame(fieldName.getText());
-				boardGame.createView();
-				boardGame.setHandler(handler);	
-				this.setVisible(false);
-			}
-			else{
-				
-			}
+				if(client.getConnected())
+				{
+					ServerHandler handler = client.getHandler();
+					BoardGame boardGame = new BoardGame(fieldName.getText());
+					boardGame.createView();
+					boardGame.setHandler(handler);	
+					this.setVisible(false);
+				}
+				else{
+					JOptionPane.showMessageDialog(this,
+						    "Nie połączono z serwerem!",
+						    "Błąd połączenia",
+						    JOptionPane.ERROR_MESSAGE);
+				}
 		}
 		if(e.getSource() == buttonExit){
 			System.exit(0);
