@@ -457,9 +457,23 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			handler.sendPlayer(player);
 		}
 		if(e.getSource() == cubeRoll){
-			player.rollDice();
 			handler.sendPlayerListSize(playerList.size());
+			player.rollDice();
 			cubeRoll.setEnabled(false);
+			Pawn[] pawns = player.getPawns();
+			int campid0 = pawns[0].getCampId();
+			int campid1 = pawns[1].getCampId();
+			int campid2 = pawns[2].getCampId();
+			int campid3 = pawns[3].getCampId();
+			if(player.getRoll() != 6 && 
+					(
+					box[campid0].getBoxId() == pawns[0].getActualyPosition() &&
+					box[campid1].getBoxId() == pawns[1].getActualyPosition() &&
+					box[campid2].getBoxId() == pawns[2].getActualyPosition() &&
+					box[campid3].getBoxId() == pawns[3].getActualyPosition()
+					)){
+						handler.sendCurrentRound(player.getColor());
+						}
 			String msg = message() + " wyrzucił: " + player.getRoll();
 			handler.sendMsg(msg);
 			
@@ -579,33 +593,34 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		// TODO Auto-generated method stub
 		infoArea.append(msg + "\n");
 	}
+	private void changePawn(int p, Box b){
+		 if(b.getBoxId() == player.getPawn(p).getCampId() && player.getRoll() == 6){
+			 player.movePawnBase(p);
+			 handler.sendPawn(player);
+			 handler.sendCurrentRound(player.getColor());
+		 }
+		 else if(b.getBoxId() != player.getPawn(p).getCampId()){
+			 player.movePawn(p);
+			 handler.sendPawn(player);
+			 handler.sendCurrentRound(player.getColor());
+		 }
+	}
 	private class PawnMoveListener extends MouseAdapter{
 		
 		 public void mouseReleased(MouseEvent me) { 
 			 Box b = (Box) me.getComponent();
 			 if(b.getPawn() != null && b.getPawn() == player.getPawn(0) && player.getRoll() != 0){
-				/* if(b.getBoxId() == player.getPawn(0).getCampId() && player.getRoll() == 6){
-					 player.movePawnBase(0);
-				 }
-				 if(b.getBoxId() != player.getPawn(0).getCampId() )*/
-				 player.movePawn(0);
-				 handler.sendPawn(player);
-				 handler.sendCurrentRound(player.getColor());
+				changePawn(0, b);
+
 			 }
 			 if(b.getPawn() != null && b.getPawn() == player.getPawn(1) && player.getRoll() != 0){
-				 player.movePawn(1);
-				 handler.sendPawn(player);
-				 handler.sendCurrentRound(player.getColor());
+				 changePawn(1, b);
 			 }
 			 if(b.getPawn() != null && b.getPawn() == player.getPawn(2) && player.getRoll() != 0){
-				 player.movePawn(2);
-				 handler.sendPawn(player);
-				 handler.sendCurrentRound(player.getColor());
+				 changePawn(2, b);
 			 }
 			 if(b.getPawn() != null && b.getPawn() == player.getPawn(3) && player.getRoll() != 0){
-				 player.movePawn(3);
-				 handler.sendPawn(player);
-				 handler.sendCurrentRound(player.getColor());
+				 changePawn(3, b);
 			 }
 			
 		 }
