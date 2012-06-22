@@ -22,6 +22,7 @@ public abstract class Box extends JPanel{
 	private Pawn pawnLast;
 	private Image pawnImage = null;
 	private ArrayDeque<Pawn> arrayPawn = new ArrayDeque<Pawn>();
+	private boolean isFree = true;
 	public Box(String path){
 		try{
 			image = ImageIO.read(new File(path));
@@ -42,6 +43,7 @@ public abstract class Box extends JPanel{
 		//arrayPawn.addFirst(pawn);
 		pawn.setActualyPosition(id);
 		pawnLast = pawn;
+		isFree=false;
 		repaint();
 		//return pawnLast;
 	}
@@ -51,6 +53,7 @@ public abstract class Box extends JPanel{
 	public void removePawn(){
 		pawnLast = null;
 		pawnImage = null;
+		isFree =true;
 		repaint();
 	}
 	public void setImage(String path){
@@ -63,6 +66,9 @@ public abstract class Box extends JPanel{
 	}
 	public int getBoxId(){
 		return id;
+	}
+	public boolean isFree(){
+		return isFree;
 	}
 	private Dimension getBoxSize(){
 		return new Dimension(30,30);
