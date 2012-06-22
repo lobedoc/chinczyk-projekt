@@ -411,6 +411,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 				p.notifyObserver();
 				}
 		System.out.println("Lista: " + playerList.size());
+		handler.sendPlayerListSize(playerList.size());
 		}
 	}
 	private void notifyPawns(Player player){
@@ -457,7 +458,6 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			handler.sendPlayer(player);
 		}
 		if(e.getSource() == cubeRoll){
-			handler.sendPlayerListSize(playerList.size());
 			player.rollDice();
 			cubeRoll.setEnabled(false);
 			Pawn[] pawns = player.getPawns();

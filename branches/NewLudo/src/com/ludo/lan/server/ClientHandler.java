@@ -118,7 +118,7 @@ public class ClientHandler extends Task implements ClientSubject{
 	}
 	public void sendCurrentRound(int i){
 		i = i+1;
-		if(i > 2)
+		if(i > playersNumber)
 			i = 1;
 		try {
 			Head currentHead = new CurrentRoundHead();
