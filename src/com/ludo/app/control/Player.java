@@ -21,6 +21,9 @@ public abstract class Player implements Serializable {
 	public Pawn[] getPawns(){
 		return pawnPlayer;
 	}
+	public int[] getHouse(){
+		return pawnPlayer[0].getHouseLocation();
+	}
 	public void setCamp(Camp camp){
 		int[] campId = camp.getCampLocation();
 		playerColor = camp.getColor();
