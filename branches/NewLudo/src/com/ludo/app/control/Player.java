@@ -67,6 +67,7 @@ public abstract class Player implements Serializable {
 	}
 	public void movePawnBase(int pawn){
 		pawnPlayer[pawn].moveFromBase(6);
+		numberRoll = 0;
 	}
 	public void setPawns(Pawn[] pawns){
 		this.pawnPlayer = pawns;
