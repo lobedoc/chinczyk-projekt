@@ -609,12 +609,21 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 			 handler.sendCurrentRound(player.getColor());
 		 }
 		 else if(b.getBoxId() != player.getPawn(p).getCampId()){
+			 if(!b.isFree()){
 			 player.movePawn(p);
 			 handler.sendPawn(player);
 			 if(isEnd())
 				 handler.sendEnd();
 			 handler.sendCurrentRound(player.getColor());
-		 }
+			 }
+		 else{
+			 Pawn pa = b.getPawn();
+			 int m = pa.getCampId();
+			 pa.moveToCamp(m);
+			 player.movePawn(p);
+			 handler.sendPawn(player);
+			 handler.sendCurrentRound(player.getColor());
+		 }}
 	}
 	private class PawnMoveListener extends MouseAdapter{
 		

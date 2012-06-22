@@ -121,6 +121,9 @@ public class Pawn implements PawnSubject, Serializable{
 			 actualyPosition = startId;
 		}
 	}
+	public void moveToCamp(int pawn){
+		moveTo(pawn);
+	}
 	public int getLastPosition(){
 		return lastPosition;
 	}
