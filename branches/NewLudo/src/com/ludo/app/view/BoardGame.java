@@ -579,6 +579,11 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 		addHousePosition(lay, 76, 1, Position.LEFT);
 		return panel;
 	}
+/*	private boolean isEnd(){
+		int f = player.getHouse()[0];
+		int s = player.getHouse()[1];
+		int t = player.getHouse()[2];
+	}*/
 	@Override
 	public void currentRound(int i) {
 		// TODO Auto-generated method stub
