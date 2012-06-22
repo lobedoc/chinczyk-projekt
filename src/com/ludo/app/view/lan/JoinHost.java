@@ -64,7 +64,7 @@ public class JoinHost extends JFrame implements ActionListener{
 			handler = client.getHandler();
 		}
 		if(e.getSource() == testowy){
-			BoardGame boardGame = new BoardGame();
+			BoardGame boardGame = new BoardGame("player");
 			boardGame.createView();
 			boardGame.setHandler(handler);
 		}

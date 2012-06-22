@@ -13,8 +13,10 @@ public abstract class Player implements Serializable {
 	protected Pawn[] pawnPlayer = new Pawn[PAWN_SIZE];
 	private int playerColor;
 	private int numberRoll;
+	private String name;
 	protected Random r = new Random();
-	public Player(){
+	public Player(String name){
+		this.name = name;
 		for(int i = 0; i < pawnPlayer.length; i++)
 			pawnPlayer[i] = new Pawn();
 	}
@@ -76,4 +78,8 @@ public abstract class Player implements Serializable {
 		numberRoll = r.nextInt(6)+1;
 	}
 	public abstract void sendReady();
+	public String getName() {
+		return name;
+	}
+	
 }
