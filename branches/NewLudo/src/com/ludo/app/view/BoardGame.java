@@ -605,6 +605,7 @@ public class BoardGame implements ActionListener,PawnObserver, ServerObserver{
 	public void updateMsg(String msg) {
 		// TODO Auto-generated method stub
 		infoArea.append(msg + "\n");
+		infoArea.setCaretPosition(infoArea.getDocument().getLength());
 	}
 	private void changePawn(int p, Box b){
 		 if(b.getBoxId() == player.getPawn(p).getCampId() && player.getRoll() == 6){
